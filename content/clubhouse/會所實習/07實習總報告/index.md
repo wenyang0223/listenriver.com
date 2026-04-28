@@ -6,15 +6,12 @@ draft: false
 type: post
 cover:
   image: 實習總報告.jpg
-  alt: "實習總報告"
-
+  alt: 實習總報告
 categories:
   - 助人工作
 tags:
   - 會所實習
   - 會所模式
-  - 會所
-  - 實習
 ---
 ### 向陽會所實習總報告
 ##### 實習期間：2023年2月-8月

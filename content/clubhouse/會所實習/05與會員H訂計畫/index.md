@@ -6,15 +6,12 @@ draft: false
 type: post
 cover:
   image: 與會員H訂計畫.jpg
-  alt: "與會員H訂計畫"
-
+  alt: 與會員H訂計畫
 categories:
   - 助人工作
 tags:
   - 會所實習
   - 會所模式
-  - 會所
-  - 實習
 ---
 ### 20230716實習日誌＿三手欄節錄
 ### 與會員H訂計畫

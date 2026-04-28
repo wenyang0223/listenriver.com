@@ -6,15 +6,12 @@ draft: false
 type: post
 cover:
   image: 期中實習結束.jpg
-  alt: "期中實習結束"
-
+  alt: 期中實習結束
 categories:
   - 助人工作
 tags:
   - 會所實習
   - 會所模式
-  - 會所
-  - 實習
 ---
 期中實習結束，開始進入暑期實習，繼續在向陽實習中。
 

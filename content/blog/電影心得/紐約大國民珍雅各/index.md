@@ -6,7 +6,7 @@ draft: false
 type: post
 cover:
   image: 珍雅各.png
-  alt: "《紐約大國民：珍雅各》Citizen Jane: Battle for the City"
+  alt: "《紐約大國民：珍雅各》"
 
 categories:
   - 閱讀與筆記
