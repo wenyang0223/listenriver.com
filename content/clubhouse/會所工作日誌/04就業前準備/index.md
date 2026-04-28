@@ -1,13 +1,12 @@
 ---
-title: 20250916會所工作日誌04_就業前準備
+title: 會所工作日誌04_就業前準備
 date: 2025-09-16
 description:
 draft: false
 type: post
 cover:
   image: 會所工作日誌04.jpg
-  alt: "20250916會所工作日誌04_就業前準備"
-
+  alt: 20250916會所工作日誌04_就業前準備
 categories:
   - 助人工作
 tags:

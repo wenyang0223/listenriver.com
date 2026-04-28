@@ -1,13 +1,12 @@
 ---
-title: 20250910會所工作日誌02_緊握垃圾的力道
+title: 會所工作日誌02_緊握垃圾的力道
 date: 2025-09-10
 description:
 draft: false
 type: post
 cover:
   image: 會所工作日誌02.jpg
-  alt: "20250910會所工作日誌02_緊握垃圾的力道"
-
+  alt: 20250910會所工作日誌02_緊握垃圾的力道
 categories:
   - 助人工作
 tags:
