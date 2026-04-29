@@ -70,4 +70,4 @@ tags:
 
 
 
-![](content/clubhouse/會所工作日誌/15認真回應會員動力/會所工作日誌15_3.jpg)
+![](content/clubhouse/會所工作日誌/15認真回應會員動力/會所工作日誌15_4.jpg)
