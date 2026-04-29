@@ -2,10 +2,10 @@
 
 .salon-hero {
   position: relative;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: calc(50% - 50vw);
-  --salon-hero-height: 186px;
+  width: calc(100vw - 6rem);
+  margin-left: calc(50% - 50vw + 3rem);
+  margin-right: calc(50% - 50vw + 3rem);
+  --salon-hero-height: 236px;
   --salon-hero-shift-y: -6px;
   min-height: var(--salon-hero-height);
   border-radius: 26px 26px 0 0;
@@ -84,7 +84,7 @@
 
 .salon-hero-lockup {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: 20px;
   min-width: 0;
@@ -93,6 +93,7 @@
 
 .salon-hero-mark {
   width: clamp(72px, 5.1vw, 90px);
+  margin-top: 0.1em;
   aspect-ratio: 1;
   flex-shrink: 0;
   background: linear-gradient(180deg, #6e645c 0%, #5c534d 100%);
@@ -532,16 +533,60 @@
 
 /* ===== responsive ===== */
 
+@media (max-width: 720px) {
+  .salon-hero {
+    --salon-hero-height: 250px;
+  }
+
+  .salon-hero-inner {
+    min-height: var(--salon-hero-height);
+    padding: 1.7rem 1rem 1.35rem;
+  }
+
+  .salon-hero-lockup {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    text-align: center;
+    transform: none;
+  }
+
+  .salon-hero-mark {
+    width: 48px;
+    margin-top: 0.05em;
+  }
+
+  .salon-hero-headline {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.35rem;
+  }
+
+  .salon-hero-title {
+    font-size: clamp(1.9rem, 6.2vw, 2.35rem);
+    white-space: nowrap;
+  }
+
+  .salon-hero-divider {
+    display: none;
+  }
+
+  .salon-hero-topics {
+    font-size: clamp(1.15rem, 4.2vw, 1.55rem);
+    white-space: normal;
+  }
+}
+
 @media (max-width: 600px) {
   .main {
     max-width: 100% !important;
   }
 
   .salon-hero {
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    --salon-hero-height: 136px;
+    width: calc(100vw - 1.5rem);
+    margin-left: calc(50% - 50vw + 0.75rem);
+    margin-right: calc(50% - 50vw + 0.75rem);
+    --salon-hero-height: 170px;
     --salon-hero-shift-y: -4px;
     min-height: var(--salon-hero-height);
     border-radius: 20px 20px 0 0;
@@ -803,7 +848,7 @@
 
 @media (max-width: 420px) {
   .salon-hero {
-    --salon-hero-height: 122px;
+    --salon-hero-height: 150px;
     --salon-hero-shift-y: -3px;
     min-height: var(--salon-hero-height);
     border-radius: 16px 16px 0 0;
