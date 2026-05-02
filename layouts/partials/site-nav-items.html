@@ -1,7 +1,32 @@
-﻿{{- return (slice
-  (dict "key" "home" "url" ("/" | relLangURL))
-  (dict "key" "categories" "url" ("/categories/" | relLangURL))
-  (dict "key" "tags" "url" ("/tags/" | relLangURL))
-  (dict "key" "clubhouse" "url" ("/clubhouse/" | relLangURL))
-  (dict "key" "about" "url" ("/about/" | relLangURL))
+{{- return (slice
+  (dict "key" "home" "label" "首頁" "url" ("/" | relLangURL))
+  (dict "key" "reading" "label" "閱讀與筆記" "url" ("/categories/閱讀與筆記/" | relLangURL) "children" (slice
+    (dict "label" "書摘" "url" ("/tags/書摘/" | relLangURL))
+    (dict "label" "閱讀心得" "url" ("/tags/閱讀心得/" | relLangURL))
+    (dict "label" "講座筆記" "url" ("/tags/講座筆記/" | relLangURL))
+    (dict "label" "講座心得" "url" ("/tags/講座心得/" | relLangURL))
+    (dict "label" "電影心得" "url" ("/tags/電影心得/" | relLangURL))
+    (dict "label" "素描" "url" ("/tags/素描/" | relLangURL))
+  ))
+  (dict "key" "daily" "label" "日常書寫" "url" ("/categories/日常書寫/" | relLangURL))
+  (dict "key" "growth" "label" "自我成長" "url" ("/categories/自我成長/" | relLangURL) "children" (slice
+    (dict "label" "親密關係" "url" ("/tags/親密關係/" | relLangURL))
+    (dict "label" "成為一個人" "url" ("/tags/成為一個人/" | relLangURL))
+    (dict "label" "正念的河流" "url" ("/tags/正念的河流/" | relLangURL))
+  ))
+  (dict "key" "pain" "label" "病痛經驗" "url" ("/categories/病痛經驗/" | relLangURL) "children" (slice
+    (dict "label" "聆聽疼痛計畫" "url" ("/tags/聆聽疼痛計畫/" | relLangURL))
+  ))
+  (dict "key" "helping" "label" "助人工作" "url" ("/categories/助人工作/" | relLangURL) "children" (slice
+    (dict "label" "開放式對話" "url" ("/tags/開放式對話/" | relLangURL))
+    (dict "label" "創傷知情" "url" ("/tags/創傷知情/" | relLangURL))
+    (dict "label" "家族治療" "url" ("/tags/家族治療/" | relLangURL))
+  ))
+  (dict "key" "clubhouse" "label" "會所模式" "url" ("/clubhouse/" | relLangURL) "children" (slice
+    (dict "label" "會所實習" "url" ("/clubhouse/會所實習/" | relLangURL))
+    (dict "label" "會所工作日誌" "url" ("/clubhouse/會所工作日誌/" | relLangURL))
+    (dict "label" "會所工作手冊" "url" ("/clubhouse/會所工作手冊/" | relLangURL))
+  ))
+  (dict "key" "topics" "label" "主題索引" "url" ("/tags/" | relLangURL))
+  (dict "key" "about" "label" "關於" "url" ("/about/" | relLangURL))
 ) -}}
