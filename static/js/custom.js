@@ -1,34 +1,19 @@
 ﻿(function() {
   const header = document.getElementById('site-header');
-  let lastY = window.scrollY;
   let ticking = false;
-  const topRevealOffset = 24;
-  const hideAfterOffset = 120;
-  const scrollDelta = 10;
+  const scrolledOffset = 8;
+  const hideOffset = 96;
 
   if (header) {
     window.addEventListener('scroll', () => {
       if (ticking) return;
       requestAnimationFrame(() => {
-        if (window.innerWidth <= 640) {
-          header.classList.remove('nav--hidden');
-          lastY = Math.max(window.scrollY, 0);
-          ticking = false;
-          return;
-        }
+        const y = Math.max(window.scrollY, 0);
+        const keepVisible = window.innerWidth <= 640 || y <= scrolledOffset;
 
-        const y = window.scrollY;
-        const diff = y - lastY;
+        header.classList.toggle('is-scrolled', y > scrolledOffset);
+        header.classList.toggle('nav--hidden', !keepVisible && y > hideOffset);
 
-        if (y <= topRevealOffset) {
-          header.classList.remove('nav--hidden');
-        } else if (diff > scrollDelta && y > hideAfterOffset) {
-          header.classList.add('nav--hidden');
-        } else if (diff < -scrollDelta) {
-          header.classList.remove('nav--hidden');
-        }
-
-        lastY = Math.max(y, 0);
         ticking = false;
       });
       ticking = true;
@@ -98,6 +83,10 @@
   const mobileTocShortcut = document.querySelector('[data-mobile-toc-shortcut]');
   const mobileBackButtons = document.querySelectorAll('[data-mobile-back]');
   const readingProgressBar = document.querySelector('[data-reading-progress]');
+  const searchToggle = document.querySelector('.header-search-toggle');
+  const inlineSearch = document.querySelector('.header-inline-search');
+  const inlineSearchInput = inlineSearch ? inlineSearch.querySelector('input[type="search"]') : null;
+  const reducedMotionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
   let lastMobileMenuTrigger = null;
 
   function toggleInert(element, inert) {
@@ -183,6 +172,34 @@
       }
     });
   }
+
+  function setHeaderSearchOpen(open) {
+    if (!header || !searchToggle || !inlineSearch) return;
+
+    header.classList.toggle('search-is-open', open);
+    searchToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    inlineSearch.hidden = !open;
+
+    if (open && inlineSearchInput && window.innerWidth > 640) {
+      if (reducedMotionMedia.matches) {
+        inlineSearchInput.focus();
+      } else {
+        window.setTimeout(() => inlineSearchInput.focus(), 80);
+      }
+    }
+  }
+
+  if (searchToggle && inlineSearch) {
+    searchToggle.addEventListener('click', () => {
+      setHeaderSearchOpen(!header.classList.contains('search-is-open'));
+    });
+  }
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      setHeaderSearchOpen(false);
+    }
+  });
 
   scrollTopButtons.forEach((button) => {
     button.addEventListener('click', () => {
