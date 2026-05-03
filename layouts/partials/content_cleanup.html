@@ -1,0 +1,11 @@
+{{- $content := . -}}
+{{- /* Article paragraph rules:
+1. Normal Markdown blank lines stay as paragraph breaks.
+2. Instagram/Threads invisible format characters are not intentional spacing.
+3. Intentional visual pauses should use the spacer shortcode instead. */ -}}
+{{- $content = replaceRE "[\\x{200B}-\\x{200F}\\x{202A}-\\x{202E}\\x{2060}-\\x{206F}\\x{FEFF}]" "" $content -}}
+{{- $content = replaceRE "(?i)<br\\s*/?>\\s*<br\\s*/?>" "</p><p>" $content -}}
+{{- $content = replaceRE "(?i)<p>\\s*<br\\s*/?>\\s*" "<p>" $content -}}
+{{- $content = replaceRE "(?i)\\s*<br\\s*/?>\\s*</p>" "</p>" $content -}}
+{{- $content = replaceRE "(?i)<p>\\s*</p>" "" $content -}}
+{{- $content | safeHTML -}}
