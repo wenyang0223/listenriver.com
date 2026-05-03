@@ -962,3 +962,68 @@
     width: 100%;
   }
 }
+
+/* Final mobile override for the homepage hero. Keep this after all salon media rules. */
+@media (max-width: 768px) {
+  body.list .main {
+    padding-left: var(--mobile-page-gutter, 24px) !important;
+    padding-right: var(--mobile-page-gutter, 24px) !important;
+  }
+
+  .salon-hero,
+  body:not(.list) .main .salon-hero {
+    width: 100%;
+    max-width: 100%;
+    min-height: 0;
+    margin: 0 0 2rem;
+    border-radius: 20px;
+  }
+
+  .salon-hero-inner {
+    min-height: 0;
+    padding: 1.7rem 1.1rem 1.2rem;
+  }
+
+  .salon-hero-title {
+    font-size: 2rem;
+    line-height: 1.12;
+    letter-spacing: 0;
+    white-space: normal;
+  }
+
+  .salon-hero-topics,
+  .salon-hero-subtitle,
+  .salon-hero-bottom .salon-channel-desc {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .salon-hero-bottom .salon-channel-desc {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .home-discovery,
+  .home-discovery-section,
+  .home-featured-grid,
+  .home-latest-grid {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .post-single .post-content .post-figure,
+  .post-single > .entry-cover {
+    width: calc(100% - (var(--mobile-media-gutter, 24px) * 2));
+    max-width: calc(100% - (var(--mobile-media-gutter, 24px) * 2));
+    margin-left: var(--mobile-media-gutter, 24px);
+    margin-right: var(--mobile-media-gutter, 24px);
+  }
+}
+
+@media (max-width: 390px) {
+  body.list .main {
+    padding-left: var(--mobile-page-gutter, 22px) !important;
+    padding-right: var(--mobile-page-gutter, 22px) !important;
+  }
+}

@@ -3,8 +3,11 @@
 <article class="post-single">
   <header class="post-header">
     {{ partial "breadcrumbs.html" . }}
+    {{- with .Params.seriesLabel }}
+    <div class="post-series-label">{{ . }}</div>
+    {{- end }}
     <h1 class="post-title entry-hint-parent">
-      {{ .Title }}
+      {{ .Params.displayTitle | default .Title }}
       {{- if .Draft }}
       <span class="entry-hint" title="Draft">
         <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
