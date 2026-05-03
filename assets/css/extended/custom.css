@@ -597,9 +597,9 @@
   padding: 20px 18px calc(24px + env(safe-area-inset-bottom, 0px));
   background: rgba(255, 252, 247, 0.98);
   border-left: 1px solid rgba(17, 24, 39, 0.08);
-  box-shadow: -24px 0 48px rgba(15, 23, 42, 0.18);
+  box-shadow: none;
   transform: translateX(100%);
-  transition: transform 0.24s ease;
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
   z-index: 900;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -626,6 +626,7 @@
 }
 
 .site-header.mobile-nav-open .mobile-nav-drawer {
+  box-shadow: -24px 0 48px rgba(15, 23, 42, 0.18);
   transform: translateX(0);
 }
 
@@ -6074,8 +6075,8 @@ body:not(.list) .main .salon-hero {
 .post-single {
   --article-shell-width: 1080px;
   --article-header-width: 720px;
-  --article-content-width: 1000px;
-  --article-text-width: 740px;
+  --article-content-width: 920px;
+  --article-text-width: 680px;
   --article-figure-width: 760px;
   --article-cover-width: 800px;
   max-width: var(--article-shell-width);
@@ -6119,10 +6120,13 @@ body:not(.list) .main .salon-hero {
 .post-single .post-content {
   max-width: var(--article-content-width);
   margin: 0 auto;
-  color: var(--primary);
-  font-size: 20px;
-  line-height: 1.98;
+  color: #30343a;
+  font-size: 21px;
+  line-height: 2.02;
   letter-spacing: 0;
+  line-break: loose;
+  word-break: auto-phrase;
+  overflow-wrap: normal;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -6145,12 +6149,26 @@ body:not(.list) .main .salon-hero {
 .post-single .post-content ol,
 .post-single .post-content blockquote {
   margin-top: 0;
-  margin-bottom: 1.75em;
+  margin-bottom: 1.95em;
 }
 
 .post-single .post-content p {
   letter-spacing: 0;
+  text-align: start;
   text-wrap: pretty;
+}
+
+.post-single .post-content a {
+  color: #9a7544;
+  text-decoration: underline;
+  text-decoration-color: rgba(154, 117, 68, 0.28);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.post-single .post-content strong {
+  color: var(--primary);
+  font-weight: 700;
 }
 
 .post-single .post-content > p:first-of-type {
@@ -6260,8 +6278,8 @@ body:not(.list) .main .salon-hero {
   .post-single {
     --article-shell-width: 1160px;
     --article-header-width: 760px;
-    --article-content-width: 1060px;
-    --article-text-width: 760px;
+    --article-content-width: 920px;
+    --article-text-width: 680px;
     --article-figure-width: 800px;
     --article-cover-width: 840px;
   }
@@ -7610,6 +7628,7 @@ body:not(.list) .main .salon-hero {
 
   .post-single {
     --article-mobile-gutter: var(--mobile-page-gutter);
+    --article-text-gutter: 42px;
     width: 100%;
     max-width: 100%;
     margin: 0;
@@ -7630,8 +7649,11 @@ body:not(.list) .main .salon-hero {
   }
 
   .post-single .post-content {
-    font-size: 18px;
-    line-height: 1.95;
+    padding-left: var(--article-text-gutter) !important;
+    padding-right: var(--article-text-gutter) !important;
+    color: #30343a;
+    font-size: 18.5px;
+    line-height: 2.05;
     letter-spacing: 0;
     text-align: start;
     text-wrap: pretty;
@@ -7658,20 +7680,28 @@ body:not(.list) .main .salon-hero {
   .post-single .post-content ul,
   .post-single .post-content ol,
   .post-single .post-content blockquote {
-    margin-bottom: 1.45em;
+    margin-bottom: 1.72em;
   }
 
   .post-single .post-content p,
   .post-single .post-content li {
-    text-align: justify;
-    text-justify: inter-character;
+    text-align: start;
     line-break: loose;
     overflow-wrap: normal;
     word-break: auto-phrase;
   }
 
+  .post-single .post-content a {
+    color: #9a7544;
+    text-decoration: underline;
+    text-decoration-color: rgba(154, 117, 68, 0.28);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+  }
+
   .post-single .post-content strong {
-    font-weight: 700;
+    color: var(--primary);
+    font-weight: 680;
   }
 
   .post-single .post-content > p:first-of-type {
@@ -7741,17 +7771,28 @@ body:not(.list) .main .salon-hero {
 
   .post-single .post-content > blockquote {
     max-width: 100%;
+    margin-top: 0.35rem;
     margin-left: 0;
     margin-right: 0;
-    padding: 0.15rem 0 0.15rem 1rem;
+    padding: 0.25rem 0 0.25rem 1.05rem;
+    border-inline-start: 4px solid rgba(111, 202, 209, 0.72);
+    color: var(--secondary);
+    font-size: 0.96em;
+    line-height: 1.9;
   }
 
-  .post-single .post-content .post-figure,
   .post-single > .entry-cover {
     width: calc(100% - (var(--mobile-media-gutter) * 2));
     max-width: calc(100% - (var(--mobile-media-gutter) * 2));
     margin-left: var(--mobile-media-gutter);
     margin-right: var(--mobile-media-gutter);
+  }
+
+  .post-single .post-content .post-figure {
+    width: calc(100% + ((var(--article-text-gutter) - var(--mobile-media-gutter)) * 2));
+    max-width: calc(100% + ((var(--article-text-gutter) - var(--mobile-media-gutter)) * 2));
+    margin-left: calc(var(--mobile-media-gutter) - var(--article-text-gutter));
+    margin-right: calc(var(--mobile-media-gutter) - var(--article-text-gutter));
   }
 
   .post-single .post-content .post-content-image,
@@ -7844,7 +7885,11 @@ body:not(.list) .main .salon-hero {
   }
 
   .post-single .post-content {
-    font-size: 17.5px;
-    line-height: 1.92;
+    font-size: 18px;
+    line-height: 2;
+  }
+
+  .post-single {
+    --article-text-gutter: 36px;
   }
 }
