@@ -7181,6 +7181,61 @@ body:not(.list) .main .salon-hero {
   }
 }
 
+/* Single article header taxonomy. */
+.post-header-taxonomy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0 0.85rem;
+}
+
+.post-header-chip,
+.post-header-chip:visited {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 0.76rem;
+  border-radius: 999px;
+  background: rgba(111, 202, 209, 0.15);
+  color: #24717a;
+  font-size: 0.78rem;
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.post-header-chip--category {
+  background: rgba(111, 202, 209, 0.2);
+}
+
+.post-header-chip--series {
+  background: rgba(36, 113, 122, 0.09);
+}
+
+.post-header-chip--tag {
+  background: rgba(15, 23, 42, 0.045);
+  color: var(--secondary);
+}
+
+.post-header-chip:hover {
+  color: #1f6870;
+  background: rgba(111, 202, 209, 0.24);
+}
+
+[data-theme="dark"] .post-header-chip,
+[data-theme="dark"] .post-header-chip:visited {
+  background: rgba(111, 202, 209, 0.18);
+  color: #9de4ea;
+}
+
+[data-theme="dark"] .post-header-chip--tag {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--secondary);
+}
+
 /* Mobile UX/UI system: final responsive contract for phones. */
 :root {
   --mobile-page-gutter: 24px;
@@ -7578,8 +7633,13 @@ body:not(.list) .main .salon-hero {
     font-size: 18px;
     line-height: 1.95;
     letter-spacing: 0;
-    overflow-wrap: break-word;
-    word-break: normal;
+    text-align: start;
+    text-wrap: pretty;
+    line-break: loose;
+    overflow-wrap: normal;
+    word-break: auto-phrase;
+    hyphens: auto;
+    font-kerning: normal;
   }
 
   .post-single .post-content > p,
@@ -7599,6 +7659,19 @@ body:not(.list) .main .salon-hero {
   .post-single .post-content ol,
   .post-single .post-content blockquote {
     margin-bottom: 1.45em;
+  }
+
+  .post-single .post-content p,
+  .post-single .post-content li {
+    text-align: justify;
+    text-justify: inter-character;
+    line-break: loose;
+    overflow-wrap: normal;
+    word-break: auto-phrase;
+  }
+
+  .post-single .post-content strong {
+    font-weight: 700;
   }
 
   .post-single .post-content > p:first-of-type {
@@ -7624,28 +7697,40 @@ body:not(.list) .main .salon-hero {
   }
 
   .post-single .post-title {
-    font-size: 1.56rem;
-    line-height: 1.38;
+    font-size: clamp(1.7rem, 6.4vw, 2.05rem);
+    line-height: 1.26;
     letter-spacing: 0;
     max-width: 100%;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-    text-wrap: auto;
+    overflow-wrap: normal;
+    word-break: auto-phrase;
+    text-wrap: balance;
   }
 
-  .post-series-label {
-    display: inline-flex;
-    align-items: center;
-    min-height: 28px;
-    margin-bottom: 0.72rem;
+  .post-header-taxonomy {
+    gap: 0.45rem;
+    margin: 0.15rem 0 0.9rem;
+  }
+
+  .post-header-chip,
+  .post-header-chip:visited {
+    min-height: 30px;
     padding: 0 0.72rem;
-    border-radius: 999px;
-    background: rgba(111, 202, 209, 0.16);
-    color: #24717a;
-    font-size: 0.78rem;
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: 0.03em;
+    font-size: 0.76rem;
+    font-weight: 750;
+  }
+
+  @supports not (word-break: auto-phrase) {
+    .post-single .post-title {
+      word-break: normal;
+      overflow-wrap: break-word;
+    }
+
+    .post-single .post-content,
+    .post-single .post-content p,
+    .post-single .post-content li {
+      word-break: normal;
+      overflow-wrap: break-word;
+    }
   }
 
   .post-single .post-content > ul,
