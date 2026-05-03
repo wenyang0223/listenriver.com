@@ -37,11 +37,12 @@
   {{- end }}
 
   {{- if .Content }}
+  {{- $content := partial "content_cleanup.html" .Content -}}
   <div class="post-content">
     {{- if not (.Param "disableAnchoredHeadings") }}
-      {{- partial "anchored_headings.html" .Content -}}
+      {{- partial "anchored_headings.html" $content -}}
     {{- else }}
-      {{ .Content }}
+      {{ $content }}
     {{- end }}
   </div>
   {{- partial "post_internal_links.html" . -}}

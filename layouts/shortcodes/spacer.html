@@ -1,0 +1,6 @@
+{{- $size := .Get 0 | default "md" -}}
+{{- $allowed := slice "sm" "md" "lg" -}}
+{{- if not (in $allowed $size) -}}
+  {{- $size = "md" -}}
+{{- end -}}
+<div class="article-spacer article-spacer--{{ $size }}" aria-hidden="true"></div>
