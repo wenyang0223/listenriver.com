@@ -7893,3 +7893,63 @@ body:not(.list) .main .salon-hero {
     --article-text-gutter: 36px;
   }
 }
+
+/* Final article readability contract. Keep this after all article/mobile overrides. */
+[data-theme="dark"] .post-single .post-content {
+  color: rgba(232, 236, 240, 0.94);
+}
+
+[data-theme="dark"] .post-single .post-content p,
+[data-theme="dark"] .post-single .post-content ul,
+[data-theme="dark"] .post-single .post-content ol,
+[data-theme="dark"] .post-single .post-content li {
+  color: inherit;
+}
+
+[data-theme="dark"] .post-single .post-content strong,
+[data-theme="dark"] .post-single .post-content b {
+  color: rgba(248, 250, 252, 0.98);
+}
+
+[data-theme="dark"] .post-single .post-content blockquote,
+[data-theme="dark"] .post-single .post-content > blockquote {
+  color: rgba(226, 232, 240, 0.86);
+  border-left-color: rgba(111, 202, 209, 0.9);
+}
+
+[data-theme="dark"] .post-single .post-content blockquote p {
+  color: inherit;
+}
+
+[data-theme="dark"] .post-single .post-content figcaption,
+[data-theme="dark"] .post-single .post-content .post-content-image--missing {
+  color: rgba(203, 213, 225, 0.78);
+}
+
+@media (max-width: 768px) {
+  .post-single .post-content {
+    word-break: normal;
+    overflow-wrap: normal;
+    line-break: auto;
+  }
+
+  .post-single .post-content > p,
+  .post-single .post-content li {
+    text-align: left;
+    text-align-last: left;
+    word-spacing: normal;
+  }
+
+  .post-single .post-content > p {
+    -webkit-hyphens: none;
+    hyphens: none;
+  }
+}
+
+@supports (word-break: auto-phrase) {
+  @media (max-width: 768px) {
+    .post-single .post-content {
+      word-break: auto-phrase;
+    }
+  }
+}
