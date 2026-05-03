@@ -3,9 +3,28 @@
 <article class="post-single">
   <header class="post-header">
     {{ partial "breadcrumbs.html" . }}
-    {{- with .Params.seriesLabel }}
-    <div class="post-series-label">{{ . }}</div>
+
+    {{- $categories := first 1 (.GetTerms "categories") -}}
+    {{- $tags := .GetTerms "tags" -}}
+    {{- $seriesLabel := .Params.seriesLabel -}}
+    {{- if and (not $seriesLabel) (findRE `^會所工作日誌[0-9]+_` .Title) -}}
+      {{- $seriesNumber := replaceRE `^會所工作日誌([0-9]+)_.*$` "$1" .Title -}}
+      {{- $seriesLabel = printf "會所工作日誌 %s" $seriesNumber -}}
+    {{- end -}}
+    {{- if or $seriesLabel (or (gt (len $categories) 0) (gt (len $tags) 0)) }}
+    <div class="post-header-taxonomy" aria-label="文章分類與主題">
+      {{- range $categories }}
+      <a class="post-header-chip post-header-chip--category" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+      {{- end }}
+      {{- with $seriesLabel }}
+      <span class="post-header-chip post-header-chip--series">{{ . }}</span>
+      {{- end }}
+      {{- range $tags }}
+      <a class="post-header-chip post-header-chip--tag" href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a>
+      {{- end }}
+    </div>
     {{- end }}
+
     <h1 class="post-title entry-hint-parent">
       {{ .Params.displayTitle | default .Title }}
       {{- if .Draft }}

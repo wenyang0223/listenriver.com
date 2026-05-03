@@ -597,9 +597,9 @@
   padding: 20px 18px calc(24px + env(safe-area-inset-bottom, 0px));
   background: rgba(255, 252, 247, 0.98);
   border-left: 1px solid rgba(17, 24, 39, 0.08);
-  box-shadow: -24px 0 48px rgba(15, 23, 42, 0.18);
+  box-shadow: none;
   transform: translateX(100%);
-  transition: transform 0.24s ease;
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
   z-index: 900;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -626,6 +626,7 @@
 }
 
 .site-header.mobile-nav-open .mobile-nav-drawer {
+  box-shadow: -24px 0 48px rgba(15, 23, 42, 0.18);
   transform: translateX(0);
 }
 
@@ -5697,8 +5698,8 @@ body:not(.list) .main .salon-hero {
 .post-single {
   --article-shell-width: 1080px;
   --article-header-width: 720px;
-  --article-content-width: 1000px;
-  --article-text-width: 740px;
+  --article-content-width: 920px;
+  --article-text-width: 680px;
   --article-figure-width: 760px;
   --article-cover-width: 800px;
   max-width: var(--article-shell-width);
@@ -5742,10 +5743,13 @@ body:not(.list) .main .salon-hero {
 .post-single .post-content {
   max-width: var(--article-content-width);
   margin: 0 auto;
-  color: var(--primary);
-  font-size: 20px;
-  line-height: 1.98;
+  color: #30343a;
+  font-size: 21px;
+  line-height: 2.02;
   letter-spacing: 0;
+  line-break: loose;
+  word-break: auto-phrase;
+  overflow-wrap: normal;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -5768,12 +5772,26 @@ body:not(.list) .main .salon-hero {
 .post-single .post-content ol,
 .post-single .post-content blockquote {
   margin-top: 0;
-  margin-bottom: 1.75em;
+  margin-bottom: 1.95em;
 }
 
 .post-single .post-content p {
   letter-spacing: 0;
+  text-align: start;
   text-wrap: pretty;
+}
+
+.post-single .post-content a {
+  color: #9a7544;
+  text-decoration: underline;
+  text-decoration-color: rgba(154, 117, 68, 0.28);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.post-single .post-content strong {
+  color: var(--primary);
+  font-weight: 700;
 }
 
 .post-single .post-content > p:first-of-type {
@@ -5883,8 +5901,8 @@ body:not(.list) .main .salon-hero {
   .post-single {
     --article-shell-width: 1160px;
     --article-header-width: 760px;
-    --article-content-width: 1060px;
-    --article-text-width: 760px;
+    --article-content-width: 920px;
+    --article-text-width: 680px;
     --article-figure-width: 800px;
     --article-cover-width: 840px;
   }
@@ -6401,6 +6419,61 @@ body:not(.list) .main .salon-hero {
   }
 }
 
+/* Single article header taxonomy. */
+.post-header-taxonomy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0 0.85rem;
+}
+
+.post-header-chip,
+.post-header-chip:visited {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 0.76rem;
+  border-radius: 999px;
+  background: rgba(111, 202, 209, 0.15);
+  color: #24717a;
+  font-size: 0.78rem;
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.post-header-chip--category {
+  background: rgba(111, 202, 209, 0.2);
+}
+
+.post-header-chip--series {
+  background: rgba(36, 113, 122, 0.09);
+}
+
+.post-header-chip--tag {
+  background: rgba(15, 23, 42, 0.045);
+  color: var(--secondary);
+}
+
+.post-header-chip:hover {
+  color: #1f6870;
+  background: rgba(111, 202, 209, 0.24);
+}
+
+[data-theme="dark"] .post-header-chip,
+[data-theme="dark"] .post-header-chip:visited {
+  background: rgba(111, 202, 209, 0.18);
+  color: #9de4ea;
+}
+
+[data-theme="dark"] .post-header-chip--tag {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--secondary);
+}
+
 /* Mobile UX/UI system: final responsive contract for phones. */
 :root {
   --mobile-page-gutter: 24px;
@@ -6773,21 +6846,18 @@ body:not(.list) .main .salon-hero {
     margin-top: 0.9rem;
   }
 
-  .post-series-label {
-    display: inline-flex;
-    align-items: center;
-    min-height: 28px;
-    margin-bottom: 0.72rem;
-    padding: 0 0.72rem;
-    border-radius: 999px;
-    background: rgba(111, 202, 209, 0.16);
-    color: #24717a;
-    font-size: 0.78rem;
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: 0.03em;
+  .post-header-taxonomy {
+    gap: 0.45rem;
+    margin: 0.15rem 0 0.9rem;
   }
 
+  .post-header-chip,
+  .post-header-chip:visited {
+    min-height: 30px;
+    padding: 0 0.72rem;
+    font-size: 0.76rem;
+    font-weight: 750;
+  }
   .post-interactions__panel,
   .post-single .post-tags {
     padding-left: 0;
