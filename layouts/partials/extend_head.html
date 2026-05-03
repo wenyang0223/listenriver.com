@@ -1,4 +1,5 @@
 <link rel="icon" type="image/png" href="{{ "/images/favicon.png" | relURL }}">
-<link rel="stylesheet" href="{{ "/css/salon.css" | relURL }}">
+{{- $salonCssVersion := readFile "static/css/salon.css" | sha256 -}}
+<link rel="stylesheet" href="{{ printf "/css/salon.css?v=%s" $salonCssVersion | relURL }}">
 <script src="{{ "/js/salon.js" | relURL }}" defer></script>
 <script src="{{ "/js/custom.js" | relURL }}" defer></script>
