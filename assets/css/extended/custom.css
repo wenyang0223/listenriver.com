@@ -7075,8 +7075,8 @@ html {
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     word-break: normal;
-    overflow-wrap: normal;
-    line-break: loose;
+    overflow-wrap: break-word;
+    line-break: normal;
     -webkit-hyphens: none;
     hyphens: none;
   }
@@ -7126,6 +7126,7 @@ html {
   .post-single .post-content li {
     text-align: left;
     text-align-last: left;
+    text-wrap: wrap;
     word-spacing: normal;
   }
 
