@@ -6998,10 +6998,10 @@ html {
 
 @media (max-width: 768px) {
   :root {
-    --article-phone-gutter: clamp(26px, 6.2vw, 34px);
-    --article-phone-font-size: 18px;
-    --article-phone-line-height: 1.88;
-    --article-phone-paragraph-gap: 1.34em;
+    --article-phone-gutter: clamp(37px, 9vw, 52px);
+    --article-phone-font-size: 19.25px;
+    --article-phone-line-height: 2.12;
+    --article-phone-paragraph-gap: 2.45em;
   }
 
   .post-single {
@@ -7066,17 +7066,18 @@ html {
     max-width: none;
     margin-left: 0;
     margin-right: 0;
-    color: var(--primary);
+    color: #3e4348;
     font-size: var(--article-phone-font-size);
     line-height: var(--article-phone-line-height);
+    font-weight: 400;
     letter-spacing: 0;
     text-align: left;
     text-align-last: left;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    word-break: normal;
+    word-break: auto-phrase;
     overflow-wrap: break-word;
-    line-break: normal;
+    line-break: loose;
     -webkit-hyphens: none;
     hyphens: none;
   }
@@ -7130,9 +7131,15 @@ html {
     word-spacing: normal;
   }
 
+  .post-single .post-content a {
+    text-decoration-thickness: 1px;
+    text-decoration-color: rgba(154, 117, 68, 0.18);
+    text-underline-offset: 0.28em;
+  }
+
   .post-single .post-content strong,
   .post-single .post-content b {
-    font-weight: 650;
+    font-weight: 600;
   }
 
   .post-single .post-content a,
@@ -7158,8 +7165,8 @@ html {
   .post-single .post-content h2,
   .post-single .post-content h3,
   .post-single .post-content h4 {
-    margin-top: 2.45rem;
-    margin-bottom: 0.88rem;
+    margin-top: 3.65rem;
+    margin-bottom: 1.35rem;
     letter-spacing: 0;
     scroll-margin-top: calc(var(--mobile-header-height) + 14px);
   }
@@ -7181,10 +7188,33 @@ html {
 
   .post-single .post-content > blockquote {
     max-width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    padding: 0.15rem 0 0.15rem 1rem;
-    line-height: 1.82;
+    margin: 3rem 0;
+    padding: 0.32rem 0 0.32rem 1.12rem;
+    border-left-width: 4px;
+    border-left-color: rgba(111, 202, 209, 0.82);
+    line-height: 2.04;
+    color: #30343a;
+  }
+
+  .post-single .post-content > blockquote p {
+    margin-bottom: 1.05em;
+    line-height: inherit;
+  }
+
+  .post-single .post-content > blockquote p:last-child {
+    margin-bottom: 0;
+  }
+
+  .post-single .post-content > blockquote strong,
+  .post-single .post-content > blockquote b {
+    font-weight: 600;
+  }
+
+  .post-single .post-content > hr {
+    height: 1px;
+    margin-top: 3.35rem;
+    margin-bottom: 3.35rem;
+    background: rgba(17, 24, 39, 0.14);
   }
 
   .post-single .post-content .post-figure,
@@ -7196,8 +7226,12 @@ html {
   }
 
   .post-single .post-content .post-figure {
-    margin-top: 1.85rem;
-    margin-bottom: 1.85rem;
+    margin-top: 2.65rem;
+    margin-bottom: 2.9rem;
+  }
+
+  .post-single .post-content .post-figure + p {
+    margin-top: 0.25rem;
   }
 
   .post-single .post-content .post-content-image,
@@ -7217,9 +7251,9 @@ html {
 
 @media (max-width: 390px) {
   :root {
-    --article-phone-gutter: 24px;
-    --article-phone-font-size: 17.5px;
-    --article-phone-line-height: 1.86;
-    --article-phone-paragraph-gap: 1.3em;
+    --article-phone-gutter: 34px;
+    --article-phone-font-size: 18.75px;
+    --article-phone-line-height: 2.08;
+    --article-phone-paragraph-gap: 2.3em;
   }
 }
