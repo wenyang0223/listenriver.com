@@ -2,4 +2,5 @@
 {{- $salonCssVersion := readFile "static/css/salon.css" | sha256 -}}
 <link rel="stylesheet" href="{{ printf "/css/salon.css?v=%s" $salonCssVersion | relURL }}">
 <script src="{{ "/js/salon.js" | relURL }}" defer></script>
-<script src="{{ "/js/custom.js" | relURL }}" defer></script>
+{{- $customJsVersion := readFile "static/js/custom.js" | sha256 -}}
+<script src="{{ printf "/js/custom.js?v=%s" $customJsVersion | relURL }}" defer></script>

@@ -1,19 +1,58 @@
 ﻿(function() {
   const header = document.getElementById('site-header');
+  const mobileMedia = window.matchMedia('(max-width: 768px)');
   let ticking = false;
+  let lastY = window.scrollY;
+  let mobileHideTravel = 0;
+  let mobileRevealTravel = 0;
   const scrolledOffset = 8;
-  const hideOffset = 96;
+  const hideOffset = 120;
+  const scrollDelta = 10;
+  const mobileHideDistance = 48;
+  const mobileRevealDistance = 36;
 
   if (header) {
     window.addEventListener('scroll', () => {
       if (ticking) return;
       requestAnimationFrame(() => {
         const y = Math.max(window.scrollY, 0);
-        const keepVisible = window.innerWidth <= 640 || y <= scrolledOffset;
+        const diff = y - lastY;
+        const isMobile = mobileMedia.matches;
+        const isInteractionOpen = header.classList.contains('mobile-nav-open') || header.classList.contains('search-is-open');
 
         header.classList.toggle('is-scrolled', y > scrolledOffset);
-        header.classList.toggle('nav--hidden', !keepVisible && y > hideOffset);
 
+        if (y <= scrolledOffset || isInteractionOpen) {
+          header.classList.remove('nav--hidden');
+          mobileHideTravel = 0;
+          mobileRevealTravel = 0;
+        } else if (isMobile) {
+          if (diff > 0) {
+            mobileHideTravel += diff;
+            mobileRevealTravel = 0;
+            if (y > hideOffset && mobileHideTravel >= mobileHideDistance) {
+              header.classList.add('nav--hidden');
+              mobileHideTravel = 0;
+            }
+          } else if (diff < 0) {
+            mobileRevealTravel += Math.abs(diff);
+            mobileHideTravel = 0;
+            if (mobileRevealTravel >= mobileRevealDistance) {
+              header.classList.remove('nav--hidden');
+              mobileRevealTravel = 0;
+            }
+          }
+        } else if (diff > scrollDelta && y > hideOffset) {
+          header.classList.add('nav--hidden');
+          mobileHideTravel = 0;
+          mobileRevealTravel = 0;
+        } else if (diff < -scrollDelta) {
+          header.classList.remove('nav--hidden');
+          mobileHideTravel = 0;
+          mobileRevealTravel = 0;
+        }
+
+        lastY = y;
         ticking = false;
       });
       ticking = true;
@@ -101,6 +140,9 @@
   function setMobileNavOpen(open) {
     if (!header || !mobileDrawer || !mobileMenuToggle) return;
 
+    if (open) {
+      header.classList.remove('nav--hidden');
+    }
     header.classList.toggle('mobile-nav-open', open);
     document.body.classList.toggle('mobile-nav-locked', open);
     mobileDrawer.setAttribute('aria-hidden', open ? 'false' : 'true');
@@ -161,7 +203,7 @@
     });
 
     window.addEventListener('resize', () => {
-      if (window.innerWidth > 640) {
+      if (window.innerWidth > 768) {
         setMobileNavOpen(false);
       }
     }, { passive: true });
@@ -176,11 +218,14 @@
   function setHeaderSearchOpen(open) {
     if (!header || !searchToggle || !inlineSearch) return;
 
+    if (open) {
+      header.classList.remove('nav--hidden');
+    }
     header.classList.toggle('search-is-open', open);
     searchToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     inlineSearch.hidden = !open;
 
-    if (open && inlineSearchInput && window.innerWidth > 640) {
+    if (open && inlineSearchInput && window.innerWidth > 768) {
       if (reducedMotionMedia.matches) {
         inlineSearchInput.focus();
       } else {
