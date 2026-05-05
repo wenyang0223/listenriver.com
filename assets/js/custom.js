@@ -1,13 +1,17 @@
 ﻿(function() {
   const header = document.getElementById('site-header');
-  const mobileMedia = window.matchMedia('(max-width: 640px)');
+  const mobileMedia = window.matchMedia('(max-width: 768px)');
   const body = document.body;
 
   let lastY = window.scrollY;
   let ticking = false;
+  let mobileHideTravel = 0;
+  let mobileRevealTravel = 0;
   const topRevealOffset = 24;
   const hideAfterOffset = 120;
   const scrollDelta = 10;
+  const mobileHideDistance = 48;
+  const mobileRevealDistance = 36;
 
   if (header) {
     window.addEventListener('scroll', () => {
@@ -15,13 +19,37 @@
       requestAnimationFrame(() => {
         const y = window.scrollY;
         const diff = y - lastY;
+        const isMobile = mobileMedia.matches;
+        const isInteractionOpen = header.classList.contains('mobile-nav-open') || header.classList.contains('search-is-open');
 
-        if (mobileMedia.matches || y <= topRevealOffset) {
+        if (y <= topRevealOffset || isInteractionOpen) {
           header.classList.remove('nav--hidden');
+          mobileHideTravel = 0;
+          mobileRevealTravel = 0;
+        } else if (isMobile) {
+          if (diff > 0) {
+            mobileHideTravel += diff;
+            mobileRevealTravel = 0;
+            if (y > hideAfterOffset && mobileHideTravel >= mobileHideDistance) {
+              header.classList.add('nav--hidden');
+              mobileHideTravel = 0;
+            }
+          } else if (diff < 0) {
+            mobileRevealTravel += Math.abs(diff);
+            mobileHideTravel = 0;
+            if (mobileRevealTravel >= mobileRevealDistance) {
+              header.classList.remove('nav--hidden');
+              mobileRevealTravel = 0;
+            }
+          }
         } else if (diff > scrollDelta && y > hideAfterOffset) {
           header.classList.add('nav--hidden');
+          mobileHideTravel = 0;
+          mobileRevealTravel = 0;
         } else if (diff < -scrollDelta) {
           header.classList.remove('nav--hidden');
+          mobileHideTravel = 0;
+          mobileRevealTravel = 0;
         }
 
         lastY = Math.max(y, 0);
@@ -67,6 +95,9 @@
   function setMobileNavOpen(isOpen) {
     if (!header || !mobileNavDrawer || !mobileNavToggle || !mobileNavBackdrop) return;
 
+    if (isOpen) {
+      header.classList.remove('nav--hidden');
+    }
     header.classList.toggle('mobile-nav-open', isOpen);
     body.classList.toggle('mobile-nav-locked', isOpen);
     mobileNavDrawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
@@ -175,11 +206,11 @@
   }
 
   function handleMediaChange(event) {
-    if (event.matches) {
-      if (header) {
-        header.classList.remove('nav--hidden');
-      }
-    } else {
+    if (header) {
+      header.classList.remove('nav--hidden');
+    }
+    mobileRevealTravel = 0;
+    if (!event.matches) {
       closeMobileNav();
       setTocOpen(false);
     }
