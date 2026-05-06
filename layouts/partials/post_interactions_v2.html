@@ -40,34 +40,5 @@
       <span class="post-like-button__count" data-post-likes>--</span>
     </button>
   </div>
-  <div class="post-floating-tools" data-post-floating-bar aria-hidden="true">
-    {{- if $commentsEnabled }}
-    <button type="button" class="post-floating-tools__item" data-post-comments-button aria-label="查看留言">
-      <span class="post-floating-tools__icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.42 0-2.76-.35-3.94-.97L3 21l1.97-5.1A8.46 8.46 0 0 1 4 11.5 8.5 8.5 0 1 1 21 11.5Z"></path>
-        </svg>
-      </span>
-      <span class="post-floating-tools__count" data-post-comments data-path="{{ .RelPermalink }}">--</span>
-    </button>
-    {{- end }}
-    <span class="post-floating-tools__item post-floating-tools__item--static">
-      <span class="post-floating-tools__icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path>
-          <circle cx="12" cy="12" r="3"></circle>
-        </svg>
-      </span>
-      <span class="post-floating-tools__count" data-post-views>--</span>
-    </span>
-    <button type="button" class="post-floating-tools__item post-floating-tools__item--like" data-post-like-button aria-label="喜歡這篇文章">
-      <span class="post-floating-tools__icon" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 20.25c-.3 0-.6-.09-.86-.26C8.29 18.06 3 14.08 3 8.99 3 5.96 5.42 3.75 8.2 3.75c1.52 0 2.98.68 3.8 1.83.82-1.15 2.28-1.83 3.8-1.83 2.78 0 5.2 2.21 5.2 5.24 0 5.09-5.29 9.07-8.14 11-.26.17-.56.26-.86.26Z"></path>
-        </svg>
-      </span>
-      <span class="post-floating-tools__count" data-post-likes>--</span>
-    </button>
-  </div>
 </section>
 {{- end -}}
