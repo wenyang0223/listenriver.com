@@ -41,20 +41,20 @@ categoryCards:
       - 病痛經驗
       - 聆聽疼痛計畫
       - 正念的河流
-  - key: self-growth
+  - key: becoming-self
     accent: growth
     index: "04"
-    en: Self Growth
-    title: 自我成長
-    page: /categories/自我成長/
+    en: Becoming Self
+    title: 成為自己
+    page: /categories/成為自己/
     source:
       kind: category
-      name: 自我成長
-    description: 關於理解自己、辨認情緒，以及慢慢成為一個人的練習。
+      name: 成為自己
+    description: 關於理解自己、辨認情緒、內在連結，以及慢慢回到自己的練習。
     tags:
       - 成為一個人
-      - 自我成長
       - 正念的河流
+      - 親密關係
   - key: daily-writing
     accent: daily
     index: "05"
