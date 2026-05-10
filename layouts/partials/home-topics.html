@@ -54,10 +54,38 @@
   <div class="home-topics-grid taxonomy-landing-category-grid">
     {{- range $idx, $card := $categoryCards -}}
       {{- if $card.entryURL -}}
+      {{- $coverResource := "" -}}
+      {{- with $card.latestPage -}}
+        {{- $coverImage := .Params.cover.image -}}
+        {{- if $coverImage -}}
+          {{- $coverStem := replaceRE "\\.[^.]+$" "" (path.Base $coverImage) -}}
+          {{- $pageBundleCover := (.Resources.ByType "image").GetMatch (printf "%s.*" $coverStem) -}}
+          {{- $globalResourcesCover := (resources.ByType "image").GetMatch (printf "*%s.*" $coverStem) -}}
+          {{- if not $pageBundleCover -}}
+            {{- $pageBundleCover = (.Resources.ByType "image").GetMatch (printf "*%s*" $coverImage) -}}
+          {{- end -}}
+          {{- if not $globalResourcesCover -}}
+            {{- $globalResourcesCover = (resources.ByType "image").GetMatch (printf "*%s*" $coverImage) -}}
+          {{- end -}}
+          {{- $coverResource = or $pageBundleCover $globalResourcesCover -}}
+        {{- end -}}
+      {{- end -}}
       <article class="taxonomy-landing-card taxonomy-landing-card--{{ $card.accent }}">
         <a class="taxonomy-landing-card__stretched-link" href="{{ $card.entryURL }}" aria-label="進入 {{ $card.title }}"></a>
         <div class="taxonomy-landing-card__media">
-          <img src="{{ $card.cover.src }}" alt="{{ $card.cover.alt }}" loading="{{ cond (lt $idx 3) "eager" "lazy" }}" decoding="async">
+          {{- if $coverResource -}}
+            {{- partialCached "optimized-image.html" (dict
+              "resource" $coverResource
+              "alt" $card.cover.alt
+              "loading" "lazy"
+              "sizes" "(min-width: 1180px) 250px, (min-width: 768px) 31vw, calc(100vw - 48px)"
+              "maxWidth" 640
+              "widths" (slice 240 360 480 640)
+              "fetchpriority" "auto"
+            ) $coverResource.RelPermalink $card.cover.alt "home-topic" -}}
+          {{- else -}}
+            <img src="{{ $card.cover.src }}" alt="{{ $card.cover.alt }}" loading="lazy" decoding="async">
+          {{- end -}}
         </div>
         <div class="taxonomy-landing-card__body">
           <div class="taxonomy-landing-card__topline">

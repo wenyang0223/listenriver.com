@@ -13,7 +13,9 @@
     <article class="home-latest-item{{ if ge $index 3 }} home-latest-item--mobile-extra{{ end }}">
       <a class="home-latest-item__media" href="{{ $page.RelPermalink }}" aria-hidden="true" tabindex="-1">
         {{- $isHidden := ($page.Param "cover.hiddenInList") | default ($page.Param "cover.hidden") | default false -}}
-        {{- partialCached "cover.html" (dict "cxt" $page "IsSingle" false "isHidden" $isHidden) $page.RelPermalink false $isHidden ($page.Params.cover.image | default "") -}}
+        {{- $latestSizes := "(min-width: 768px) 360px, 42vw" -}}
+        {{- $latestWidths := slice 160 240 320 360 480 -}}
+        {{- partialCached "cover.html" (dict "cxt" $page "IsSingle" false "isHidden" $isHidden "sizes" $latestSizes "widths" $latestWidths "maxWidth" 480) $page.RelPermalink false $isHidden ($page.Params.cover.image | default "") "lazy" "auto" $latestSizes (delimit $latestWidths "-") 480 -}}
       </a>
       <div class="home-latest-item__body">
         <div class="home-latest-item__meta">

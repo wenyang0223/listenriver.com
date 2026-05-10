@@ -5,7 +5,8 @@
 {{- end -}}
 {{- if and $coverImage (not $.isHidden) -}}
 <figure class="entry-cover">
-    {{- $loading := cond $.IsSingle "eager" "lazy" -}}
+    {{- $loading := $.loading | default (cond $.IsSingle "eager" "lazy") -}}
+    {{- $fetchpriority := $.fetchpriority | default (cond (or $.IsSingle (eq $loading "eager")) "high" "auto") -}}
     {{- $addLink := and site.Params.cover.linkFullImages $.IsSingle -}}
     {{- $alt := (.Params.cover.alt | default .Params.cover.caption | default .Title | plainify) -}}
 
@@ -33,17 +34,18 @@
     {{- end -}}
 
     {{- if $cover -}}
-      {{- $widths := cond $.IsSingle (slice 480 760 960 1280 1600) (slice 240 360 480 720) -}}
-      {{- $sizes := cond $.IsSingle "(min-width: 1280px) 760px, (min-width: 900px) 68vw, calc(100vw - 36px)" "(min-width: 768px) 360px, 100vw" -}}
+      {{- $widths := $.widths | default (cond $.IsSingle (slice 480 760 960 1280 1600) (slice 240 360 480 720)) -}}
+      {{- $sizes := $.sizes | default (cond $.IsSingle "(min-width: 1280px) 760px, (min-width: 900px) 68vw, calc(100vw - 36px)" "(min-width: 768px) 360px, 100vw") -}}
+      {{- $maxWidth := $.maxWidth | default 1600 -}}
       {{- partialCached "optimized-image.html" (dict
         "resource" $cover
         "alt" $alt
         "loading" $loading
         "sizes" $sizes
-        "maxWidth" 1600
+        "maxWidth" $maxWidth
         "widths" $widths
-        "fetchpriority" (cond $.IsSingle "high" "auto")
-      ) $cover.RelPermalink $alt $loading $sizes 1600 (delimit $widths "-") (cond $.IsSingle "high" "auto") -}}
+        "fetchpriority" $fetchpriority
+      ) $cover.RelPermalink $alt $loading $sizes $maxWidth (delimit $widths "-") $fetchpriority -}}
     {{- else -}}
       <img loading="{{ $loading }}" src="{{ $coverImage | relURL }}" alt="{{ $alt }}">
     {{- end -}}

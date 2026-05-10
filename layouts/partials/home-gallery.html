@@ -1,4 +1,4 @@
-{{- $galleryFiles := readDir "static/images/home/gallery" -}}
+{{- $galleryFiles := readDir "assets/images/home/gallery" -}}
 {{- $slides := slice -}}
 {{- range sort $galleryFiles "Name" "asc" -}}
   {{- if and (not .IsDir) (eq (lower (path.Ext .Name)) ".webp") -}}
@@ -14,12 +14,25 @@
     <div class="home-gallery-viewport">
       <div class="home-gallery-track" data-gallery-track>
         {{- range $index, $file := $slides -}}
+        {{- $image := resources.Get (printf "images/home/gallery/%s" $file) -}}
         <div class="home-gallery-slide">
-          <img
-            src="{{ printf "/images/home/gallery/%s" $file | relURL }}"
-            alt="{{ printf "首頁圖集 %d" (add $index 1) }}"
-            loading="lazy"
-            decoding="async">
+          {{- if $image -}}
+            {{- partialCached "optimized-image.html" (dict
+              "resource" $image
+              "alt" (printf "首頁圖集 %d" (add $index 1))
+              "loading" "lazy"
+              "sizes" "(min-width: 1180px) 1100px, calc(100vw - 32px)"
+              "maxWidth" 1200
+              "widths" (slice 480 720 960 1200)
+              "fetchpriority" "auto"
+            ) $image.RelPermalink $index "lazy" "gallery" -}}
+          {{- else -}}
+            <img
+              src="{{ printf "/images/home/gallery/%s" $file | relURL }}"
+              alt="{{ printf "首頁圖集 %d" (add $index 1) }}"
+              loading="lazy"
+              decoding="async">
+          {{- end -}}
         </div>
         {{- end -}}
       </div>
@@ -34,7 +47,7 @@
       class="home-gallery-dot{{ if eq $index 0 }} is-active{{ end }}"
       type="button"
       data-gallery-dot="{{ $index }}"
-      aria-label="{{ printf "切換到第 %d 張" (add $index 1) }}">
+      aria-label="{{ printf "前往第 %d 張" (add $index 1) }}">
     </button>
     {{- end -}}
   </div>
