@@ -1,4 +1,4 @@
-﻿{{- $limit := site.Params.articleRelatedLimit | default 4 -}}
+{{- $limit := site.Params.articleRelatedLimit | default 3 -}}
 {{- $related := .Site.RegularPages.Related . | first $limit -}}
 {{- $related = where $related "RelPermalink" "ne" .RelPermalink -}}
 {{- if lt (len $related) 3 -}}
