@@ -1,4 +1,70 @@
 ﻿/* ===== ???”嚗椰????寞摮◢?潘?===== */
+body.list {
+  --entry: #fffefd;
+  --code-bg: #fffcf7;
+  background: #fffcf7;
+}
+
+body.list .main {
+  background: #fffcf7;
+}
+
+body.list .post-entry,
+body.list .category-entry {
+  background: #fffefd;
+  border-color: rgba(154, 117, 68, 0.16);
+  box-shadow: 0 8px 22px rgba(154, 117, 68, 0.055);
+}
+
+[data-theme="dark"] body.list {
+  --entry: rgb(46, 46, 51);
+  --code-bg: rgb(55, 56, 62);
+  background: var(--theme);
+}
+
+[data-theme="dark"] body.list .main {
+  background: var(--theme);
+}
+
+[data-theme="dark"] body.list .post-entry,
+[data-theme="dark"] body.list .category-entry {
+  background: var(--entry);
+  border-color: var(--border);
+  box-shadow: none;
+}
+
+[data-theme="light"] {
+  --paper-bg: #fffcf7;
+  --paper-surface: #fffefd;
+  --paper-line: rgba(154, 117, 68, 0.14);
+  --paper-shadow: rgba(154, 117, 68, 0.055);
+}
+
+[data-theme="light"] .site-header,
+[data-theme="light"] .header-top-shell,
+[data-theme="light"] .header-nav-shell {
+  background: var(--paper-bg);
+  border-color: var(--paper-line);
+}
+
+[data-theme="light"] .header-icon-link,
+[data-theme="light"] .header-icon-button,
+[data-theme="light"] .nav-group-menu-inner,
+[data-theme="light"] .dropdown,
+[data-theme="light"] .home-clubhouse-arrow,
+[data-theme="light"] .post-floating-tools {
+  background: var(--paper-surface) !important;
+  border-color: var(--paper-line);
+  box-shadow: 0 10px 26px var(--paper-shadow);
+}
+
+[data-theme="light"] .nav-group-link:hover,
+[data-theme="light"] .dropdown li a:hover,
+[data-theme="light"] .header-icon-link:hover,
+[data-theme="light"] .header-icon-button:hover {
+  background: var(--paper-bg);
+}
+
 .post-entry {
   display: flex;
   flex-direction: row;
@@ -5819,6 +5885,14 @@ body:not(.list) .main .salon-hero {
 }
 
 /* Article Reading Experience: scoped to single post pages. */
+body:not(.list):has(.post-single) {
+  background: #fffcf7;
+}
+
+[data-theme="dark"] body:not(.list):has(.post-single) {
+  background: var(--theme);
+}
+
 .post-single {
   --article-shell-width: 1080px;
   --article-header-width: 720px;
