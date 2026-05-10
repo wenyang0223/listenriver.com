@@ -7528,3 +7528,85 @@ html {
     --article-phone-paragraph-gap: 2.3em;
   }
 }
+
+/* Paper surface pass: low-risk light-theme overrides for auxiliary UI. */
+[data-theme="light"] .mobile-bottom-bar,
+[data-theme="light"] .mobile-reading-toolbar,
+[data-theme="light"] .article-scroll-top,
+[data-theme="light"] .personal-header__search,
+[data-theme="light"] .mobile-nav-drawer {
+  background: rgba(255, 254, 253, 0.94);
+  border-color: var(--paper-line);
+}
+
+[data-theme="light"] .mobile-nav-sub-link-parent,
+[data-theme="light"] .mobile-nav-search-entry,
+[data-theme="light"] .taxonomy-category-topics__item {
+  background: rgba(255, 252, 247, 0.78);
+  border-color: var(--paper-line);
+}
+
+[data-theme="light"] #searchbox input,
+[data-theme="light"] #searchResults li,
+[data-theme="light"] .searchbox-fallback,
+[data-theme="light"] .search-pagefind-shell {
+  background: var(--paper-surface);
+  border-color: var(--paper-line);
+}
+
+[data-theme="light"] .post-comments,
+[data-theme="light"] .post-interactions,
+[data-theme="light"] .post-relationship-section {
+  border-color: var(--paper-line);
+}
+
+[data-theme="light"] #waline {
+  --waline-bg-color-light: rgba(255, 252, 247, 0.72);
+  --waline-bg-color-hover: rgba(255, 252, 247, 0.9);
+  --waline-border-color: var(--paper-line);
+  --waline-disable-bg-color: rgba(255, 252, 247, 0.72);
+  --waline-info-bg-color: rgba(255, 252, 247, 0.72);
+}
+
+[data-theme="light"] #waline .wl-editor-container,
+[data-theme="light"] #waline .wl-header input,
+[data-theme="light"] #waline .wl-input,
+[data-theme="light"] #waline .wl-editor {
+  background: rgba(255, 254, 253, 0.9);
+  border-color: var(--paper-line);
+}
+
+[data-theme="light"] #waline .wl-header input:focus,
+[data-theme="light"] #waline .wl-input:focus,
+[data-theme="light"] #waline .wl-editor:focus {
+  background: var(--paper-surface);
+}
+
+[data-theme="light"] .post-tags a {
+  background: rgba(111, 202, 209, 0.2);
+  border-color: rgba(111, 202, 209, 0.48);
+  color: #1f6f77;
+  font-weight: 650;
+}
+
+[data-theme="light"] .post-tags a:hover,
+[data-theme="light"] .post-tags a:focus-visible {
+  background: rgba(111, 202, 209, 0.3);
+  border-color: rgba(84, 194, 201, 0.72);
+  color: #155e66;
+}
+
+[data-theme="light"] .post-sequence-link,
+[data-theme="light"] .post-relationship-entry,
+[data-theme="light"] .post-inline-link {
+  background: var(--paper-surface);
+  border-color: var(--paper-line);
+  box-shadow: 0 8px 22px var(--paper-shadow);
+}
+
+[data-theme="light"] .post-sequence-link:hover,
+[data-theme="light"] .post-relationship-entry:hover,
+[data-theme="light"] .post-inline-link:hover {
+  background: var(--paper-surface);
+  border-color: rgba(111, 202, 209, 0.48);
+}
