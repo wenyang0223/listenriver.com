@@ -22,7 +22,9 @@
         <article class="home-clubhouse-card{{ if ge $index 3 }} home-clubhouse-card--mobile-extra{{ end }}">
           <a class="home-clubhouse-card__media" href="{{ $page.RelPermalink }}" aria-hidden="true" tabindex="-1">
             {{- $isHidden := ($page.Param "cover.hiddenInList") | default ($page.Param "cover.hidden") | default false -}}
-            {{- partialCached "cover.html" (dict "cxt" $page "IsSingle" false "isHidden" $isHidden) $page.RelPermalink false $isHidden ($page.Params.cover.image | default "") -}}
+            {{- $clubhouseSizes := "(min-width: 768px) 360px, 42vw" -}}
+            {{- $clubhouseWidths := slice 160 240 320 360 480 -}}
+            {{- partialCached "cover.html" (dict "cxt" $page "IsSingle" false "isHidden" $isHidden "sizes" $clubhouseSizes "widths" $clubhouseWidths "maxWidth" 480) $page.RelPermalink false $isHidden ($page.Params.cover.image | default "") "lazy" "auto" $clubhouseSizes (delimit $clubhouseWidths "-") 480 -}}
           </a>
           <div class="home-clubhouse-card__body">
             <div class="home-clubhouse-card__meta">

@@ -13,7 +13,9 @@
     <article class="home-post-card home-post-card--featured home-post-card--featured-lead">
       <a class="home-post-card__media" href="{{ .RelPermalink }}" aria-hidden="true" tabindex="-1">
         {{- $isHidden := (.Param "cover.hiddenInList") | default (.Param "cover.hidden") | default false -}}
-        {{- partialCached "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) .RelPermalink false $isHidden (.Params.cover.image | default "") -}}
+        {{- $leadSizes := "(min-width: 1180px) 520px, (min-width: 768px) 55vw, 100vw" -}}
+        {{- $leadWidths := slice 360 480 720 960 -}}
+        {{- partialCached "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden "loading" "eager" "fetchpriority" "high" "sizes" $leadSizes "widths" $leadWidths "maxWidth" 960) .RelPermalink false $isHidden (.Params.cover.image | default "") "eager" "high" $leadSizes (delimit $leadWidths "-") 960 -}}
       </a>
       <div class="home-post-card__body">
         <div class="home-post-card__meta">
@@ -39,7 +41,9 @@
       <article class="home-post-card home-post-card--compact">
         <a class="home-post-card__media" href="{{ .RelPermalink }}" aria-hidden="true" tabindex="-1">
           {{- $isHidden := (.Param "cover.hiddenInList") | default (.Param "cover.hidden") | default false -}}
-          {{- partialCached "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) .RelPermalink false $isHidden (.Params.cover.image | default "") -}}
+          {{- $compactSizes := "(min-width: 768px) 360px, 42vw" -}}
+          {{- $compactWidths := slice 160 240 320 360 480 -}}
+          {{- partialCached "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden "sizes" $compactSizes "widths" $compactWidths "maxWidth" 480) .RelPermalink false $isHidden (.Params.cover.image | default "") "lazy" "auto" $compactSizes (delimit $compactWidths "-") 480 -}}
         </a>
         <div class="home-post-card__body">
           <div class="home-post-card__meta">
