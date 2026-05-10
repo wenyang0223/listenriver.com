@@ -50,7 +50,7 @@ params:
     Title: "聆聽的河流"
     Content: "閱讀・書寫・心理・社工"
   homeFeaturedLimit: 4
-  articleRelatedLimit: 4
+  articleRelatedLimit: 3
   articleInternalLinksLimit: 3
 
   author: "文揚 Wen-Yang"
