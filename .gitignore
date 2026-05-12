@@ -5,3 +5,11 @@
 /.tmp_hugo_check_paginated/
 /.tmp_hugo_check_sidebar_static/
 *.base
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/

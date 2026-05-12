@@ -4,7 +4,6 @@
   {{- $coverImage = site.Params.salonDefaultCover -}}
 {{- end -}}
 {{- if and $coverImage (not $.isHidden) -}}
-<figure class="entry-cover">
     {{- $loading := $.loading | default (cond $.IsSingle "eager" "lazy") -}}
     {{- $fetchpriority := $.fetchpriority | default (cond (or $.IsSingle (eq $loading "eager")) "high" "auto") -}}
     {{- $addLink := and site.Params.cover.linkFullImages $.IsSingle -}}
@@ -29,6 +28,12 @@
       {{- $imgdl = $cover.RelPermalink -}}
     {{- end -}}
 
+    {{- $coverClass := "entry-cover" -}}
+    {{- if and $.IsSingle $cover (gt $cover.Height $cover.Width) -}}
+      {{- $coverClass = printf "%s %s" $coverClass "entry-cover--portrait" -}}
+    {{- end -}}
+
+<figure class="{{ $coverClass }}">
     {{- if $addLink -}}
       <a href="{{ $imgdl }}" target="_blank" rel="noopener noreferrer">
     {{- end -}}

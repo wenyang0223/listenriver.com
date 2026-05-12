@@ -1,0 +1,28 @@
+{
+  "name": "listenriver.com",
+  "version": "1.0.0",
+  "description": "Source repository for `listenriver.com`.",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wenyang5566/listenriver.com.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/wenyang5566/listenriver.com/issues"
+  },
+  "homepage": "https://github.com/wenyang5566/listenriver.com#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.7.0"
+  }
+}
