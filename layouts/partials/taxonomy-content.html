@@ -1710,6 +1710,7 @@
 
 {{- else if and (eq $plural "tags") $hasPages -}}
   {{- $featured := first 3 $pages -}}
+  {{- $yearGroups := $pages.GroupByDate "2006" -}}
   <header class="page-header taxonomy-term-header">
     {{- partial "breadcrumbs.html" . -}}
     <span class="taxonomy-page-kicker">主題總覽</span>
@@ -1734,7 +1735,7 @@
     </div>
     <div class="taxonomy-featured-grid">
       {{- range $featured -}}
-        {{- partial "article-card.html" (dict "page" .) -}}
+        {{- partial "article-card.html" (dict "page" . "class" "post-entry home-featured-entry taxonomy-featured-entry") -}}
       {{- end -}}
     </div>
   </section>
@@ -1747,8 +1748,71 @@
         <h2 id="taxonomy-article-list-title" class="home-section-title">全部文章</h2>
       </div>
     </div>
-    {{- range $pages -}}
-      {{- partial "article-card.html" (dict "page" . "class" "post-entry category-entry") -}}
+    {{- range $group := $yearGroups -}}
+      <div class="taxonomy-story-year">{{ $group.Key }} <span class="taxonomy-category-topics__count">{{ len $group.Pages }} 篇</span></div>
+      <div class="taxonomy-story-list">
+        {{- range $page := $group.Pages -}}
+          {{- $coverImage := $page.Params.cover.image -}}
+          {{- $coverStem := replaceRE "\\.[^.]+$" "" (path.Base $coverImage) -}}
+          {{- $pageBundleCover := $page.Resources.GetMatch (printf "%s.*" $coverStem) -}}
+          {{- $globalResourcesCover := (resources.ByType "image").GetMatch (printf "*%s.*" $coverStem) -}}
+          {{- if and (not $pageBundleCover) $coverImage -}}
+            {{- $pageBundleCover = $page.Resources.GetMatch (printf "*%s*" $coverImage) -}}
+          {{- end -}}
+          {{- if and (not $globalResourcesCover) $coverImage -}}
+            {{- $globalResourcesCover = (resources.ByType "image").GetMatch (printf "*%s*" $coverImage) -}}
+          {{- end -}}
+          {{- $cover := or $pageBundleCover $globalResourcesCover -}}
+          {{- $excerpt := $page.Description | default ($page.Summary | plainify | htmlUnescape) -}}
+          {{- $tags := first 2 ($page.Params.tags | default (slice)) -}}
+          <article class="taxonomy-story-card">
+            <a class="taxonomy-story-card__media" href="{{ $page.RelPermalink }}" aria-label="閱讀 {{ $page.Title | plainify }}">
+              {{- if $cover -}}
+                {{- partialCached "optimized-image.html" (dict
+                  "resource" $cover
+                  "alt" ($page.Params.cover.alt | default $page.Title | plainify)
+                  "loading" "lazy"
+                  "sizes" "(min-width: 980px) 10.5rem, (min-width: 820px) 28vw, 100vw"
+                  "maxWidth" 640
+                  "widths" (slice 240 360 480 640)
+                  "fetchpriority" "auto"
+                  "class" "taxonomy-story-card__image"
+                ) $cover.RelPermalink ($page.Params.cover.alt | default $page.Title | plainify) "lazy" "(min-width: 980px) 10.5rem, (min-width: 820px) 28vw, 100vw" 640 "240-360-480-640" "auto" "taxonomy-story-card__image" -}}
+              {{- else if $coverImage -}}
+                <img
+                  class="taxonomy-story-card__image"
+                  src="{{ $coverImage | relURL }}"
+                  alt="{{ $page.Params.cover.alt | default $page.Title | plainify }}"
+                  loading="lazy"
+                  decoding="async">
+              {{- else -}}
+                <span class="taxonomy-card-placeholder">No Image</span>
+              {{- end -}}
+            </a>
+            <div class="taxonomy-story-card__body">
+              <div class="taxonomy-story-card__meta">
+                <span>{{ $page.Date.Format "01.02" }}</span>
+                {{- if ($page.Param "ShowReadingTime") -}}
+                  <span>{{ $page.ReadingTime }} 分鐘</span>
+                {{- end -}}
+              </div>
+              <h3 class="taxonomy-story-card__title"><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+              {{- with $excerpt }}
+                <div class="taxonomy-story-card__excerpt">{{ . | plainify | htmlUnescape | truncate 108 }}</div>
+              {{- end }}
+              {{- if gt (len $tags) 0 }}
+              <div class="taxonomy-story-card__tags" aria-label="{{ $page.Title }} 相關標籤">
+                {{- range $tags -}}
+                  {{- with site.GetPage (printf "/tags/%s" .) -}}
+                    <a class="taxonomy-story-card__tag" href="{{ .RelPermalink }}">#{{ .Title }}</a>
+                  {{- end -}}
+                {{- end -}}
+              </div>
+              {{- end }}
+            </div>
+          </article>
+        {{- end -}}
+      </div>
     {{- end -}}
   </section>
 
