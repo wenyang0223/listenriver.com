@@ -5955,8 +5955,8 @@ body:not(.list):has(.post-single) {
 .post-single .post-title {
   max-width: var(--article-header-width);
   margin: 0 0 1.1rem;
-  font-size: 2.5rem;
-  line-height: 1.26;
+  font-size: 3rem;
+  line-height: 1.18;
   letter-spacing: 0;
   text-wrap: balance;
 }
@@ -6057,15 +6057,15 @@ body:not(.list):has(.post-single) {
 }
 
 .post-single .post-content h2 {
-  font-size: 1.62rem;
+  font-size: 2rem;
 }
 
 .post-single .post-content h3 {
-  font-size: 1.34rem;
+  font-size: 1.75rem;
 }
 
 .post-single .post-content h4 {
-  font-size: 1.12rem;
+  font-size: 1.38rem;
 }
 
 .post-single .post-content blockquote {
@@ -6140,7 +6140,7 @@ body:not(.list):has(.post-single) {
   }
 
   .post-single .post-title {
-    font-size: 2.62rem;
+    font-size: 3.16rem;
   }
 }
 
@@ -7304,6 +7304,7 @@ html {
 @media (max-width: 768px) {
   :root {
     --article-phone-gutter: clamp(37px, 9vw, 52px);
+    --article-content-image-gutter: 14px;
     --article-phone-font-size: 19.25px;
     --article-phone-line-height: 2.12;
     --article-phone-paragraph-gap: 2.45em;
@@ -7349,12 +7350,14 @@ html {
   .post-single .post-title {
     max-width: 100%;
     margin-bottom: 1.25rem;
-    font-size: 1.56rem;
-    line-height: 1.38;
+    font-size: clamp(2.08rem, 9.4vw, 2.42rem);
+    font-weight: 800;
+    line-height: 1.24;
     letter-spacing: 0;
-    text-wrap: balance;
-    overflow-wrap: break-word;
-    word-break: normal;
+    text-wrap: pretty;
+    overflow-wrap: anywhere;
+    word-break: auto-phrase;
+    line-break: strict;
   }
 
   .post-single .post-meta-top {
@@ -7477,18 +7480,18 @@ html {
   }
 
   .post-single .post-content h2 {
-    font-size: 1.34rem;
-    line-height: 1.42;
+    font-size: 1.72rem;
+    line-height: 1.38;
   }
 
   .post-single .post-content h3 {
-    font-size: 1.2rem;
-    line-height: 1.45;
+    font-size: 1.5rem;
+    line-height: 1.42;
   }
 
   .post-single .post-content h4 {
-    font-size: 1.06rem;
-    line-height: 1.5;
+    font-size: 1.3rem;
+    line-height: 1.46;
   }
 
   .post-single .post-content > blockquote {
@@ -7522,12 +7525,11 @@ html {
     background: rgba(17, 24, 39, 0.14);
   }
 
-  .post-single .post-content .post-figure,
-  .post-single > .entry-cover {
-    width: calc(100% - (var(--mobile-media-gutter) * 2));
-    max-width: calc(100% - (var(--mobile-media-gutter) * 2));
-    margin-left: var(--mobile-media-gutter);
-    margin-right: var(--mobile-media-gutter);
+  .post-single .post-content .post-figure {
+    width: calc(100% - (var(--article-content-image-gutter) * 2));
+    max-width: calc(100% - (var(--article-content-image-gutter) * 2));
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .post-single .post-content .post-figure {
@@ -7557,6 +7559,7 @@ html {
 @media (max-width: 390px) {
   :root {
     --article-phone-gutter: 34px;
+    --article-content-image-gutter: 12px;
     --article-phone-font-size: 18.75px;
     --article-phone-line-height: 2.08;
     --article-phone-paragraph-gap: 2.3em;
