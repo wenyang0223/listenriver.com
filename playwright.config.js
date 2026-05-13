@@ -66,6 +66,6 @@ export default defineConfig({
     command: 'hugo server --bind 127.0.0.1 --port 1313 --disableFastRender',
     url: 'http://127.0.0.1:1313',
     reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000,
+    timeout: process.env.CI ? 420 * 1000 : 120 * 1000,
   },
 });
