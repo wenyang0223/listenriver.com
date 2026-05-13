@@ -58,8 +58,8 @@
 
 {{- range $variantWidths -}}
   {{- $width := . -}}
-  {{- $fallbackVariant := $resource.Resize (printf "%dx q80" $width) -}}
-  {{- $webpVariant := $resource.Resize (printf "%dx webp q75" $width) -}}
+  {{- $fallbackVariant := $resource.Resize (printf "%dx q72" $width) -}}
+  {{- $webpVariant := $resource.Resize (printf "%dx webp q68" $width) -}}
   {{- if eq $width $targetWidth -}}
     {{- $fallbackPrimary = $fallbackVariant -}}
   {{- end -}}

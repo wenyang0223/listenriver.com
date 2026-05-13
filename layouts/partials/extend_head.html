@@ -1,7 +1,9 @@
 <link rel="icon" type="image/png" href="{{ "/images/favicon.png" | relURL }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap">
+{{- $notoSansTcHref := "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=optional" -}}
+<link rel="preload" as="style" href="{{ $notoSansTcHref }}" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ $notoSansTcHref }}"></noscript>
 {{- $salonCssVersion := readFile "static/css/salon.css" | sha256 -}}
 <link rel="stylesheet" href="{{ printf "/css/salon.css?v=%s" $salonCssVersion | relURL }}">
 <script src="{{ "/js/salon.js" | relURL }}" defer></script>
