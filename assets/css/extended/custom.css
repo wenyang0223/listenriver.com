@@ -1,8 +1,13 @@
 ﻿/* ===== ???”嚗椰????寞摮◢?潘?===== */
 body.list {
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
   --entry: #fffefd;
   --code-bg: #fffcf7;
   background: #fffcf7;
+}
+
+body:not(.list) {
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
 }
 
 body.list .main {
@@ -6114,8 +6119,8 @@ body:not(.list):has(.post-single) {
   --article-figure-width: 760px;
   --article-cover-width: 820px;
   --article-portrait-cover-width: 620px;
-  --article-title-font: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
-  --article-reading-font: "Roboto Slab", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --article-title-font: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  --article-reading-font: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
   max-width: var(--article-shell-width);
   margin-left: auto;
   margin-right: auto;
