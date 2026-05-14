@@ -5,6 +5,7 @@ description: 作者說：「個體化是持續的創作，永遠不會有終點�
 draft: false
 aliases:
   - /blog/閱讀心得/英雄之旅/
+  - /blog/閱讀心得/閱讀心得英雄之旅個體化找回自己的碎片/
 type: post
 cover:
   image: 英雄之旅.png
