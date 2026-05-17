@@ -1,5 +1,7 @@
 ---
 title: 會所工作日誌04_就業前準備
+displayTitle: 就業前準備
+seriesLabel: 會所工作日誌 04
 date: 2025-09-16
 description:
 draft: false

@@ -1,5 +1,7 @@
 ---
-title: 為自己做決定即是成為自己
+title: 會所工作手冊05_將言語視為符號
+displayTitle: 將言語視為符號
+seriesLabel: 會所工作手冊 05
 date:
 description: 「社
 draft: true

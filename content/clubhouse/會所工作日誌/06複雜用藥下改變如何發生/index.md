@@ -1,5 +1,7 @@
 ---
 title: 會所工作日誌06_複雜用藥下，改變如何發生??
+displayTitle: 複雜用藥下，改變如何發生??
+seriesLabel: 會所工作日誌 06
 date: 2025-10-01
 description:
 draft: false

@@ -1,5 +1,7 @@
 ---
 title: 會所工作日誌05_就業訓練反思
+displayTitle: 就業訓練反思
+seriesLabel: 會所工作日誌 05
 date: 2025-09-26
 description:
 draft: false

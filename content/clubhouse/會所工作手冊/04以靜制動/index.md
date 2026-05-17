@@ -1,5 +1,7 @@
 ---
-title: 以靜制動
+title: 會所工作手冊04_以靜制動
+displayTitle: 以靜制動
+seriesLabel: 會所工作手冊 04
 date:
 description: 在
 draft: true
