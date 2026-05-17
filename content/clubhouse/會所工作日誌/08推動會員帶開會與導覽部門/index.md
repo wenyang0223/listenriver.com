@@ -1,5 +1,7 @@
 ---
 title: 會所工作日誌08_推動會員帶開會與導覽部門
+displayTitle: 推動會員帶開會與導覽部門
+seriesLabel: 會所工作日誌 08
 date: 2025-11-11
 description:
 draft: false

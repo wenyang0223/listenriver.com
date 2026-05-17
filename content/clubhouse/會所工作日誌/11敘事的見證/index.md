@@ -1,5 +1,7 @@
 ---
 title: 會所工作日誌11_敘事的見證
+displayTitle: 敘事的見證
+seriesLabel: 會所工作日誌 11
 date: 2026-03-04
 description:
 draft: false

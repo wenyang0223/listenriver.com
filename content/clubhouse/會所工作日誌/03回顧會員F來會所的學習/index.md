@@ -1,5 +1,7 @@
 ---
 title: 會所工作日誌03_回顧會員F來會所的學習
+displayTitle: 回顧會員F來會所的學習
+seriesLabel: 會所工作日誌 03
 date: 2025-09-11
 description:
 draft: false

@@ -1,5 +1,7 @@
 ---
 title: 素描13：實在感
+displayTitle: 實在感
+seriesLabel: 素描 13
 date: 2022-12-07 10:07:47+08:00
 description: 建立物體的實在感，對我來說更像是存在感，排線一層一層加深的過程很像在創造一個東西，感受到存在感、重量感的出現。
 draft: false
