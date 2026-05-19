@@ -64,12 +64,14 @@
       {{ $content }}
     {{- end }}
   </div>
-  {{- partial "post_internal_links.html" . -}}
-  {{- partial "post_related.html" . -}}
-  {{- partial "post_interactions_v2.html" . -}}
-  {{- if (.Param "comments") }}
-    {{- partial "comments.html" . }}
-  {{- end }}
+  <div data-pagefind-ignore>
+    {{- partial "post_internal_links.html" . -}}
+    {{- partial "post_related.html" . -}}
+    {{- partial "post_interactions_v2.html" . -}}
+    {{- if (.Param "comments") }}
+      {{- partial "comments.html" . }}
+    {{- end }}
+  </div>
   {{- end }}
 
   <button class="article-scroll-top" type="button" data-scroll-top aria-label="回到頁面頂端" aria-hidden="true">

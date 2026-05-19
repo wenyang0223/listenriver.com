@@ -25,7 +25,8 @@
     <div class="mobile-reading-progress" aria-hidden="true">
         <span class="mobile-reading-progress-bar" data-reading-progress></span>
     </div>
-    <main class="main"{{ if ne .Layout `search` }} data-pagefind-body{{ else }} data-pagefind-ignore{{ end }}>
+    {{- $indexWithPagefind := and (eq .Kind `page`) (not (in (slice `search` `archives`) .Layout)) -}}
+    <main class="main"{{ if $indexWithPagefind }} data-pagefind-body{{ else }} data-pagefind-ignore{{ end }}>
         {{- block "main" . }}{{ end }}
     </main>
     {{ partialCached "footer.html" . .Layout .Kind (.Param "hideFooter") (.Param "ShowCodeCopyButtons") -}}
