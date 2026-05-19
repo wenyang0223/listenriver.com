@@ -51,15 +51,17 @@
 
 - Search page route:
   `content/search.md`
-  Uses theme search layout behavior via `layout: search`.
+  Uses the local Pagefind search layout via `layout: search`.
 
 ## Theme Files Still Used As Fallback
 
 - Base HTML shell:
-  `themes/PaperMod/layouts/_default/baseof.html`
+  `layouts/_default/baseof.html`
+  This locally adds the site header, mobile reading progress, and Pagefind body indexing scope.
 
 - Search page template:
-  `themes/PaperMod/layouts/_default/search.html`
+  `layouts/_default/search.html`
+  This locally renders the Pagefind UI and bridges `/search/?q=...` into the search input.
 
 - Footer partial:
   `themes/PaperMod/layouts/partials/footer.html`

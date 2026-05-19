@@ -240,6 +240,19 @@
     });
   }
 
+  if (inlineSearch && inlineSearchInput) {
+    inlineSearch.addEventListener('submit', (event) => {
+      const query = inlineSearchInput.value.trim();
+      if (!query) {
+        event.preventDefault();
+        window.location.href = inlineSearch.action;
+        return;
+      }
+
+      inlineSearchInput.value = query;
+    });
+  }
+
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       setHeaderSearchOpen(false);

@@ -20,11 +20,20 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
         with:
-          hugo-version: "0.155.2"
+          hugo-version: "0.160.1"
           extended: true
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install site dependencies
+        run: npm ci
+
       - name: Build site
-        run: hugo --gc --minify
+        run: npm run build
 
       - name: Validate sitemap URLs
         run: |

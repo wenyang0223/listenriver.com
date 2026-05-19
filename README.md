@@ -6,9 +6,10 @@ This project uses Hugo for the site, GitHub Actions for CI validation, and Cloud
 
 ## Stack
 
-- Site generator: Hugo `0.155.2` extended
+- Site generator: Hugo `0.160.1` extended
 - Theme: PaperMod
 - Hosting: Cloudflare Pages
+- Site search: Pagefind
 - Article interactions: Cloudflare Worker + D1
 
 ## Repository Model
@@ -35,8 +36,11 @@ This repository follows a source-only deployment model.
 Build the site:
 
 ```powershell
-hugo --gc --minify
+npm run build
 ```
+
+The build command runs Hugo first, then generates the Pagefind index in
+`public/pagefind/`.
 
 Build the site with a workspace-local absolute cache directory:
 
@@ -86,7 +90,7 @@ GitHub Actions workflow:
 
 What it checks:
 
-- Hugo site build
+- Hugo site build and Pagefind indexing
 - Cloudflare Worker type/config validation
 
 ## Deployment
@@ -95,11 +99,11 @@ Cloudflare Pages should be configured to:
 
 - Track branch: `main`
 - Use framework preset: `Hugo`
-- Run build command: `hugo --gc --minify`
+- Run build command: `npm run build`
 - Publish directory: `public`
-- Use environment variable: `HUGO_VERSION=0.155.2`
+- Use environment variable: `HUGO_VERSION=0.160.1`
 
-Cloudflare Pages generates `sitemap.xml`, RSS, JSON, and the rest of the deployable output inside `public/` during the build, so those files should not be committed to the repository.
+Cloudflare Pages generates `sitemap.xml`, RSS, JSON, `pagefind/`, and the rest of the deployable output inside `public/` during the build, so those files should not be committed to the repository.
 
 Detailed deployment guidance:
 
