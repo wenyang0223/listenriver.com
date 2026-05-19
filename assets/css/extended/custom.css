@@ -4924,10 +4924,114 @@ body:not(.list) .main .salon-hero {
 
 .search-pagefind-shell {
   margin-top: 1rem;
+  --pagefind-ui-scale: 1;
+  --pagefind-ui-primary: var(--primary);
+  --pagefind-ui-text: var(--content);
+  --pagefind-ui-background: var(--entry);
+  --pagefind-ui-border: var(--border);
+  --pagefind-ui-tag: var(--tertiary);
+  --pagefind-ui-border-width: 1px;
+  --pagefind-ui-border-radius: 8px;
+  --pagefind-ui-image-border-radius: 6px;
+  --pagefind-ui-font: inherit;
 }
 
-.searchbox-fallback {
-  display: none;
+.search-pagefind-shell .pagefind-ui {
+  color: var(--content);
+  font-family: inherit;
+}
+
+.search-pagefind-shell .pagefind-ui__form {
+  position: relative;
+}
+
+.search-pagefind-shell .pagefind-ui__search-input {
+  width: 100%;
+  min-height: 3.1rem;
+  padding: 0.75rem 3.2rem 0.75rem 1rem;
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--primary);
+  font: inherit;
+  line-height: 1.5;
+  outline: none;
+}
+
+.search-pagefind-shell .pagefind-ui__search-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(125, 94, 64, 0.18);
+}
+
+.search-pagefind-shell .pagefind-ui__search-input::placeholder {
+  color: var(--secondary);
+}
+
+.search-pagefind-shell .pagefind-ui__search-clear {
+  min-width: 2.3rem;
+  min-height: 2.3rem;
+  border-radius: 999px;
+}
+
+.search-pagefind-shell .pagefind-ui__message {
+  margin: 1rem 0;
+  color: var(--secondary);
+  font-size: 0.95rem;
+}
+
+.search-pagefind-shell .pagefind-ui__results {
+  margin-top: 1rem;
+}
+
+.search-pagefind-shell .pagefind-ui__result {
+  padding: 1.05rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.search-pagefind-shell .pagefind-ui__result:first-child {
+  border-top: 0;
+}
+
+.search-pagefind-shell .pagefind-ui__result-link {
+  color: var(--primary);
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.45;
+  text-decoration: none;
+}
+
+.search-pagefind-shell .pagefind-ui__result-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.search-pagefind-shell .pagefind-ui__result-excerpt {
+  margin-top: 0.4rem;
+  color: var(--content);
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.search-pagefind-shell mark {
+  padding: 0.04em 0.18em;
+  background: rgba(197, 139, 74, 0.2);
+  border-radius: 4px;
+  color: var(--primary);
+}
+
+.search-pagefind-shell .pagefind-ui__button {
+  min-height: 2.65rem;
+  padding: 0.55rem 1rem;
+  background: var(--entry);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--primary);
+  font: inherit;
+  font-weight: 700;
+}
+
+.search-pagefind-shell .pagefind-ui__button:hover {
+  border-color: var(--primary);
 }
 
 @media (max-width: 768px) {
@@ -4938,6 +5042,29 @@ body:not(.list) .main .salon-hero {
 
   .home-category-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .search-pagefind-shell {
+    margin-top: 0.8rem;
+  }
+
+  .search-pagefind-shell .pagefind-ui__search-input {
+    min-height: 3rem;
+    font-size: 16px;
+  }
+
+  .search-pagefind-shell .pagefind-ui__result {
+    padding: 0.95rem 0;
+  }
+
+  .search-pagefind-shell .pagefind-ui__result-link {
+    font-size: 1rem;
+  }
+
+  .search-pagefind-shell .pagefind-ui__result-excerpt {
+    font-size: 0.92rem;
   }
 }
 
@@ -7781,10 +7908,8 @@ html {
   border-color: var(--paper-line);
 }
 
-[data-theme="light"] #searchbox input,
-[data-theme="light"] #searchResults li,
-[data-theme="light"] .searchbox-fallback,
-[data-theme="light"] .search-pagefind-shell {
+[data-theme="light"] .search-pagefind-shell .pagefind-ui__search-input,
+[data-theme="light"] .search-pagefind-shell .pagefind-ui__button {
   background: var(--paper-surface);
   border-color: var(--paper-line);
 }

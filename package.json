@@ -6,6 +6,7 @@
     "doc": "docs"
   },
   "scripts": {
+    "build": "hugo --minify && pagefind --site public",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
   },
@@ -23,6 +24,7 @@
   "homepage": "https://github.com/wenyang5566/listenriver.com#readme",
   "devDependencies": {
     "@playwright/test": "^1.60.0",
-    "@types/node": "^25.7.0"
+    "@types/node": "^25.7.0",
+    "pagefind": "^1.5.2"
   }
 }

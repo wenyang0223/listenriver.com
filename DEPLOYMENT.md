@@ -16,9 +16,9 @@ Configure the Pages project with:
 - Production branch: `main`
 - Framework preset: `Hugo`
 - Root directory: `/`
-- Build command: `hugo --gc --minify`
+- Build command: `npm run build`
 - Build output directory: `public`
-- Environment variable: `HUGO_VERSION=0.155.2`
+- Environment variable: `HUGO_VERSION=0.160.1`
 
 Repository expectations:
 
@@ -26,7 +26,7 @@ Repository expectations:
 - Do not commit `public/`
 - Do not commit `resources/_gen/`
 - Do not commit local cache directories such as `.hugo_cache/`
-- Let Pages generate `public/sitemap.xml` and the rest of the site output during deployment
+- Let Pages generate `public/sitemap.xml`, `public/pagefind/`, and the rest of the site output during deployment
 
 Recommended checks:
 
@@ -40,6 +40,14 @@ For local Windows builds, prefer the helper script below when Hugo cannot write 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\hugo-build-local.ps1
 ```
+
+For the production-equivalent site build, use:
+
+```powershell
+npm run build
+```
+
+This runs Hugo and then generates the Pagefind search index in `public/pagefind/`.
 
 ## Cloudflare Worker
 
@@ -108,7 +116,7 @@ That script keeps the originals outside deployment and reduces oversized page bu
 - Run `powershell -ExecutionPolicy Bypass -File .\scripts\cleanup-generated.ps1` if generated output or caches have piled up
 - Confirm `git status` is clean except for intentional files
 - Run `powershell -ExecutionPolicy Bypass -File .\scripts\audit-aliases.ps1`
-- Run `hugo --destination public-build-check`
+- Run `npm run build`
 - If Worker code changed, run `npm run check` in `workers/post-interactions`
 - Push source changes to `main`
 - Confirm GitHub Actions passes

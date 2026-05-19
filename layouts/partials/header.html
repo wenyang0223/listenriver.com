@@ -13,7 +13,7 @@
         <span class="header-brand-text__subtitle">{{ $brandSubtitle }}</span>
       </a>
 
-      <form class="header-inline-search personal-header__search" action="{{ $searchUrl }}" role="search" aria-label="站內搜尋" hidden>
+      <form class="header-inline-search personal-header__search" action="{{ $searchUrl }}" method="get" role="search" aria-label="站內搜尋" hidden>
         <label class="sr-only" for="header-search-input">搜尋站內文章</label>
         <input id="header-search-input" name="q" type="search" placeholder="搜尋文章、主題或分類" autocomplete="off">
         <button class="header-search-submit" type="submit" aria-label="送出搜尋">
