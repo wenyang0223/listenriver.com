@@ -6,8 +6,9 @@
     "doc": "docs"
   },
   "scripts": {
-    "build": "hugo --minify && npm run clean:pagefind && pagefind --site public",
+    "build": "hugo --minify && npm run clean:pagefind && pagefind --site public && npm run check:pagefind-output",
     "clean:pagefind": "node scripts/clean-pagefind.mjs",
+    "check:pagefind-output": "node scripts/check-pagefind-output.mjs",
     "check:search-ux": "node scripts/check-search-ux.mjs",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"

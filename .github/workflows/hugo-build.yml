@@ -35,6 +35,9 @@ jobs:
       - name: Build site
         run: npm run build
 
+      - name: Validate Pagefind output
+        run: npm run check:pagefind-output
+
       - name: Validate sitemap URLs
         run: |
           python3 - <<'PY'
