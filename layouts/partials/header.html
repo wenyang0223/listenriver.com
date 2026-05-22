@@ -102,7 +102,7 @@
         </div>
       </div>
       {{- else -}}
-      <a href="{{ .url }}" class="nav-chip personal-header__nav-link{{ if $isCurrent }} is-active{{ end }}"{{ if $isCurrent }} aria-current="page"{{ end }}>{{ .label }}</a>
+      <a href="{{ .url }}" class="nav-chip personal-header__nav-link personal-header__nav-link--{{ .key }}{{ if $isCurrent }} is-active{{ end }}"{{ if $isCurrent }} aria-current="page"{{ end }}>{{ .label }}</a>
       {{- end -}}
       {{- end -}}
     </nav>
