@@ -5085,16 +5085,22 @@ body:not(.list) .main .salon-hero {
 }
 
 .home-discovery {
-  --home-discovery-breakout: clamp(2rem, 6vw, 6rem);
   display: grid;
   gap: 2.25rem;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1100px) {
   .home-discovery {
-    width: calc(100% + var(--home-discovery-breakout));
-    margin-inline: calc(var(--home-discovery-breakout) / -2);
-    padding-inline: clamp(1rem, 1.8vw, 1.5rem);
+    width: min(100%, 68rem);
+    margin-inline: auto;
+    padding-block: clamp(1.25rem, 2vw, 1.8rem);
+    padding-inline: clamp(1.25rem, 2.5vw, 2.25rem);
+    border-radius: 32px;
+    background: rgba(255, 254, 251, 0.72);
+  }
+
+  [data-theme="dark"] .home-discovery {
+    background: rgba(255, 255, 255, 0.035);
   }
 }
 
@@ -5371,14 +5377,14 @@ body:not(.list) .main .salon-hero {
 
 .home-clubhouse-arrow--prev {
   position: absolute;
-  left: -3.1rem;
+  left: -1.55rem;
   top: 50%;
   transform: translateY(-50%);
 }
 
 .home-clubhouse-arrow--next {
   position: absolute;
-  right: -3.1rem;
+  right: -1.55rem;
   top: 50%;
   opacity: 1;
   transform: translateY(-50%) scale(1);
@@ -5870,6 +5876,24 @@ body:not(.list) .main .salon-hero {
 @media (max-width: 1024px) {
   .home-topics-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 960px) {
+  .home-featured-grid,
+  .home-author-card {
+    grid-template-columns: 1fr;
+  }
+
+  .home-author-card {
+    gap: 1rem;
+  }
+
+  .home-author-card__aside {
+    min-height: 0;
+    padding: 1rem 0 0;
+    border-top: 1px solid rgba(17, 24, 39, 0.08);
+    border-left: 0;
   }
 }
 
@@ -6927,6 +6951,23 @@ body:not(.list):has(.post-single) {
   .personal-header__nav {
     justify-content: flex-start;
     gap: 0;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 860px) {
+  .personal-header__nav-shell {
+    display: none;
+  }
+
+  .personal-header .header-mobile-menu-toggle {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 860px) {
+  .personal-header .mobile-nav-drawer,
+  .personal-header .mobile-nav-backdrop {
+    display: block;
   }
 }
 
