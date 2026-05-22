@@ -35,8 +35,11 @@ jobs:
       - name: Build site
         run: npm run build
 
-      - name: Validate Pagefind output
-        run: npm run check:pagefind-output
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Validate search UX
+        run: npm run check:search-ux
 
       - name: Validate sitemap URLs
         run: |
