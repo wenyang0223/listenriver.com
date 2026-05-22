@@ -4382,7 +4382,7 @@ body.mobile-nav-locked {
   margin-right: calc(50% - 50vw + 3rem);
   margin-bottom: 1.45rem;
   width: calc(100vw - 6rem);
-  min-height: 260px;
+  min-height: 248px;
   border-radius: 24px;
   border-left: 1px solid rgba(17, 24, 39, 0.08);
   border-right: 1px solid rgba(17, 24, 39, 0.08);
@@ -4401,9 +4401,9 @@ body:not(.list) .main .salon-hero {
 
 .salon-hero-inner {
   width: min(100%, 1400px);
-  min-height: 260px;
+  min-height: 248px;
   margin: 0 auto;
-  padding: 3rem 3rem 2.45rem;
+  padding: 2.75rem 3rem 2.2rem;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
@@ -5085,8 +5085,17 @@ body:not(.list) .main .salon-hero {
 }
 
 .home-discovery {
+  --home-discovery-breakout: clamp(2rem, 6vw, 6rem);
   display: grid;
   gap: 2.25rem;
+}
+
+@media (min-width: 900px) {
+  .home-discovery {
+    width: calc(100% + var(--home-discovery-breakout));
+    margin-inline: calc(var(--home-discovery-breakout) / -2);
+    padding-inline: clamp(1rem, 1.8vw, 1.5rem);
+  }
 }
 
 .home-discovery-section {

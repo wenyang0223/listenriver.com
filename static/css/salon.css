@@ -5,7 +5,7 @@
   width: calc(100vw - 6rem);
   margin-left: calc(50% - 50vw + 3rem);
   margin-right: calc(50% - 50vw + 3rem);
-  --salon-hero-height: 260px;
+  --salon-hero-height: 248px;
   --salon-hero-shift-y: 0;
   min-height: var(--salon-hero-height);
   border-radius: 24px;
@@ -63,7 +63,7 @@
   min-height: var(--salon-hero-height);
   box-sizing: border-box;
   margin: 0 auto;
-  padding: 48px 40px 42px;
+  padding: 44px 40px 38px;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
