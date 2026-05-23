@@ -354,6 +354,28 @@
       transform: translateX(3px);
       color: var(--taxonomy-landing-text-soft);
     }
+    @media (min-width: 1025px) {
+      .taxonomy-landing-card__media {
+        aspect-ratio: 16 / 7.2;
+      }
+      .taxonomy-landing-card__body {
+        gap: 0.38rem;
+        padding: 0.78rem 0.88rem 0.82rem;
+      }
+      .taxonomy-landing-card__description {
+        -webkit-line-clamp: 2;
+      }
+      .taxonomy-landing-card__tag {
+        padding: 0.24rem 0.52rem;
+      }
+      .taxonomy-landing-card__tag:nth-child(n+3) {
+        display: none;
+      }
+      .taxonomy-landing-card__footer {
+        margin-top: 0.34rem;
+        padding-top: 0.52rem;
+      }
+    }
     .taxonomy-landing-card--reading .taxonomy-landing-card__label { color: var(--taxonomy-landing-reading); }
     .taxonomy-landing-card--practice .taxonomy-landing-card__label { color: var(--taxonomy-landing-practice); }
     .taxonomy-landing-card--pain .taxonomy-landing-card__label { color: var(--taxonomy-landing-pain); }
