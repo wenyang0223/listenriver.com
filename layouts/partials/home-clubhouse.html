@@ -20,20 +20,19 @@
         {{- range $index, $page := $pages -}}
           {{- $label := index ($page.Params.categories | default (slice)) 0 | default (index ($page.Params.tags | default (slice)) 0) | default "會所" -}}
         <article class="home-clubhouse-card{{ if ge $index 3 }} home-clubhouse-card--mobile-extra{{ end }}">
-          <a class="home-clubhouse-card__media" href="{{ $page.RelPermalink }}" aria-hidden="true" tabindex="-1">
+          <a class="home-clubhouse-card__link" href="{{ $page.RelPermalink }}" aria-label="閱讀 {{ $page.Title | plainify }}"></a>
+          <div class="home-clubhouse-card__media" aria-hidden="true">
             {{- $isHidden := ($page.Param "cover.hiddenInList") | default ($page.Param "cover.hidden") | default false -}}
             {{- $clubhouseSizes := "(min-width: 768px) 360px, 42vw" -}}
             {{- $clubhouseWidths := slice 160 240 320 360 480 -}}
             {{- partialCached "cover.html" (dict "cxt" $page "IsSingle" false "isHidden" $isHidden "sizes" $clubhouseSizes "widths" $clubhouseWidths "maxWidth" 480) $page.RelPermalink false $isHidden ($page.Params.cover.image | default "") "lazy" "auto" $clubhouseSizes (delimit $clubhouseWidths "-") 480 -}}
-          </a>
+          </div>
           <div class="home-clubhouse-card__body">
             <div class="home-clubhouse-card__meta">
               <span class="home-clubhouse-card__tag">{{ $label }}</span>
               <time datetime="{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ $page.Date.Format "2006.01.02" }}</time>
             </div>
-            <h3 class="home-clubhouse-card__title">
-              <a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a>
-            </h3>
+            <h3 class="home-clubhouse-card__title">{{ $page.Title }}</h3>
             <p class="home-clubhouse-card__excerpt">{{ $page.Summary | plainify | htmlUnescape | truncate 92 }}</p>
           </div>
         </article>
