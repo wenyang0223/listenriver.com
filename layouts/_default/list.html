@@ -52,6 +52,10 @@
 {{- end }}
 
 {{- $term := .Data.Term }}
+{{- $isBlogArchive := and (eq .Kind "section") (eq .Section "blog") }}
+{{- if $isBlogArchive }}
+<div class="blog-archive-list">
+{{- end }}
 {{- range $index, $page := $paginator.Pages }}
 
 {{- $class := "post-entry" }}
@@ -64,9 +68,12 @@
 {{- else if eq $.Data.Plural "categories" }}
 {{- $class = "post-entry category-entry" }}
 {{- else if and (eq $.Kind "section") (eq $.Section "blog") }}
-{{- $class = "post-entry blog-archive-entry" }}
+{{- $class = "home-latest-item blog-archive-entry" }}
 {{- end }}
 
+{{- if $isBlogArchive }}
+{{- partial "article-card.html" (dict "page" . "class" $class "variant" "latest-list") }}
+{{- else }}
 <article class="{{ $class }}">
   {{- $isHidden := (.Param "cover.hiddenInList") | default (.Param "cover.hidden") | default false }}
   {{- partialCached "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) .RelPermalink false $isHidden (.Params.cover.image | default "") }}
@@ -105,8 +112,34 @@
   <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .RelPermalink }}"></a>
 </article>
 {{- end }}
+{{- end }}
+{{- if $isBlogArchive }}
+</div>
+{{- end }}
 
 {{- if gt $paginator.TotalPages 1 }}
+{{- if $isBlogArchive }}
+<footer class="page-footer">
+  <nav class="archive-pagination" aria-label="Blog 文章分頁">
+    <div class="archive-pagination__meta">第 {{ $paginator.PageNumber }} / {{ $paginator.TotalPages }} 頁，共 {{ len $pages }} 篇文章</div>
+    <div class="archive-pagination__links">
+      {{- with $paginator.Prev }}
+        <a class="archive-pagination__link" href="{{ .URL | relURL }}">上一頁</a>
+      {{- end }}
+      {{- range $paginator.Pagers }}
+        {{- if eq .PageNumber $paginator.PageNumber }}
+          <span class="archive-pagination__link is-current">{{ .PageNumber }}</span>
+        {{- else }}
+          <a class="archive-pagination__link" href="{{ .URL | relURL }}">{{ .PageNumber }}</a>
+        {{- end }}
+      {{- end }}
+      {{- with $paginator.Next }}
+        <a class="archive-pagination__link" href="{{ .URL | relURL }}">下一頁</a>
+      {{- end }}
+    </div>
+  </nav>
+</footer>
+{{- else }}
 <footer class="page-footer">
   <nav class="pagination">
     {{- if $paginator.HasPrev }}
@@ -127,6 +160,7 @@
     {{- end }}
   </nav>
 </footer>
+{{- end }}
 {{- end }}
 
 {{- end }}{{/* end profileMode */}}
