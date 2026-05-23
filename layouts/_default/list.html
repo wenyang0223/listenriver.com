@@ -63,6 +63,8 @@
 {{- $class = "post-entry tag-entry" }}
 {{- else if eq $.Data.Plural "categories" }}
 {{- $class = "post-entry category-entry" }}
+{{- else if and (eq $.Kind "section") (eq $.Section "blog") }}
+{{- $class = "post-entry blog-archive-entry" }}
 {{- end }}
 
 <article class="{{ $class }}">

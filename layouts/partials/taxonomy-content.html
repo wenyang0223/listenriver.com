@@ -1719,20 +1719,24 @@
   </section>
   {{- end }}
 
-  <section class="taxonomy-landing-section" aria-labelledby="all-tags-title">
+  <section class="taxonomy-landing-section taxonomy-tags-index" aria-labelledby="all-tags-title">
     <div class="home-section-heading taxonomy-section-heading">
       <div>
-        <span class="home-section-kicker">A-Z</span>
+        <span class="home-section-kicker">By Count</span>
         <h2 id="all-tags-title" class="home-section-title">全部主題</h2>
       </div>
+      <p class="taxonomy-section-note">依文章數量排序，快速看見站內最常延伸的閱讀線索。</p>
     </div>
-    <ul class="terms-tags">
-      {{- range .Data.Terms.Alphabetical }}
-      <li>
-        <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }} <sup><strong><sup>{{ .Count }}</sup></strong></sup></a>
-      </li>
-      {{- end }}
-    </ul>
+    <div class="taxonomy-landing-tag-shell">
+      <div class="taxonomy-landing-tag-grid">
+        {{- range site.Taxonomies.tags.ByCount }}
+        <a class="taxonomy-landing-tag-link" href="{{ .Page.RelPermalink }}">
+          <span class="taxonomy-landing-tag-link__name">#{{ .Page.Title }}</span>
+          <span class="taxonomy-landing-tag-link__count">{{ .Count }}</span>
+        </a>
+        {{- end }}
+      </div>
+    </div>
   </section>
 
 {{- else if and (eq $plural "tags") $hasPages -}}
