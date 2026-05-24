@@ -1,5 +1,6 @@
 {{- $landing := index site.Data "taxonomy-landing" | default site.Data.taxonomyLanding | default dict -}}
 {{- $cardConfigs := index $landing "categoryCards" | default (slice) -}}
+{{- $fallbackImage := site.Params.salonDefaultCover | relURL -}}
 {{- $items := slice -}}
 
 {{- range $cardConfigs -}}
@@ -7,24 +8,63 @@
   {{- $sourceKind := index $source "kind" -}}
   {{- $sourceName := index $source "name" -}}
   {{- $count := 0 -}}
+  {{- $sourcePages := slice -}}
 
   {{- if eq $sourceKind "category" -}}
     {{- with index site.Taxonomies.categories $sourceName -}}
       {{- $count = len .Pages -}}
     {{- end -}}
+    {{- range site.RegularPages -}}
+      {{- if in (.Params.categories | default (slice)) $sourceName -}}
+        {{- $sourcePages = $sourcePages | append . -}}
+      {{- end -}}
+    {{- end -}}
   {{- else if eq $sourceKind "tag" -}}
     {{- with index site.Taxonomies.tags $sourceName -}}
       {{- $count = len .Pages -}}
     {{- end -}}
+    {{- range site.RegularPages -}}
+      {{- if in (.Params.tags | default (slice)) $sourceName -}}
+        {{- $sourcePages = $sourcePages | append . -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $latestPage := index ($sourcePages.ByDate.Reverse) 0 -}}
+  {{- $cover := dict "src" $fallbackImage "alt" (.title | default $sourceName) -}}
+  {{- if $latestPage -}}
+    {{- $cover = partial "get-page-cover-resource.html" (dict "page" $latestPage "fallback" $fallbackImage) | transform.Unmarshal -}}
   {{- end -}}
 
   {{- $items = $items | append (merge . (dict
     "entryURL" (.page | default "" | relLangURL)
     "postCount" $count
+    "cover" $cover
   )) -}}
 {{- end -}}
 
-{{- if gt (len $items) 0 -}}
+{{- $orderedItems := slice -}}
+{{- $orderedSourceNames := slice -}}
+{{- $categoryOrder := site.Params.desktopHeader.categories | default site.Params.salonCategoryOrder | default (slice) -}}
+{{- range $categoryOrder -}}
+  {{- $categoryName := . -}}
+  {{- range $items -}}
+    {{- $source := .source | default dict -}}
+    {{- if and (eq (index $source "kind") "category") (eq (index $source "name") $categoryName) -}}
+      {{- $orderedItems = $orderedItems | append . -}}
+      {{- $orderedSourceNames = $orderedSourceNames | append $categoryName -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- range $items -}}
+  {{- $source := .source | default dict -}}
+  {{- $sourceName := index $source "name" -}}
+  {{- if not (in $orderedSourceNames $sourceName) -}}
+    {{- $orderedItems = $orderedItems | append . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if gt (len $orderedItems) 0 -}}
 <section class="home-mobile-topics" aria-labelledby="home-mobile-topics-title">
   <div class="home-mobile-topics__head">
     <div>
@@ -34,19 +74,25 @@
     <a class="home-mobile-topics__more" href="{{ "/categories/" | relURL }}">全部</a>
   </div>
   <div class="home-mobile-topics__rail" aria-label="首頁主題快速入口">
-    {{- range first 6 $items -}}
+    {{- range $idx, $item := first 6 $orderedItems -}}
+      {{- with $item -}}
       {{- if .entryURL -}}
       <a class="home-mobile-topic-link home-mobile-topic-link--{{ .accent }}" href="{{ .entryURL }}">
-        <span class="home-mobile-topic-link__topline">
-          <span class="home-mobile-topic-link__index">{{ .index }}</span>
-          <span class="home-mobile-topic-link__en">{{ .en }}</span>
+        {{- with .cover }}
+        <span class="home-mobile-topic-link__media" aria-hidden="true">
+          <img src="{{ .src }}" alt="" loading="lazy" decoding="async">
         </span>
-        <span class="home-mobile-topic-link__label">{{ .title }}</span>
+        {{- end }}
+        <span class="home-mobile-topic-link__label">
+          <span class="home-mobile-topic-link__index">{{ printf "%02d" (add $idx 1) }}</span>
+          <span class="home-mobile-topic-link__name">{{ .title }}</span>
+        </span>
         <span class="home-mobile-topic-link__footer">
           <span class="home-mobile-topic-link__meta">{{ .postCount }} 篇</span>
           <span class="home-mobile-topic-link__arrow" aria-hidden="true">→</span>
         </span>
       </a>
+      {{- end -}}
       {{- end -}}
     {{- end -}}
   </div>

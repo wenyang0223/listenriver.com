@@ -1818,48 +1818,207 @@
 
 {{- else if and (eq $plural "tags") $hasPages -}}
   {{- $featured := first 3 $pages -}}
-  {{- $yearGroups := $pages.GroupByDate "2006" -}}
-  <header class="page-header taxonomy-term-header">
-    {{- partial "breadcrumbs.html" . -}}
-    <span class="taxonomy-page-kicker">主題總覽</span>
-    <h1>{{ .Title }}</h1>
-    <div class="post-description taxonomy-page-description">
-      {{- if .Description -}}
-        {{ .Description | markdownify }}
-      {{- else -}}
-        這個主題目前收錄 {{ len $pages }} 篇文章，可從不同分類交叉閱讀。
+  {{- $categoryItems := slice -}}
+  {{- range site.Taxonomies.categories.ByCount -}}
+    {{- $relatedPages := where $pages "Params.categories" "intersect" (slice .Term) -}}
+    {{- if gt (len $relatedPages) 0 -}}
+      {{- $categoryItems = $categoryItems | append (dict
+        "name" .Term
+        "count" (len $relatedPages)
+        "page" .Page
+      ) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $topicItems := slice -}}
+  {{- range site.Taxonomies.tags.ByCount -}}
+    {{- if ne .Term $.Title -}}
+      {{- $relatedPages := where $pages "Params.tags" "intersect" (slice .Term) -}}
+      {{- if gt (len $relatedPages) 0 -}}
+        {{- $topicItems = $topicItems | append (dict
+          "name" .Term
+          "count" (len $relatedPages)
+          "page" .Page
+        ) -}}
       {{- end -}}
-    </div>
-  </header>
+    {{- end -}}
+  {{- end -}}
+  {{- $paginator := .Paginate $pages 10 -}}
+  {{- $pagedPages := $paginator.Pages -}}
+  {{- $yearGroups := $pagedPages.GroupByDate "2006" -}}
 
-  {{- if gt (len $featured) 0 }}
-  <section class="taxonomy-featured" aria-labelledby="taxonomy-featured-title">
-    <div class="home-section-heading taxonomy-section-heading">
-      <div>
-        <span class="home-section-kicker">Featured</span>
-        <h2 id="taxonomy-featured-title" class="home-section-title">先讀這幾篇</h2>
+  <div class="taxonomy-tag-shell">
+    <div class="taxonomy-tag-top">
+      <div class="taxonomy-tag-primary">
+        <header class="page-header taxonomy-tag-hero">
+          {{- partial "breadcrumbs.html" . -}}
+          <div class="taxonomy-tag-hero__eyebrow">
+            <span>Tag</span>
+            <span class="taxonomy-tag-hero__eyebrow-count">{{ len $pages }} 篇文章</span>
+          </div>
+          <h1>#{{ .Title }}</h1>
+          <div class="taxonomy-tag-hero__description">
+            {{- if .Description -}}
+              {{ .Description | markdownify }}
+            {{- else -}}
+              <p>這個主題目前收錄 {{ len $pages }} 篇文章，可從不同分類交叉閱讀。</p>
+            {{- end -}}
+          </div>
+          {{- if gt (len $categoryItems) 0 }}
+          <div class="taxonomy-tag-topics" aria-label="{{ .Title }} 相關分類">
+            {{- range first 5 $categoryItems -}}
+              <a class="taxonomy-tag-topics__item" href="{{ .page.RelPermalink }}">
+                <span>{{ .name }}</span>
+                <span class="taxonomy-tag-topics__count">{{ .count }}</span>
+              </a>
+            {{- end -}}
+          </div>
+          {{- end }}
+          {{- if gt (len $topicItems) 0 }}
+          <div class="taxonomy-tag-mobile-map" aria-label="{{ .Title }} 相關標籤">
+            <span class="taxonomy-tag-mobile-map__eyebrow">Related Tags</span>
+            <div class="taxonomy-tag-mobile-map__rail">
+              {{- range first 6 $topicItems -}}
+                <a class="taxonomy-tag-mobile-map__item" href="{{ .page.RelPermalink }}">
+                  <span>#{{ .name }}</span>
+                  <span class="taxonomy-tag-mobile-map__count">{{ .count }}</span>
+                </a>
+              {{- end -}}
+            </div>
+          </div>
+          {{- end }}
+        </header>
       </div>
-      <p class="taxonomy-section-note">先用代表文章快速理解這個主題的閱讀方向。</p>
-    </div>
-    <div class="taxonomy-featured-grid">
-      {{- range $featured -}}
-        {{- partial "article-card.html" (dict "page" . "class" "post-entry home-featured-entry taxonomy-featured-entry") -}}
-      {{- end -}}
-    </div>
-  </section>
-  {{- end }}
 
-  <section class="taxonomy-article-list" aria-labelledby="taxonomy-article-list-title">
-    <div class="home-section-heading taxonomy-section-heading">
-      <div>
-        <span class="home-section-kicker">Archive</span>
-        <h2 id="taxonomy-article-list-title" class="home-section-title">全部文章</h2>
-      </div>
+      <aside class="taxonomy-tag-sidebar">
+        {{- if gt (len $categoryItems) 0 }}
+        <section class="taxonomy-sidebar-panel" aria-labelledby="taxonomy-tag-category-map-title">
+          <span class="taxonomy-sidebar-panel__eyebrow">Category Map</span>
+          <h3 id="taxonomy-tag-category-map-title">相關分類</h3>
+          <p>從這個標籤回到較大的閱讀分類。</p>
+          <ul class="taxonomy-sidebar-links">
+            {{- range first 8 $categoryItems -}}
+              <li>
+                <a href="{{ .page.RelPermalink }}">
+                  <span class="taxonomy-sidebar-links__label">{{ .name }}</span>
+                  <span class="taxonomy-sidebar-links__count">{{ .count }}</span>
+                </a>
+              </li>
+            {{- end -}}
+          </ul>
+        </section>
+        {{- end }}
+        {{- if gt (len $topicItems) 0 }}
+        <section class="taxonomy-sidebar-panel" aria-labelledby="taxonomy-related-tags-title">
+          <span class="taxonomy-sidebar-panel__eyebrow">Related Tags</span>
+          <h3 id="taxonomy-related-tags-title">常一起出現</h3>
+          <p>沿著相近標籤延伸閱讀。</p>
+          <ul class="taxonomy-sidebar-links">
+            {{- range first 10 $topicItems -}}
+              <li>
+                <a href="{{ .page.RelPermalink }}">
+                  <span class="taxonomy-sidebar-links__label">#{{ .name }}</span>
+                  <span class="taxonomy-sidebar-links__count">{{ .count }}</span>
+                </a>
+              </li>
+            {{- end -}}
+          </ul>
+        </section>
+        {{- end }}
+      </aside>
     </div>
-    {{- range $group := $yearGroups -}}
-      <div class="taxonomy-story-year">{{ $group.Key }} <span class="taxonomy-category-topics__count">{{ len $group.Pages }} 篇</span></div>
-      <div class="taxonomy-story-list">
-        {{- range $page := $group.Pages -}}
+
+    <main class="taxonomy-tag-main">
+      {{- if gt (len $featured) 0 }}
+      <section class="taxonomy-tag-section taxonomy-featured" aria-labelledby="taxonomy-featured-title">
+        <div class="taxonomy-category-section__heading">
+          <div>
+            <span class="taxonomy-category-section__eyebrow">Recommended Reading</span>
+            <h2 id="taxonomy-featured-title">先讀這幾篇</h2>
+          </div>
+          <p class="taxonomy-category-section__note">先用代表文章快速理解這個主題的閱讀方向。</p>
+        </div>
+        <div class="taxonomy-featured-grid">
+          {{- range $idx, $page := $featured -}}
+            {{- $coverImage := $page.Params.cover.image -}}
+            {{- $coverStem := replaceRE "\\.[^.]+$" "" (path.Base $coverImage) -}}
+            {{- $pageBundleCover := $page.Resources.GetMatch (printf "%s.*" $coverStem) -}}
+            {{- $globalResourcesCover := (resources.ByType "image").GetMatch (printf "*%s.*" $coverStem) -}}
+            {{- if and (not $pageBundleCover) $coverImage -}}
+              {{- $pageBundleCover = $page.Resources.GetMatch (printf "*%s*" $coverImage) -}}
+            {{- end -}}
+            {{- if and (not $globalResourcesCover) $coverImage -}}
+              {{- $globalResourcesCover = (resources.ByType "image").GetMatch (printf "*%s*" $coverImage) -}}
+            {{- end -}}
+            {{- $cover := or $pageBundleCover $globalResourcesCover -}}
+            {{- $excerpt := $page.Description | default ($page.Summary | plainify | htmlUnescape) -}}
+            {{- $firstCategory := index ($page.Params.categories | default (slice)) 0 -}}
+            {{- $imageLoading := cond (eq $idx 0) "eager" "lazy" -}}
+            {{- $imageFetchPriority := cond (eq $idx 0) "high" "auto" -}}
+            <article class="taxonomy-feature-card">
+              <a class="taxonomy-feature-card__link" href="{{ $page.RelPermalink }}" aria-label="閱讀 {{ $page.Title | plainify }}"></a>
+              <a class="taxonomy-feature-card__media" href="{{ $page.RelPermalink }}" aria-label="閱讀 {{ $page.Title | plainify }}">
+                {{- if $cover -}}
+                  {{- partialCached "optimized-image.html" (dict
+                    "resource" $cover
+                    "alt" ($page.Params.cover.alt | default $page.Title | plainify)
+                    "loading" $imageLoading
+                    "sizes" "(min-width: 1180px) 21rem, (min-width: 820px) calc((100vw - 8rem) / 3), calc(100vw - 5rem)"
+                    "maxWidth" 960
+                    "widths" (slice 360 540 720 960)
+                    "fetchpriority" $imageFetchPriority
+                    "class" "taxonomy-feature-card__image"
+                  ) $cover.RelPermalink ($page.Params.cover.alt | default $page.Title | plainify) $imageLoading "(min-width: 1180px) 21rem, (min-width: 820px) calc((100vw - 8rem) / 3), calc(100vw - 5rem)" 960 "360-540-720-960" $imageFetchPriority "taxonomy-feature-card__image" -}}
+                {{- else if $coverImage -}}
+                  <img
+                    class="taxonomy-feature-card__image"
+                    src="{{ $coverImage | relURL }}"
+                    alt="{{ $page.Params.cover.alt | default $page.Title | plainify }}"
+                    loading="{{ $imageLoading }}"
+                    decoding="async"
+                    fetchpriority="{{ $imageFetchPriority }}">
+                {{- else -}}
+                  <img
+                    class="taxonomy-feature-card__image"
+                    src="{{ site.Params.salonDefaultCover | relURL }}"
+                    alt="Mao"
+                    loading="{{ $imageLoading }}"
+                    decoding="async"
+                    fetchpriority="{{ $imageFetchPriority }}">
+                {{- end -}}
+              </a>
+              <div class="taxonomy-feature-card__body">
+                {{- with $firstCategory }}
+                  <span class="taxonomy-feature-card__topic">{{ . }}</span>
+                {{- end }}
+                <h3 class="taxonomy-feature-card__title"><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
+                {{- with $excerpt }}
+                  <div class="taxonomy-feature-card__excerpt">{{ . | plainify | htmlUnescape | truncate 88 }}</div>
+                {{- end }}
+                <div class="taxonomy-feature-card__meta">
+                  <time datetime="{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ $page.Date.Format "2006.01.02" }}</time>
+                  {{- if ($page.Param "ShowReadingTime") -}}
+                    <span>{{ partial "reading-time.html" $page }} 分鐘</span>
+                  {{- end -}}
+                </div>
+              </div>
+            </article>
+          {{- end -}}
+        </div>
+      </section>
+      {{- end }}
+
+      <section class="taxonomy-tag-section taxonomy-article-list" aria-labelledby="taxonomy-article-list-title">
+        <div class="taxonomy-category-section__heading">
+          <div>
+            <span class="taxonomy-category-section__eyebrow">All Articles</span>
+            <h2 id="taxonomy-article-list-title">全部文章</h2>
+          </div>
+          <p class="taxonomy-category-section__note">依年份與時間排序瀏覽這個主題中的文章，每頁顯示 {{ len $pagedPages }} 篇。</p>
+        </div>
+        {{- range $group := $yearGroups -}}
+          <div class="taxonomy-story-year">{{ $group.Key }} <span class="taxonomy-category-topics__count">{{ len $group.Pages }} 篇</span></div>
+          <div class="taxonomy-story-list">
+          {{- range $page := $group.Pages -}}
           {{- $coverImage := $page.Params.cover.image -}}
           {{- $coverStem := replaceRE "\\.[^.]+$" "" (path.Base $coverImage) -}}
           {{- $pageBundleCover := $page.Resources.GetMatch (printf "%s.*" $coverStem) -}}
@@ -1925,10 +2084,32 @@
               {{- end }}
             </div>
           </article>
+          {{- end -}}
+          </div>
         {{- end -}}
-      </div>
-    {{- end -}}
-  </section>
+        {{- if gt $paginator.TotalPages 1 }}
+          <nav class="taxonomy-pagination" aria-label="主題文章分頁">
+            <div class="taxonomy-pagination__meta">第 {{ $paginator.PageNumber }} / {{ $paginator.TotalPages }} 頁，共 {{ len $pages }} 篇文章</div>
+            <div class="taxonomy-pagination__links">
+              {{- with $paginator.Prev }}
+                <a class="taxonomy-pagination__link" href="{{ .URL }}">上一頁</a>
+              {{- end }}
+              {{- range $paginator.Pagers -}}
+                {{- if eq . $paginator }}
+                  <span class="taxonomy-pagination__link is-current">{{ .PageNumber }}</span>
+                {{- else }}
+                  <a class="taxonomy-pagination__link" href="{{ .URL }}">{{ .PageNumber }}</a>
+                {{- end }}
+              {{- end }}
+              {{- with $paginator.Next }}
+                <a class="taxonomy-pagination__link" href="{{ .URL }}">下一頁</a>
+              {{- end }}
+            </div>
+          </nav>
+        {{- end }}
+      </section>
+    </main>
+  </div>
 
 {{- else -}}
   <header class="page-header">
