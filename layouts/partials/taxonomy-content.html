@@ -1648,7 +1648,7 @@
                   <div class="taxonomy-feature-card__meta">
                     <span>{{ $page.Date.Format "2006.01.02" }}</span>
                     {{- if ($page.Param "ShowReadingTime") -}}
-                      <span>{{ $page.ReadingTime }} 分鐘閱讀</span>
+                      <span>{{ partial "reading-time.html" $page }} 分鐘閱讀</span>
                     {{- end -}}
                   </div>
                 </div>
@@ -1717,7 +1717,7 @@
                     <div class="taxonomy-story-card__meta">
                       <span>{{ $page.Date.Format "01.02" }}</span>
                       {{- if ($page.Param "ShowReadingTime") -}}
-                        <span>{{ $page.ReadingTime }} 分鐘</span>
+                        <span>{{ partial "reading-time.html" $page }} 分鐘</span>
                       {{- end -}}
                     </div>
                     <h3 class="taxonomy-story-card__title"><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
@@ -1907,7 +1907,7 @@
               <div class="taxonomy-story-card__meta">
                 <span>{{ $page.Date.Format "01.02" }}</span>
                 {{- if ($page.Param "ShowReadingTime") -}}
-                  <span>{{ $page.ReadingTime }} 分鐘</span>
+                  <span>{{ partial "reading-time.html" $page }} 分鐘</span>
                 {{- end -}}
               </div>
               <h3 class="taxonomy-story-card__title"><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>

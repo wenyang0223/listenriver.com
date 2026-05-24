@@ -25,7 +25,7 @@
           {{- end -}}
           <time datetime="{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ $page.Date.Format "2006.01.02" }}</time>
           {{- if site.Params.ShowReadingTime -}}
-          <span>{{ $page.ReadingTime }} 分鐘閱讀</span>
+          <span>{{ partial "reading-time.html" $page }} 分鐘閱讀</span>
           {{- end -}}
         </div>
         <h3 class="home-latest-item__title">{{ $page.Title }}</h3>

@@ -563,18 +563,23 @@
       sessionStorage.setItem(viewedSessionKey, '1');
 
       try {
-        if (navigator.sendBeacon) {
-          const blob = new Blob([JSON.stringify({ post: postPath })], { type: 'application/json' });
-          navigator.sendBeacon(apiBase + '/view', blob);
-          return;
-        }
-
         const payload = await postJson(apiBase + '/view', { post: postPath }, true);
         const stats = extractStats(payload);
         if (stats.views !== null) {
           setCountText(viewsValues, formatCount(stats.views));
         }
+        if (stats.likes !== null) {
+          setCountText(likesValues, formatCount(stats.likes));
+        }
       } catch (error) {
+        if (navigator.sendBeacon) {
+          const blob = new Blob([JSON.stringify({ post: postPath })], { type: 'application/json' });
+          if (navigator.sendBeacon(apiBase + '/view', blob)) {
+            return;
+          }
+        }
+
+        sessionStorage.removeItem(viewedSessionKey);
       }
     }
 

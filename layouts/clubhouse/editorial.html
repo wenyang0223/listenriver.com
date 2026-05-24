@@ -505,7 +505,7 @@
               {{- with $excerpt }}<div class="clubhouse-feature-card__excerpt">{{ . | plainify | htmlUnescape | truncate 88 }}</div>{{- end }}
               <div class="clubhouse-feature-card__meta">
                 <span>{{ .Date.Format "2006.01.02" }}</span>
-                {{- if (.Param "ShowReadingTime") -}}<span>{{ .ReadingTime }} 分鐘閱讀</span>{{- end -}}
+                {{- if (.Param "ShowReadingTime") -}}<span>{{ partial "reading-time.html" . }} 分鐘閱讀</span>{{- end -}}
               </div>
             </div>
           </article>
@@ -536,7 +536,7 @@
               <div class="clubhouse-story-card__body">
                 <div class="clubhouse-story-card__meta">
                   <span>{{ $page.Date.Format "01.02" }}</span>
-                  {{- if ($page.Param "ShowReadingTime") -}}<span>{{ $page.ReadingTime }} 分鐘</span>{{- end -}}
+                  {{- if ($page.Param "ShowReadingTime") -}}<span>{{ partial "reading-time.html" $page }} 分鐘</span>{{- end -}}
                 </div>
                 <h3 class="clubhouse-story-card__title"><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h3>
                 {{- with $excerpt }}<div class="clubhouse-story-card__excerpt">{{ . | plainify | htmlUnescape | truncate 108 }}</div>{{- end }}

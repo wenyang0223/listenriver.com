@@ -1,0 +1,11 @@
+{{- $page := . -}}
+{{- $wordsPerMinute := site.Params.readingTimeWordsPerMinute | default 500 -}}
+{{- $wordCount := $page.WordCount | default 0 -}}
+{{- $minutes := 1 -}}
+{{- if gt $wordCount 0 -}}
+  {{- $minutes = int (math.Ceil (div (float $wordCount) (float $wordsPerMinute))) -}}
+  {{- if lt $minutes 1 -}}
+    {{- $minutes = 1 -}}
+  {{- end -}}
+{{- end -}}
+{{- return $minutes -}}
