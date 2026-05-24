@@ -7707,11 +7707,16 @@ body:not(.list):has(.post-single) {
 
   .salon-hero-inner {
     min-height: 0;
-    padding: 1.7rem 1.1rem 1.2rem;
+    padding: 1.35rem 1.1rem 1.05rem;
+  }
+
+  .salon-hero-lockup {
+    width: 100%;
+    flex: 0 1 auto;
   }
 
   .salon-hero-title {
-    font-size: 2rem;
+    font-size: 1.82rem;
     line-height: 1.12;
     letter-spacing: 0;
   }
@@ -7725,8 +7730,8 @@ body:not(.list):has(.post-single) {
   .salon-hero-subtitle,
   .salon-hero-bottom .salon-channel-desc {
     max-width: 100%;
-    font-size: 0.9rem;
-    line-height: 1.7;
+    font-size: 0.86rem;
+    line-height: 1.62;
     overflow-wrap: anywhere;
     white-space: normal;
   }
