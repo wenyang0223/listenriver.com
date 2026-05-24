@@ -42,7 +42,28 @@
   )) -}}
 {{- end -}}
 
-{{- if gt (len $categoryCards) 0 -}}
+{{- $orderedCategoryCards := slice -}}
+{{- $orderedSourceNames := slice -}}
+{{- $categoryOrder := site.Params.desktopHeader.categories | default site.Params.salonCategoryOrder | default (slice) -}}
+{{- range $categoryOrder -}}
+  {{- $categoryName := . -}}
+  {{- range $categoryCards -}}
+    {{- $source := .source | default dict -}}
+    {{- if and (eq (index $source "kind") "category") (eq (index $source "name") $categoryName) -}}
+      {{- $orderedCategoryCards = $orderedCategoryCards | append . -}}
+      {{- $orderedSourceNames = $orderedSourceNames | append $categoryName -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- range $categoryCards -}}
+  {{- $source := .source | default dict -}}
+  {{- $sourceName := index $source "name" -}}
+  {{- if not (in $orderedSourceNames $sourceName) -}}
+    {{- $orderedCategoryCards = $orderedCategoryCards | append . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if gt (len $orderedCategoryCards) 0 -}}
 <section class="home-discovery-section home-discovery-section--topics" aria-labelledby="home-topics-title">
   <div class="home-discovery-section__header">
     <div>
@@ -52,7 +73,7 @@
     <a href="{{ "/categories/" | relURL }}" class="home-discovery-section__more">瀏覽分類</a>
   </div>
   <div class="home-topics-grid taxonomy-landing-category-grid">
-    {{- range $idx, $card := $categoryCards -}}
+    {{- range $idx, $card := $orderedCategoryCards -}}
       {{- if $card.entryURL -}}
       {{- $coverResource := "" -}}
       {{- with $card.latestPage -}}
@@ -89,7 +110,7 @@
         </div>
         <div class="taxonomy-landing-card__body">
           <div class="taxonomy-landing-card__topline">
-            <span class="taxonomy-landing-card__index">{{ $card.index }}</span>
+            <span class="taxonomy-landing-card__index">{{ printf "%02d" (add $idx 1) }}</span>
             <span class="taxonomy-landing-card__label">{{ $card.en }}</span>
           </div>
           <h3 class="taxonomy-landing-card__title">{{ $card.title }}</h3>
