@@ -1,0 +1,54 @@
+{{- $landing := index site.Data "taxonomy-landing" | default site.Data.taxonomyLanding | default dict -}}
+{{- $cardConfigs := index $landing "categoryCards" | default (slice) -}}
+{{- $items := slice -}}
+
+{{- range $cardConfigs -}}
+  {{- $source := .source | default dict -}}
+  {{- $sourceKind := index $source "kind" -}}
+  {{- $sourceName := index $source "name" -}}
+  {{- $count := 0 -}}
+
+  {{- if eq $sourceKind "category" -}}
+    {{- with index site.Taxonomies.categories $sourceName -}}
+      {{- $count = len .Pages -}}
+    {{- end -}}
+  {{- else if eq $sourceKind "tag" -}}
+    {{- with index site.Taxonomies.tags $sourceName -}}
+      {{- $count = len .Pages -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $items = $items | append (merge . (dict
+    "entryURL" (.page | default "" | relLangURL)
+    "postCount" $count
+  )) -}}
+{{- end -}}
+
+{{- if gt (len $items) 0 -}}
+<section class="home-mobile-topics" aria-labelledby="home-mobile-topics-title">
+  <div class="home-mobile-topics__head">
+    <div>
+      <p class="home-mobile-topics__eyebrow">Explore Topics</p>
+      <h2 id="home-mobile-topics-title" class="home-mobile-topics__title">探索主題</h2>
+    </div>
+    <a class="home-mobile-topics__more" href="{{ "/categories/" | relURL }}">全部</a>
+  </div>
+  <div class="home-mobile-topics__rail" aria-label="首頁主題快速入口">
+    {{- range first 6 $items -}}
+      {{- if .entryURL -}}
+      <a class="home-mobile-topic-link home-mobile-topic-link--{{ .accent }}" href="{{ .entryURL }}">
+        <span class="home-mobile-topic-link__topline">
+          <span class="home-mobile-topic-link__index">{{ .index }}</span>
+          <span class="home-mobile-topic-link__en">{{ .en }}</span>
+        </span>
+        <span class="home-mobile-topic-link__label">{{ .title }}</span>
+        <span class="home-mobile-topic-link__footer">
+          <span class="home-mobile-topic-link__meta">{{ .postCount }} 篇</span>
+          <span class="home-mobile-topic-link__arrow" aria-hidden="true">→</span>
+        </span>
+      </a>
+      {{- end -}}
+    {{- end -}}
+  </div>
+</section>
+{{- end -}}

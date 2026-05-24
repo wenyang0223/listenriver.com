@@ -23,6 +23,7 @@
 
   <div class="home-discovery">
     {{- partial "home-featured.html" (dict "pages" $featuredPages) -}}
+    {{- partial "home-mobile-topics.html" . -}}
     {{- partial "home-topics.html" (dict "items" $categoryItems) -}}
     {{- partial "home-clubhouse.html" (dict "pages" $clubhousePages) -}}
     {{- partial "home-latest.html" (dict "pages" $latestPages) -}}

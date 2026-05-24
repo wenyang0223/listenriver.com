@@ -6001,6 +6001,10 @@ body:not(.list) .main .salon-hero {
 .home-discovery-section--topics .taxonomy-landing-card--daily .taxonomy-landing-card__label { color: var(--taxonomy-landing-daily); }
 .home-discovery-section--topics .taxonomy-landing-card--clubhouse .taxonomy-landing-card__label { color: var(--taxonomy-landing-clubhouse); }
 
+.home-mobile-topics {
+  display: none;
+}
+
 .home-latest-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -6313,6 +6317,143 @@ body:not(.list) .main .salon-hero {
 @media (max-width: 640px) {
   .home-discovery {
     gap: 1.7rem;
+  }
+
+  .home-mobile-topics {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+    padding: 0.95rem 0;
+    border: 1px solid rgba(17, 24, 39, 0.08);
+    border-radius: 18px;
+    background: rgba(255, 254, 251, 0.78);
+  }
+
+  [data-theme="dark"] .home-mobile-topics {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.035);
+  }
+
+  .home-mobile-topics__head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0 0.95rem;
+  }
+
+  .home-mobile-topics__eyebrow {
+    margin: 0 0 0.12rem;
+    color: var(--secondary);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .home-mobile-topics__title {
+    margin: 0;
+    color: var(--primary);
+    font-size: 1.08rem;
+    line-height: 1.25;
+  }
+
+  .home-mobile-topics__more {
+    flex: 0 0 auto;
+    color: #1f6f77;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .home-mobile-topics__rail {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+    padding: 0 0.95rem;
+  }
+
+  .home-mobile-topic-link {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 0.45rem;
+    min-height: 118px;
+    padding: 0.78rem 0.78rem 0.72rem;
+    border: 1px solid rgba(109, 93, 76, 0.16);
+    border-radius: 16px;
+    background:
+      linear-gradient(180deg, rgba(255, 253, 250, 0.96), rgba(248, 244, 238, 0.9));
+    color: var(--primary);
+    text-decoration: none;
+    overflow: hidden;
+  }
+
+  .home-mobile-topic-link::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 4px;
+    background: var(--mobile-topic-accent, #6fcad1);
+  }
+
+  .home-mobile-topic-link__topline,
+  .home-mobile-topic-link__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.4rem;
+    min-width: 0;
+  }
+
+  .home-mobile-topic-link__index,
+  .home-mobile-topic-link__en {
+    color: var(--secondary);
+    font-size: 0.65rem;
+    font-weight: 760;
+    line-height: 1.1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .home-mobile-topic-link__en {
+    min-width: 0;
+    overflow: hidden;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .home-mobile-topic-link__label {
+    min-width: 0;
+    align-self: center;
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.28;
+  }
+
+  .home-mobile-topic-link__meta {
+    color: var(--secondary);
+    font-size: 0.74rem;
+    line-height: 1.2;
+  }
+
+  .home-mobile-topic-link__arrow {
+    color: var(--mobile-topic-accent, #1f6f77);
+    font-size: 0.9rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .home-mobile-topic-link--reading { --mobile-topic-accent: var(--taxonomy-landing-reading, #1d4f73); }
+  .home-mobile-topic-link--practice { --mobile-topic-accent: var(--taxonomy-landing-practice, #215b46); }
+  .home-mobile-topic-link--pain { --mobile-topic-accent: var(--taxonomy-landing-pain, #7a4530); }
+  .home-mobile-topic-link--growth { --mobile-topic-accent: var(--taxonomy-landing-growth, #86642e); }
+  .home-mobile-topic-link--daily { --mobile-topic-accent: var(--taxonomy-landing-daily, #5c4f7e); }
+  .home-mobile-topic-link--clubhouse { --mobile-topic-accent: var(--taxonomy-landing-clubhouse, #7b4a5f); }
+
+  .home-discovery-section--topics {
+    display: none;
   }
 
   .home-latest-item__media .entry-cover {
