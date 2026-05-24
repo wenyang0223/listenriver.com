@@ -1,11 +1,4 @@
 <link rel="icon" type="image/png" href="{{ "/images/favicon.png" | relURL }}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-{{- $notoSansTcHref := "https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=optional" -}}
-<link rel="preload" as="style" href="{{ $notoSansTcHref }}" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="{{ $notoSansTcHref }}"></noscript>
-{{- $salonCssVersion := readFile "static/css/salon.css" | sha256 -}}
-<link rel="stylesheet" href="{{ printf "/css/salon.css?v=%s" $salonCssVersion | relURL }}">
-<script src="{{ "/js/salon.js" | relURL }}" defer></script>
 {{- $customJsVersion := readFile "static/js/custom.js" | sha256 -}}
-<script src="{{ printf "/js/custom.js?v=%s" $customJsVersion | relURL }}" defer></script>
+{{- $customJs := readFile "static/js/custom.js" | resources.FromString (printf "assets/js/custom.%s.js" $customJsVersion) | resources.Minify | fingerprint -}}
+<script src="{{ $customJs.RelPermalink }}" integrity="{{ $customJs.Data.Integrity }}" crossorigin="anonymous" defer></script>

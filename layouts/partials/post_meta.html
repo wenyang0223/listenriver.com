@@ -5,7 +5,8 @@
 {{- end -}}
 
 {{- if (.Param "ShowReadingTime") -}}
-  {{- $scratch.Add "meta" (slice (printf "<span class='post-meta-item'>閱讀 %d 分鐘</span>" .ReadingTime)) -}}
+  {{- $readingTime := partial "reading-time.html" . -}}
+  {{- $scratch.Add "meta" (slice (printf "<span class='post-meta-item'>閱讀 %d 分鐘</span>" $readingTime)) -}}
 {{- end -}}
 
 {{- if (.Param "ShowWordCount") -}}

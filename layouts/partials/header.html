@@ -131,10 +131,57 @@
       <span>搜尋站內文章、分類與主題</span>
     </a>
 
-    <div class="mobile-nav-primary mobile-nav-primary--simple">
+    <div class="mobile-nav-menu" aria-label="手機版網站導覽">
       {{- range $navItems -}}
+      {{- $children := .children | default (slice) -}}
+      {{- if gt (len $children) 0 -}}
       {{- $isCurrent := or (eq $.RelPermalink .url) (in ($.Params.categories | default (slice)) .label) -}}
+      {{- range $children -}}
+        {{- if eq $.RelPermalink .url -}}
+          {{- $isCurrent = true -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $categoryCount := 0 -}}
+      {{- with index site.Taxonomies.categories .label -}}
+        {{- $categoryCount = len .Pages -}}
+      {{- else -}}
+        {{- if eq .key "clubhouse" -}}
+          {{- $categoryCount = len (where site.RegularPages "Section" "clubhouse") -}}
+        {{- end -}}
+      {{- end -}}
+      <section class="mobile-nav-group{{ if $isCurrent }} is-open{{ end }}">
+        <button class="mobile-nav-group-trigger" type="button" aria-expanded="{{ if $isCurrent }}true{{ else }}false{{ end }}">
+          <span>{{ .label }}</span>
+          <svg class="mobile-nav-group-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </button>
+        <div class="mobile-nav-group-panel">
+          <a class="mobile-nav-sub-link mobile-nav-sub-link-parent{{ if eq $.RelPermalink .url }} is-active{{ end }}" href="{{ .url }}"{{ if eq $.RelPermalink .url }} aria-current="page"{{ end }}>
+            <span>{{ .label }}（all）</span>
+            {{- if gt $categoryCount 0 -}}
+            <span class="mobile-nav-sub-count">{{ $categoryCount }}</span>
+            {{- end -}}
+          </a>
+          {{- range $children -}}
+          {{- $isChildCurrent := eq $.RelPermalink .url -}}
+          {{- $childCount := 0 -}}
+          {{- with index site.Taxonomies.tags .label -}}
+            {{- $childCount = len .Pages -}}
+          {{- end -}}
+          <a class="mobile-nav-sub-link{{ if $isChildCurrent }} is-active{{ end }}" href="{{ .url }}"{{ if $isChildCurrent }} aria-current="page"{{ end }}>
+            <span>{{ .label }}</span>
+            {{- if gt $childCount 0 -}}
+            <span class="mobile-nav-sub-count">{{ $childCount }}</span>
+            {{- end -}}
+          </a>
+          {{- end -}}
+        </div>
+      </section>
+      {{- else -}}
+      {{- $isCurrent := eq $.RelPermalink .url -}}
       <a href="{{ .url }}" class="mobile-nav-primary-link{{ if $isCurrent }} is-active{{ end }}"{{ if $isCurrent }} aria-current="page"{{ end }}>{{ .label }}</a>
+      {{- end -}}
       {{- end -}}
     </div>
   </aside>

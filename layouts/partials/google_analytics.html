@@ -1,0 +1,38 @@
+{{- with site.Config.Services.GoogleAnalytics.ID }}
+<script>
+  (function() {
+    var measurementId = '{{ . }}';
+    var loaded = false;
+    var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+
+    if (dnt === '1' || dnt === 'yes') return;
+
+    function loadAnalytics() {
+      if (loaded) return;
+      loaded = true;
+
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function() {
+        window.dataLayer.push(arguments);
+      };
+      window.gtag('js', new Date());
+      window.gtag('config', measurementId);
+
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(measurementId);
+      document.head.appendChild(script);
+    }
+
+    var schedule = window.requestIdleCallback || function(callback) {
+      window.setTimeout(callback, 1800);
+    };
+    var events = ['pointerdown', 'keydown', 'scroll', 'touchstart'];
+
+    schedule(loadAnalytics);
+    events.forEach(function(eventName) {
+      window.addEventListener(eventName, loadAnalytics, { once: true, passive: true });
+    });
+  })();
+</script>
+{{- end }}

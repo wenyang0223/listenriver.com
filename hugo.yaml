@@ -2,6 +2,7 @@ baseURL: "https://listenriver.com/"
 languageCode: "zh-tw"
 defaultContentLanguage: "zh-tw"
 defaultContentLanguageInSubdir: false
+hasCJKLanguage: true
 title: "聆聽的河流｜閱讀・書寫・心理・社工"
 theme: "PaperMod"
 enableRobotsTXT: true
@@ -52,6 +53,7 @@ params:
   homeFeaturedLimit: 4
   articleRelatedLimit: 3
   articleInternalLinksLimit: 3
+  readingTimeWordsPerMinute: 500
 
   author: "文揚 Wen-Yang"
   description: "聆聽的河流｜閱讀・書寫・心理・社工"

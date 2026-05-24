@@ -24,7 +24,7 @@
           {{- end -}}
           <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "2006.01.02" }}</time>
           {{- if site.Params.ShowReadingTime -}}
-          <span>{{ .ReadingTime }} 分鐘閱讀</span>
+          <span>{{ partial "reading-time.html" . }} 分鐘閱讀</span>
           {{- end -}}
         </div>
         <h3 class="home-post-card__title">
