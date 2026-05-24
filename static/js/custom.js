@@ -434,6 +434,9 @@
     const viewedSessionKey = 'listenriver:view:' + postPath;
     const likedSessionKey = 'listenriver:like:' + postPath;
     let isLikePending = false;
+    const scheduleIdle = window.requestIdleCallback || function(callback) {
+      window.setTimeout(callback, 700);
+    };
 
     commentValues.forEach((node) => {
       node.dataset.path = commentsPath;
@@ -450,11 +453,7 @@
       setCountText(viewsValues, '--');
       setCountText(likesValues, '--');
     } else {
-      const schedule = window.requestIdleCallback || function(callback) {
-        window.setTimeout(callback, 700);
-      };
-
-      schedule(() => {
+      scheduleIdle(() => {
         loadStats();
         if (!sessionStorage.getItem(viewedSessionKey)) {
           window.setTimeout(() => {
@@ -465,7 +464,7 @@
     }
 
     if (commentsEnabled && commentsServerUrl && commentValues.length) {
-      loadCommentCount();
+      scheduleIdle(loadCommentCount);
       document.addEventListener('listenriver:comments-updated', handleCommentsUpdated);
     } else if (commentValues.length) {
       setCountText(commentValues, '--');
