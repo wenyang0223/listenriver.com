@@ -8,12 +8,11 @@ aliases:
 type: post
 cover:
   image: 關於自我揭露.jpg
-  alt: "關於自我揭露"
-
+  alt: 關於自我揭露
 categories:
   - 病痛經驗
 tags:
-  - 病痛經驗
+  - 蟹足腫病痛
 ---
 近期的兩堂課都上台進行自我揭露，和不那麼熟悉信任的同學、甚至是完全陌生的人面對面分享。
 
