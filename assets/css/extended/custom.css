@@ -8070,6 +8070,7 @@ body:not(.list):has(.post-single) {
   border-radius: 8px;
   background: #fffefc;
   box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
+  font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
 }
 
 .personal-header__dropdown-title {
@@ -9052,8 +9053,8 @@ html {
     --article-phone-gutter: clamp(37px, 9vw, 52px);
     --article-content-image-gutter: 14px;
     --article-phone-font-size: 19.25px;
-    --article-phone-line-height: 2.12;
-    --article-phone-paragraph-gap: 2.45em;
+    --article-phone-line-height: 1.92;
+    --article-phone-paragraph-gap: 1.65em;
   }
 
   .post-single {
@@ -9307,8 +9308,8 @@ html {
     --article-phone-gutter: 34px;
     --article-content-image-gutter: 12px;
     --article-phone-font-size: 18.75px;
-    --article-phone-line-height: 2.08;
-    --article-phone-paragraph-gap: 2.3em;
+    --article-phone-line-height: 1.9;
+    --article-phone-paragraph-gap: 1.55em;
   }
 }
 
