@@ -998,8 +998,8 @@ body.list .blog-archive-entry .entry-footer {
   }
 
   .mobile-nav-menu .mobile-nav-sub-link {
-    min-height: 42px;
-    padding: 0;
+    min-height: 46px;
+    padding: 0.35rem 0;
     border-radius: 0;
     color: var(--primary);
     font-size: 0.96rem;
