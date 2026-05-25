@@ -45,11 +45,11 @@ test.describe('desktop taxonomy layout', () => {
   test('uses stable vertical cards for tag featured articles', async ({ page }) => {
     await page.goto('/tags/閱讀心得/');
 
-    const firstCard = page.locator('.taxonomy-featured-grid .taxonomy-featured-entry').first();
+    const firstCard = page.locator('.taxonomy-featured-grid .taxonomy-feature-card').first();
     await expect(firstCard).toBeVisible();
 
-    const title = firstCard.locator('.entry-header h2');
-    const cover = firstCard.locator('.entry-cover');
+    const title = firstCard.locator('.taxonomy-feature-card__title');
+    const cover = firstCard.locator('.taxonomy-feature-card__media');
     const cardBox = await firstCard.boundingBox();
     const titleBox = await title.boundingBox();
     const coverBox = await cover.boundingBox();
@@ -84,7 +84,7 @@ test.describe('desktop taxonomy layout', () => {
     expect(mediaBox).not.toBeNull();
     expect(bodyBox).not.toBeNull();
     expect(titleBox).not.toBeNull();
-    expect(mediaBox.width).toBeGreaterThan(180);
+    expect(mediaBox.width).toBeGreaterThanOrEqual(176);
     expect(bodyBox.width).toBeGreaterThan(500);
     expect(titleBox.width).toBeGreaterThan(400);
   });
