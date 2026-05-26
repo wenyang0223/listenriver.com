@@ -6,8 +6,8 @@ description: 之所以不想脫去正常人的偽裝，是因為我覺得某部�
 draft: false
 type: post
 cover:
-  image:
-  alt:
+  image: 標本.jpg
+  alt: 標本：凝視與被凝視
 categories:
   - 病痛經驗
 tags:

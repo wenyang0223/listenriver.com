@@ -6,8 +6,8 @@ description: 無論他們怎麼說「這跟社會工作有什麼關係？」我�
 draft: false
 type: post
 cover:
-  image:
-  alt:
+  image: 第三次住院.jpg
+  alt: 第三次住院
 categories:
   - 病痛經驗
 tags:
