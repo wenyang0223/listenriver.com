@@ -39,6 +39,9 @@ categoryCards:
     source:
       kind: category
       name: 病痛經驗
+    cover:
+      src: /blog/病痛經驗/定期回診/定期回診.jpg
+      alt: 定期回診藥單
     description: 從疼痛與照護經驗回到身體，書寫受苦如何改變自己。
     tags:
       - 病痛經驗

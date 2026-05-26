@@ -36,8 +36,13 @@
 
     {{- $latestPage := index $sourcePages 0 -}}
     {{- $postCount := len $sourcePages -}}
+    {{- $fixedCover := .cover | default dict -}}
+    {{- $fixedCoverSrc := (index $fixedCover "src") | default "" -}}
+    {{- $hasFixedCover := ne $fixedCoverSrc "" -}}
     {{- $cover := dict "resource" nil "src" $fallbackImage "alt" (.title | default $sourceName) -}}
-    {{- if $latestPage -}}
+    {{- if $hasFixedCover -}}
+      {{- $cover = merge $cover $fixedCover -}}
+    {{- else if $latestPage -}}
       {{- $cover = partial "get-page-cover-resource.html" (dict "page" $latestPage "fallback" $fallbackImage) | transform.Unmarshal -}}
     {{- end -}}
 
@@ -583,7 +588,21 @@
   </div>
 
 {{- else if and (eq $plural "categories") $hasPages -}}
-  {{- $featured := first 3 $pages -}}
+  {{- $seriesTagName := "聆聽疼痛計畫" -}}
+  {{- $isPainCategory := eq .Title "病痛經驗" -}}
+  {{- $seriesPages := slice -}}
+  {{- $primaryPages := $pages -}}
+  {{- if $isPainCategory -}}
+    {{- $primaryPages = slice -}}
+    {{- range $pages -}}
+      {{- if in (.Params.tags | default (slice)) $seriesTagName -}}
+        {{- $seriesPages = $seriesPages | append . -}}
+      {{- else -}}
+        {{- $primaryPages = $primaryPages | append . -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $featured := first 3 $primaryPages -}}
   {{- $categoryItems := partial "category-data.html" . -}}
   {{- $topicItems := slice -}}
   {{- range site.Taxonomies.tags.ByCount -}}
@@ -598,7 +617,7 @@
   {{- end -}}
   {{- $heroTopics := first 8 $topicItems -}}
   {{- $sidebarTopics := first 10 $topicItems -}}
-  {{- $paginator := .Paginate $pages 8 -}}
+  {{- $paginator := .Paginate $primaryPages 8 -}}
   {{- $pagedPages := $paginator.Pages -}}
   {{- $yearGroups := $pagedPages.GroupByDate "2006" -}}
   <style>
@@ -775,6 +794,56 @@
       font-size: 0.82rem;
       line-height: 1.7;
       text-align: right;
+    }
+    .taxonomy-series-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1rem;
+      align-items: center;
+      padding: 1.05rem 1.15rem;
+      border: 1px solid var(--taxonomy-line);
+      border-radius: 20px;
+      background:
+        linear-gradient(135deg, rgba(122, 69, 48, 0.08), transparent 42%),
+        var(--taxonomy-surface);
+    }
+    .taxonomy-series-panel__eyebrow {
+      display: block;
+      margin-bottom: 0.32rem;
+      color: var(--taxonomy-accent);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .taxonomy-series-panel h2 {
+      margin: 0;
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      line-height: 1.3;
+    }
+    .taxonomy-series-panel p {
+      max-width: 42rem;
+      margin: 0.55rem 0 0;
+      color: var(--taxonomy-text-soft);
+      font-size: 0.86rem;
+      line-height: 1.7;
+    }
+    .taxonomy-series-panel__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.62rem 0.95rem;
+      border: 1px solid rgba(15, 110, 86, 0.22);
+      border-radius: 999px;
+      background: var(--taxonomy-surface-soft);
+      color: var(--taxonomy-text);
+      font-size: 0.82rem;
+      line-height: 1;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .taxonomy-series-panel__link:hover {
+      border-color: rgba(15, 110, 86, 0.38);
+      color: var(--taxonomy-accent);
     }
     .taxonomy-featured-grid {
       display: grid;
@@ -1227,6 +1296,12 @@
       .taxonomy-category-section__note {
         text-align: left;
       }
+      .taxonomy-series-panel {
+        grid-template-columns: 1fr;
+      }
+      .taxonomy-series-panel__link {
+        justify-self: start;
+      }
       .taxonomy-pagination {
         align-items: center;
         flex-direction: column;
@@ -1579,6 +1654,24 @@
     </div>
 
     <main class="taxonomy-category-main">
+        {{- if and $isPainCategory (gt (len $seriesPages) 0) -}}
+        {{- with site.GetPage (printf "/tags/%s" $seriesTagName) -}}
+        <section class="taxonomy-category-section taxonomy-series-section" aria-labelledby="taxonomy-series-title">
+          <div class="taxonomy-series-panel">
+            <div>
+              <span class="taxonomy-series-panel__eyebrow">Series</span>
+              <h2 id="taxonomy-series-title">{{ .Title }}</h2>
+              <p>整理疼痛訪談、投稿與計畫成果，作為病痛經驗中的專題入口；個人病痛、蟹足腫與回診書寫則保留在下方主列表。</p>
+            </div>
+            <a class="taxonomy-series-panel__link" href="{{ .RelPermalink }}">
+              <span>閱讀系列</span>
+              <span>{{ len $seriesPages }} 篇</span>
+            </a>
+          </div>
+        </section>
+        {{- end -}}
+        {{- end -}}
+
         {{- if gt (len $featured) 0 }}
         <section class="taxonomy-category-section taxonomy-featured" aria-labelledby="taxonomy-featured-title">
           <div class="taxonomy-category-section__heading">
@@ -1740,7 +1833,7 @@
           {{- end -}}
           {{- if gt $paginator.TotalPages 1 }}
           <nav class="taxonomy-pagination" aria-label="分類文章分頁">
-            <div class="taxonomy-pagination__meta">第 {{ $paginator.PageNumber }} / {{ $paginator.TotalPages }} 頁，共 {{ len $pages }} 篇文章</div>
+            <div class="taxonomy-pagination__meta">第 {{ $paginator.PageNumber }} / {{ $paginator.TotalPages }} 頁，共 {{ len $primaryPages }} 篇文章</div>
             <div class="taxonomy-pagination__links">
               {{- with $paginator.Prev }}
                 <a class="taxonomy-pagination__link" href="{{ .URL }}">上一頁</a>
