@@ -29,8 +29,13 @@
 
   {{- $latestPage := index $sourcePages 0 -}}
   {{- $postCount := len $sourcePages -}}
+  {{- $fixedCover := .cover | default dict -}}
+  {{- $fixedCoverSrc := (index $fixedCover "src") | default "" -}}
+  {{- $hasFixedCover := ne $fixedCoverSrc "" -}}
   {{- $cover := dict "src" $fallbackImage "alt" (.title | default $sourceName) -}}
-  {{- if $latestPage -}}
+  {{- if $hasFixedCover -}}
+    {{- $cover = merge $cover $fixedCover -}}
+  {{- else if $latestPage -}}
     {{- $cover = partial "get-page-cover-resource.html" (dict "page" $latestPage "fallback" $fallbackImage) | transform.Unmarshal -}}
   {{- end -}}
 
@@ -39,6 +44,7 @@
     "latestPage" $latestPage
     "postCount" $postCount
     "cover" $cover
+    "fixedCover" $hasFixedCover
   )) -}}
 {{- end -}}
 
@@ -76,6 +82,7 @@
     {{- range $idx, $card := $orderedCategoryCards -}}
       {{- if $card.entryURL -}}
       {{- $coverResource := "" -}}
+      {{- if not $card.fixedCover -}}
       {{- with $card.latestPage -}}
         {{- $coverImage := .Params.cover.image -}}
         {{- if $coverImage -}}
@@ -90,6 +97,7 @@
           {{- end -}}
           {{- $coverResource = or $pageBundleCover $globalResourcesCover -}}
         {{- end -}}
+      {{- end -}}
       {{- end -}}
       <article class="taxonomy-landing-card taxonomy-landing-card--{{ $card.accent }}">
         <a class="taxonomy-landing-card__stretched-link" href="{{ $card.entryURL }}" aria-label="進入 {{ $card.title }}"></a>

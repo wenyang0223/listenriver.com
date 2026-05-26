@@ -22,6 +22,9 @@ categoryCards:
     source:
       kind: category
       name: 助人工作
+    cover:
+      src: /blog/助人工作/受苦的倒影/《受苦的倒影》新書講座.jpg
+      alt: 《受苦的倒影》新書講座現場
     description: 記錄社會工作與對話現場，寫下助人實務的困惑與學習。
     tags:
       - 助人工作

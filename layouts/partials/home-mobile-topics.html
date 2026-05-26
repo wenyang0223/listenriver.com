@@ -31,8 +31,13 @@
   {{- end -}}
 
   {{- $latestPage := index ($sourcePages.ByDate.Reverse) 0 -}}
+  {{- $fixedCover := .cover | default dict -}}
+  {{- $fixedCoverSrc := (index $fixedCover "src") | default "" -}}
+  {{- $hasFixedCover := ne $fixedCoverSrc "" -}}
   {{- $cover := dict "src" $fallbackImage "alt" (.title | default $sourceName) -}}
-  {{- if $latestPage -}}
+  {{- if $hasFixedCover -}}
+    {{- $cover = merge $cover $fixedCover -}}
+  {{- else if $latestPage -}}
     {{- $cover = partial "get-page-cover-resource.html" (dict "page" $latestPage "fallback" $fallbackImage) | transform.Unmarshal -}}
   {{- end -}}
 
