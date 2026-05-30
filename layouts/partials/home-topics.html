@@ -99,7 +99,7 @@
         {{- end -}}
       {{- end -}}
       {{- end -}}
-      <article class="taxonomy-landing-card taxonomy-landing-card--{{ $card.accent }}">
+      <article class="taxonomy-landing-card topic-card taxonomy-landing-card--{{ $card.accent }}">
         <a class="taxonomy-landing-card__stretched-link" href="{{ $card.entryURL }}" aria-label="進入 {{ $card.title }}"></a>
         <div class="taxonomy-landing-card__media">
           {{- if $coverResource -}}
@@ -116,12 +116,12 @@
             <img src="{{ $card.cover.src }}" alt="{{ $card.cover.alt }}" loading="lazy" decoding="async">
           {{- end -}}
         </div>
-        <div class="taxonomy-landing-card__body">
+        <div class="taxonomy-landing-card__body topic-card-body">
           <div class="taxonomy-landing-card__topline">
             <span class="taxonomy-landing-card__index">{{ printf "%02d" (add $idx 1) }}</span>
             <span class="taxonomy-landing-card__label">{{ $card.en }}</span>
           </div>
-          <h3 class="taxonomy-landing-card__title">{{ $card.title }}</h3>
+          <h3 class="taxonomy-landing-card__title topic-card-name">{{ $card.title }}</h3>
           <div class="taxonomy-landing-card__description"><p>{{ $card.description }}</p></div>
           {{- with $card.tags }}
           <div class="taxonomy-landing-card__tags" aria-label="{{ $card.title }} 代表標籤">
@@ -131,7 +131,7 @@
           </div>
           {{- end }}
           <div class="taxonomy-landing-card__footer">
-            <span>{{ $card.postCount }} 篇文章</span>
+            <span class="topic-card-count">{{ $card.postCount }} 篇文章</span>
             <span class="taxonomy-landing-card__arrow" aria-hidden="true">→</span>
           </div>
         </div>

@@ -11,10 +11,9 @@
   {{- $clubhousePages = first $clubhouseLimit (sort .RegularPagesRecursive "Date" "desc") -}}
 {{- end -}}
 {{- $allPages = where $allPages "Params.hiddenInHomeList" "!=" "true" -}}
-{{- $featuredLimit := site.Params.homeFeaturedLimit | default 4 -}}
 {{- $latestLimit := 6 -}}
 {{- $categoryItems := partial "home-axis-data-clean.html" . -}}
-{{- $featuredPages := first $featuredLimit (where $allPages "Params.featured" true) -}}
+{{- $featuredPages := where $allPages "Params.featured" true -}}
 {{- $latestPages := first $latestLimit $allPages -}}
 {{- $paginator := .Paginate $allPages -}}
 

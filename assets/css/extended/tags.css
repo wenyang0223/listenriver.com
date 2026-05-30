@@ -1,0 +1,58 @@
+.tag-pill {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 500;
+  padding: 2px 7px;
+  border-radius: 4px;
+  line-height: 1.4;
+  vertical-align: middle;
+}
+
+/* 6 category colors */
+.tag-\9605\8B80\8207\7B46\8A18,
+.tag-閱讀與筆記,
+.tag-reading {
+  background: #E1F5EE;
+  color: #0F6E56;
+}
+
+.tag-\65E5\5E38\66F8\5BEB,
+.tag-日常書寫,
+.tag-daily-writing {
+  background: #FAEEDA;
+  color: #854F0B;
+}
+
+.tag-\6210\70BA\81EA\5DF1,
+.tag-成為自己,
+.tag-becoming-self {
+  background: #EEEDFE;
+  color: #534AB7;
+}
+
+.tag-\75C5\75DB\7D93\9A57,
+.tag-病痛經驗,
+.tag-illness {
+  background: #FBEAF0;
+  color: #993556;
+}
+
+.tag-\52A9\4EBA\5DE5\4F5C,
+.tag-助人工作,
+.tag-helping {
+  background: #EAF3DE;
+  color: #3B6D11;
+}
+
+.tag-\6703\6240\6A21\5F0F,
+.tag-會所模式,
+.tag-clubhouse {
+  background: #E6F1FB;
+  color: #185FA5;
+}
+
+@media (max-width: 480px) {
+  .tag-pill {
+    font-size: 10px;
+  }
+}
