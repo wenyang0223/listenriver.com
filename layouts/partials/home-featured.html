@@ -63,4 +63,80 @@
     {{- end -}}
   </div>
 </section>
+<section class="home-section home-section--mobile-featured" aria-labelledby="home-featured-mobile-title">
+  <div class="home-section-header">
+    <h2 id="home-featured-mobile-title">精選文章<span class="section-en">Featured Posts</span></h2>
+    <a href="{{ "/blog/" | relURL }}">查看全部 →</a>
+  </div>
+  <div class="scroll-hint">← 滑動查看更多</div>
+  <div class="featured-scroll-row">
+    {{- range $pages -}}
+    {{- $category := index (.Params.categories | default (slice)) 0 | default "" -}}
+    {{- $categoryClass := "" -}}
+    {{- if eq $category "閱讀與筆記" -}}
+      {{- $categoryClass = "tag-reading" -}}
+    {{- else if eq $category "日常書寫" -}}
+      {{- $categoryClass = "tag-daily-writing" -}}
+    {{- else if eq $category "成為自己" -}}
+      {{- $categoryClass = "tag-becoming-self" -}}
+    {{- else if eq $category "病痛經驗" -}}
+      {{- $categoryClass = "tag-illness" -}}
+    {{- else if eq $category "助人工作" -}}
+      {{- $categoryClass = "tag-helping" -}}
+    {{- else if eq $category "會所模式" -}}
+      {{- $categoryClass = "tag-clubhouse" -}}
+    {{- end -}}
+    {{- $coverImage := .Params.cover.image | default "" -}}
+    {{- $coverAlt := .Params.cover.alt | default .Params.cover.caption | default .Title | plainify -}}
+    {{- $coverResource := "" -}}
+    {{- if $coverImage -}}
+      {{- $coverStem := replaceRE "\\.[^.]+$" "" (path.Base $coverImage) -}}
+      {{- $coverResource = (.Resources.ByType "image").GetMatch (printf "%s.*" $coverStem) -}}
+      {{- if not $coverResource -}}
+        {{- $coverResource = (.Resources.ByType "image").GetMatch (printf "*%s*" $coverImage) -}}
+      {{- end -}}
+    {{- else -}}
+      {{- $coverResource = .Resources.GetMatch "cover.*" -}}
+    {{- end -}}
+    <a class="feat-card" href="{{ .RelPermalink }}">
+      <div class="feat-img">
+        {{- if $coverImage -}}
+          {{- if $coverResource -}}
+            {{- partialCached "optimized-image.html" (dict
+              "resource" $coverResource
+              "alt" $coverAlt
+              "loading" "lazy"
+              "sizes" "155px"
+              "maxWidth" 320
+              "widths" (slice 155 310)
+              "fetchpriority" "auto"
+            ) $coverResource.RelPermalink $coverAlt "featured-mobile" -}}
+          {{- else -}}
+            <img src="{{ $coverImage | relURL }}" alt="{{ $coverAlt }}" loading="lazy" decoding="async">
+          {{- end -}}
+        {{- else if $coverResource -}}
+          {{- partialCached "optimized-image.html" (dict
+            "resource" $coverResource
+            "alt" $coverAlt
+            "loading" "lazy"
+            "sizes" "155px"
+            "maxWidth" 320
+            "widths" (slice 155 310)
+            "fetchpriority" "auto"
+          ) $coverResource.RelPermalink $coverAlt "featured-mobile-fallback" -}}
+        {{- else -}}
+          <div class="feat-img-placeholder {{ $categoryClass }}" aria-hidden="true"></div>
+        {{- end -}}
+      </div>
+      <div class="feat-body">
+        {{- if $category -}}
+        <span class="tag-pill tag-{{ $category }} {{ $categoryClass }}">{{ $category }}</span>
+        {{- end -}}
+        <h3 class="feat-title">{{ .Title }}</h3>
+        <div class="feat-meta">{{ .Date.Format "2006.01.02" }} · {{ .ReadingTime }} 分鐘</div>
+      </div>
+    </a>
+    {{- end -}}
+  </div>
+</section>
 {{- end -}}
