@@ -10,8 +10,9 @@
   </div>
   <div class="home-latest-grid">
     {{- range $index, $page := $pages -}}
+    {{- $displayTitle := $page.Params.displayTitle | default $page.Title | default $page.File.TranslationBaseName -}}
     <article class="home-latest-item{{ if ge $index 3 }} home-latest-item--mobile-extra{{ end }}">
-      <a class="home-latest-item__link" href="{{ $page.RelPermalink }}" aria-label="閱讀 {{ $page.Title | plainify }}"></a>
+      <a class="home-latest-item__link" href="{{ $page.RelPermalink }}" aria-label="閱讀 {{ $displayTitle | plainify }}"></a>
       <div class="home-latest-item__media" aria-hidden="true">
         {{- $isHidden := ($page.Param "cover.hiddenInList") | default ($page.Param "cover.hidden") | default false -}}
         {{- $latestSizes := "(min-width: 768px) 360px, 42vw" -}}
@@ -28,7 +29,7 @@
           <span>{{ partial "reading-time.html" $page }} 分鐘閱讀</span>
           {{- end -}}
         </div>
-        <h3 class="home-latest-item__title">{{ $page.Title }}</h3>
+        <h3 class="home-latest-item__title">{{ $displayTitle }}</h3>
         <p class="home-latest-item__excerpt">{{ $page.Summary | plainify | htmlUnescape | truncate 120 }}</p>
       </div>
     </article>
@@ -42,14 +43,15 @@
   </div>
   <div class="latest-list">
     {{- range first 6 $pages -}}
+    {{- $displayTitle := .Params.displayTitle | default .Title | default .File.TranslationBaseName -}}
     {{- $category := index (.Params.categories | default (slice)) 0 | default "" -}}
     {{- $categoryClass := "" -}}
     {{- if eq $category "閱讀與筆記" -}}
       {{- $categoryClass = "tag-reading" -}}
     {{- else if eq $category "日常書寫" -}}
-      {{- $categoryClass = "tag-daily-writing" -}}
+      {{- $categoryClass = "tag-daily" -}}
     {{- else if eq $category "成為自己" -}}
-      {{- $categoryClass = "tag-becoming-self" -}}
+      {{- $categoryClass = "tag-self" -}}
     {{- else if eq $category "病痛經驗" -}}
       {{- $categoryClass = "tag-illness" -}}
     {{- else if eq $category "助人工作" -}}
@@ -103,7 +105,7 @@
         {{- if $category -}}
         <span class="tag-pill tag-{{ $category }} {{ $categoryClass }}">{{ $category }}</span>
         {{- end -}}
-        <h3 class="latest-title">{{ .Title }}</h3>
+        <h3 class="latest-title">{{ $displayTitle }}</h3>
         <div class="latest-meta">{{ .Date.Format "2006.01.02" }} · {{ .ReadingTime }} 分鐘</div>
       </div>
     </a>
