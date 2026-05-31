@@ -6549,6 +6549,7 @@ body:not(.list) .main .salon-hero {
 .home-discovery-section--topics .taxonomy-landing-card__title {
   margin: 0;
   font-size: 1.1rem;
+  font-weight: 800;
   line-height: 1.35;
   letter-spacing: 0.02em;
 }
@@ -7124,6 +7125,7 @@ body:not(.list) .main .salon-hero {
 
   .home-mobile-topic-link__name {
     min-width: 0;
+    font-weight: 800;
   }
 
   .home-mobile-topic-link__meta {

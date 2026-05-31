@@ -29,11 +29,15 @@
             {{- partialCached "cover.html" (dict "cxt" $page "IsSingle" false "isHidden" $isHidden "sizes" $clubhouseSizes "widths" $clubhouseWidths "maxWidth" 480) $page.RelPermalink false $isHidden ($page.Params.cover.image | default "") "lazy" "auto" $clubhouseSizes (delimit $clubhouseWidths "-") 480 -}}
           </div>
           <div class="home-clubhouse-card__body latest-right">
-            <div class="home-clubhouse-card__meta latest-meta">
-              <span class="home-clubhouse-card__tag">{{ $label }}</span>
-              <time datetime="{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ $page.Date.Format "2006.01.02" }}</time>
-            </div>
+            <span class="home-clubhouse-card__tag tag-pill tag-clubhouse">{{ $label }}</span>
             <h3 class="home-clubhouse-card__title latest-title">{{ $displayTitle }}</h3>
+            <div class="home-clubhouse-card__meta latest-meta">
+              <time datetime="{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ $page.Date.Format "2006.01.02" }}</time>
+              {{- if site.Params.ShowReadingTime -}}
+              <span aria-hidden="true">·</span>
+              <span>{{ partial "reading-time.html" $page }} 分鐘閱讀</span>
+              {{- end -}}
+            </div>
             <p class="home-clubhouse-card__excerpt">{{ $page.Summary | plainify | htmlUnescape | truncate 92 }}</p>
           </div>
         </article>

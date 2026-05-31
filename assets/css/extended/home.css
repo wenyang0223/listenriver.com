@@ -225,9 +225,19 @@
   }
 
   .home-discovery .home-clubhouse-card__body.latest-right {
+    display: block;
     flex: 1;
     min-width: 0;
     padding: 0;
+    gap: 0;
+  }
+
+  .home-discovery .home-clubhouse-card__tag.tag-pill {
+    max-width: 100%;
+    margin-bottom: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .home-discovery .home-clubhouse-card .latest-thumb,
@@ -270,6 +280,7 @@
   }
 
   .home-discovery .home-clubhouse-card__meta.latest-meta {
+    display: flex;
     min-width: 0;
     gap: 0.35rem;
     font-size: 10px;
@@ -318,7 +329,7 @@
 
   .topic-card-name {
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 800;
     color: #2e2e33;
   }
 
