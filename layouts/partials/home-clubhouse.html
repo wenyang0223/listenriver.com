@@ -19,6 +19,20 @@
       <div class="home-clubhouse-scroll" data-home-clubhouse-scroll>
         {{- range $index, $page := $pages -}}
           {{- $label := index ($page.Params.categories | default (slice)) 0 | default (index ($page.Params.tags | default (slice)) 0) | default "會所" -}}
+          {{- $labelClass := "tag-general" -}}
+          {{- if eq $label "閱讀與筆記" -}}
+            {{- $labelClass = "tag-reading" -}}
+          {{- else if eq $label "日常書寫" -}}
+            {{- $labelClass = "tag-daily" -}}
+          {{- else if eq $label "成為自己" -}}
+            {{- $labelClass = "tag-self" -}}
+          {{- else if eq $label "病痛經驗" -}}
+            {{- $labelClass = "tag-illness" -}}
+          {{- else if eq $label "助人工作" -}}
+            {{- $labelClass = "tag-helping" -}}
+          {{- else if eq $label "會所模式" -}}
+            {{- $labelClass = "tag-clubhouse" -}}
+          {{- end -}}
           {{- $displayTitle := $page.Params.displayTitle | default $page.Title -}}
         <article class="home-clubhouse-card latest-card{{ if ge $index 3 }} home-clubhouse-card--mobile-extra{{ end }}">
           <a class="home-clubhouse-card__link" href="{{ $page.RelPermalink }}" aria-label="閱讀 {{ $displayTitle | plainify }}"></a>
@@ -29,7 +43,7 @@
             {{- partialCached "cover.html" (dict "cxt" $page "IsSingle" false "isHidden" $isHidden "sizes" $clubhouseSizes "widths" $clubhouseWidths "maxWidth" 480) $page.RelPermalink false $isHidden ($page.Params.cover.image | default "") "lazy" "auto" $clubhouseSizes (delimit $clubhouseWidths "-") 480 -}}
           </div>
           <div class="home-clubhouse-card__body latest-right">
-            <span class="home-clubhouse-card__tag tag-pill tag-clubhouse">{{ $label }}</span>
+            <span class="home-clubhouse-card__tag tag-pill {{ $labelClass }}">{{ $label }}</span>
             <h3 class="home-clubhouse-card__title latest-title">{{ $displayTitle }}</h3>
             <div class="home-clubhouse-card__meta latest-meta">
               <time datetime="{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ $page.Date.Format "2006.01.02" }}</time>

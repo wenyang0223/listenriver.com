@@ -1,58 +1,100 @@
-.tag-pill {
+/* ============================================================
+   listenriver.com — Tag & Category Color System
+   Applies globally: mobile + desktop, no media query wrapper.
+
+   Two tiers:
+   1. .tag-pill + .tag-{category}  → 6 main categories (bold)
+   2. .tag-general                 → all other tags (regular)
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   Base styles
+   ------------------------------------------------------------ */
+
+.tag-pill,
+.tag-general {
   display: inline-block;
-  font-size: 9px;
-  font-weight: 500;
-  padding: 2px 7px;
-  border-radius: 4px;
-  line-height: 1.4;
-  vertical-align: middle;
+  font-size: 10px;
+  padding: 2px 9px;
+  border-radius: 20px;
+  letter-spacing: .01em;
+  text-decoration: none;
 }
 
-/* 6 category colors */
-.tag-\9605\8B80\8207\7B46\8A18,
-.tag-閱讀與筆記,
+.tag-pill {
+  font-weight: 500;   /* category — heavier, more prominent */
+}
+
+.tag-general {
+  font-weight: 400;   /* general tag — lighter, subordinate */
+}
+
+
+/* ------------------------------------------------------------
+   Category colors (6 main categories)
+   ------------------------------------------------------------ */
+
 .tag-reading {
-  background: #E1F5EE;
-  color: #0F6E56;
+  background: #F5E8E0;   /* 赤褐底 */
+  color:      #5C2810;   /* 深赤褐字 */
+  /* 閱讀與筆記 — Reading & Notes */
 }
 
-.tag-\65E5\5E38\66F8\5BEB,
-.tag-日常書寫,
-.tag-daily-writing {
-  background: #FAEEDA;
-  color: #854F0B;
+.tag-daily {
+  background: #DAE2F7;   /* 夜藍底 */
+  color:      #0A1A5C;   /* 深夜藍字 */
+  /* 日常書寫 — Daily Writing */
 }
 
-.tag-\6210\70BA\81EA\5DF1,
-.tag-成為自己,
-.tag-becoming-self {
-  background: #EEEDFE;
-  color: #534AB7;
+.tag-self {
+  background: #F0D5F0;   /* 丁香紫底 */
+  color:      #5A0060;   /* 深丁香紫字 */
+  /* 成為自己 — Becoming Self */
 }
 
-.tag-\75C5\75DB\7D93\9A57,
-.tag-病痛經驗,
 .tag-illness {
-  background: #FBEAF0;
-  color: #993556;
+  background: #F7DAE4;   /* 胭脂底 */
+  color:      #6B0A28;   /* 深胭脂字 */
+  /* 病痛經驗 — Illness & Pain */
 }
 
-.tag-\52A9\4EBA\5DE5\4F5C,
-.tag-助人工作,
 .tag-helping {
-  background: #EAF3DE;
-  color: #3B6D11;
+  background: #DAF7E4;   /* 茶綠底 */
+  color:      #086B28;   /* 深茶綠字 */
+  /* 助人工作 — Helping Practice */
 }
 
-.tag-\6703\6240\6A21\5F0F,
-.tag-會所模式,
 .tag-clubhouse {
-  background: #E6F1FB;
-  color: #185FA5;
+  background: #DAE8F7;   /* 靛青底 */
+  color:      #083060;   /* 深靛青字 */
+  /* 會所模式 — Clubhouse Model */
 }
 
-@media (max-width: 480px) {
-  .tag-pill {
-    font-size: 10px;
-  }
+
+/* ------------------------------------------------------------
+   General tag color (all sub-tags like 書摘、電影心得 etc.)
+   稻穗米 — warm rice yellow, no overlap with any category above
+   ------------------------------------------------------------ */
+
+.tag-general {
+  background: #F5F0E0;   /* 稻穗米底 */
+  color:      #4A3C1A;   /* 深褐字 */
 }
+
+
+/* ============================================================
+   How to apply in Hugo templates:
+
+   Category:
+   <span class="tag-pill tag-reading">閱讀與筆記</span>
+   <span class="tag-pill tag-daily">日常書寫</span>
+   <span class="tag-pill tag-self">成為自己</span>
+   <span class="tag-pill tag-illness">病痛經驗</span>
+   <span class="tag-pill tag-helping">助人工作</span>
+   <span class="tag-pill tag-clubhouse">會所模式</span>
+
+   General tag:
+   <span class="tag-general">書摘</span>
+   <span class="tag-general">電影心得</span>
+   ============================================================ */

@@ -6416,17 +6416,6 @@ body:not(.list) .main .salon-hero {
   padding: 0.7rem 0.72rem 0.78rem;
 }
 
-.home-discovery .home-clubhouse-card__tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.16rem 0.4rem;
-  border-radius: 999px;
-  background: rgba(111, 202, 209, 0.08);
-  color: #24717a;
-  font-size: 0.62rem;
-  font-weight: 700;
-}
-
 .home-discovery .home-clubhouse-card__title {
   margin: 0;
   font-size: 0.84rem;
