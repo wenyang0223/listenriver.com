@@ -191,6 +191,7 @@
     align-items: stretch;
     border: 0.5px solid #e5e4df;
     border-radius: 10px;
+    background: var(--entry);
     min-height: 88px;
     padding: 0 11px 0 0;
     margin-bottom: 0;
@@ -206,6 +207,7 @@
     width: 100%;
     border: 0.5px solid #e5e4df;
     border-radius: 10px;
+    background: var(--entry);
     min-height: 88px;
     padding: 0 11px 0 0;
     margin-bottom: 0;

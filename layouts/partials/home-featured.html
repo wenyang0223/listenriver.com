@@ -18,9 +18,24 @@
         {{- partialCached "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden "loading" "eager" "fetchpriority" "high" "sizes" $leadSizes "widths" $leadWidths "maxWidth" 960) .RelPermalink false $isHidden (.Params.cover.image | default "") "eager" "high" $leadSizes (delimit $leadWidths "-") 960 -}}
       </a>
       <div class="home-post-card__body">
+        {{- $category := index (.Params.categories | default (slice)) 0 | default "" -}}
+        {{- $categoryClass := "" -}}
+        {{- if eq $category "閱讀與筆記" -}}
+          {{- $categoryClass = "tag-reading" -}}
+        {{- else if eq $category "日常書寫" -}}
+          {{- $categoryClass = "tag-daily" -}}
+        {{- else if eq $category "成為自己" -}}
+          {{- $categoryClass = "tag-self" -}}
+        {{- else if eq $category "病痛經驗" -}}
+          {{- $categoryClass = "tag-illness" -}}
+        {{- else if eq $category "助人工作" -}}
+          {{- $categoryClass = "tag-helping" -}}
+        {{- else if eq $category "會所模式" -}}
+          {{- $categoryClass = "tag-clubhouse" -}}
+        {{- end -}}
         <div class="home-post-card__meta">
-          {{- with index (.Params.categories | default (slice)) 0 -}}
-          <span>{{ . }}</span>
+          {{- if $category -}}
+          <span class="tag-pill tag-{{ $category }} {{ $categoryClass }}">{{ $category }}</span>
           {{- end -}}
           <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "2006.01.02" }}</time>
           {{- if site.Params.ShowReadingTime -}}
@@ -37,7 +52,7 @@
 
     {{- if gt (len $pages) 1 -}}
     <div class="home-featured-stack">
-      {{- range after 1 $pages -}}
+      {{- range first 2 (after 1 $pages) -}}
       <article class="home-post-card home-post-card--compact">
         <a class="home-post-card__media" href="{{ .RelPermalink }}" aria-hidden="true" tabindex="-1">
           {{- $isHidden := (.Param "cover.hiddenInList") | default (.Param "cover.hidden") | default false -}}
@@ -46,9 +61,24 @@
           {{- partialCached "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden "sizes" $compactSizes "widths" $compactWidths "maxWidth" 480) .RelPermalink false $isHidden (.Params.cover.image | default "") "lazy" "auto" $compactSizes (delimit $compactWidths "-") 480 -}}
         </a>
         <div class="home-post-card__body">
+          {{- $category := index (.Params.categories | default (slice)) 0 | default "" -}}
+          {{- $categoryClass := "" -}}
+          {{- if eq $category "閱讀與筆記" -}}
+            {{- $categoryClass = "tag-reading" -}}
+          {{- else if eq $category "日常書寫" -}}
+            {{- $categoryClass = "tag-daily" -}}
+          {{- else if eq $category "成為自己" -}}
+            {{- $categoryClass = "tag-self" -}}
+          {{- else if eq $category "病痛經驗" -}}
+            {{- $categoryClass = "tag-illness" -}}
+          {{- else if eq $category "助人工作" -}}
+            {{- $categoryClass = "tag-helping" -}}
+          {{- else if eq $category "會所模式" -}}
+            {{- $categoryClass = "tag-clubhouse" -}}
+          {{- end -}}
           <div class="home-post-card__meta">
-            {{- with index (.Params.categories | default (slice)) 0 -}}
-            <span>{{ . }}</span>
+            {{- if $category -}}
+            <span class="tag-pill tag-{{ $category }} {{ $categoryClass }}">{{ $category }}</span>
             {{- end -}}
             <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "2006.01.02" }}</time>
           </div>
