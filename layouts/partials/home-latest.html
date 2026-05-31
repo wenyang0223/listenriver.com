@@ -11,6 +11,21 @@
   <div class="home-latest-grid">
     {{- range $index, $page := $pages -}}
     {{- $displayTitle := $page.Params.displayTitle | default $page.Title | default $page.File.TranslationBaseName -}}
+    {{- $category := index ($page.Params.categories | default (slice)) 0 | default "" -}}
+    {{- $categoryClass := "" -}}
+    {{- if eq $category "閱讀與筆記" -}}
+      {{- $categoryClass = "tag-reading" -}}
+    {{- else if eq $category "日常書寫" -}}
+      {{- $categoryClass = "tag-daily" -}}
+    {{- else if eq $category "成為自己" -}}
+      {{- $categoryClass = "tag-self" -}}
+    {{- else if eq $category "病痛經驗" -}}
+      {{- $categoryClass = "tag-illness" -}}
+    {{- else if eq $category "助人工作" -}}
+      {{- $categoryClass = "tag-helping" -}}
+    {{- else if eq $category "會所模式" -}}
+      {{- $categoryClass = "tag-clubhouse" -}}
+    {{- end -}}
     <article class="home-latest-item{{ if ge $index 3 }} home-latest-item--mobile-extra{{ end }}">
       <a class="home-latest-item__link" href="{{ $page.RelPermalink }}" aria-label="閱讀 {{ $displayTitle | plainify }}"></a>
       <div class="home-latest-item__media" aria-hidden="true">
@@ -21,8 +36,8 @@
       </div>
       <div class="home-latest-item__body">
         <div class="home-latest-item__meta">
-          {{- with index ($page.Params.categories | default (slice)) 0 -}}
-          <span>{{ . }}</span>
+          {{- if $category -}}
+          <span class="tag-pill tag-{{ $category }} {{ $categoryClass }}">{{ $category }}</span>
           {{- end -}}
           <time datetime="{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ $page.Date.Format "2006.01.02" }}</time>
           {{- if site.Params.ShowReadingTime -}}

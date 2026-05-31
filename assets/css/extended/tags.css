@@ -1,10 +1,10 @@
 /* ============================================================
-   listenriver.com — Tag & Category Color System
+   listenriver.com Tag & Category Color System
    Applies globally: mobile + desktop, no media query wrapper.
 
    Two tiers:
-   1. .tag-pill + .tag-{category}  → 6 main categories (bold)
-   2. .tag-general                 → all other tags (regular)
+   1. .tag-pill + .tag-{category}  - 6 main categories
+   2. .tag-general                 - all other tags
    ============================================================ */
 
 
@@ -17,17 +17,18 @@
   display: inline-block;
   font-size: 10px;
   padding: 2px 9px;
+  border: 0.5px solid transparent;
   border-radius: 20px;
   letter-spacing: .01em;
   text-decoration: none;
 }
 
 .tag-pill {
-  font-weight: 500;   /* category — heavier, more prominent */
+  font-weight: 500;
 }
 
 .tag-general {
-  font-weight: 400;   /* general tag — lighter, subordinate */
+  font-weight: 400;
 }
 
 
@@ -36,65 +37,47 @@
    ------------------------------------------------------------ */
 
 .tag-reading {
-  background: #F5E8E0;   /* 赤褐底 */
-  color:      #5C2810;   /* 深赤褐字 */
-  /* 閱讀與筆記 — Reading & Notes */
+  background-color: #edeaf7;
+  color: #5c5496;
+  border-color: #c5bfe8;
 }
 
 .tag-daily {
-  background: #DAE2F7;   /* 夜藍底 */
-  color:      #0A1A5C;   /* 深夜藍字 */
-  /* 日常書寫 — Daily Writing */
+  background-color: #f7eddf;
+  color: #8a5e38;
+  border-color: #e2c49e;
 }
 
 .tag-self {
-  background: #F0D5F0;   /* 丁香紫底 */
-  color:      #5A0060;   /* 深丁香紫字 */
-  /* 成為自己 — Becoming Self */
+  background-color: #e2f5ef;
+  color: #2e6b5c;
+  border-color: #a8d4c6;
 }
 
 .tag-illness {
-  background: #F7DAE4;   /* 胭脂底 */
-  color:      #6B0A28;   /* 深胭脂字 */
-  /* 病痛經驗 — Illness & Pain */
+  background-color: #f5e8ea;
+  color: #8a404b;
+  border-color: #ddb8be;
 }
 
 .tag-helping {
-  background: #DAF7E4;   /* 茶綠底 */
-  color:      #086B28;   /* 深茶綠字 */
-  /* 助人工作 — Helping Practice */
+  background-color: #e4eef6;
+  color: #2d5e82;
+  border-color: #a8c4db;
 }
 
 .tag-clubhouse {
-  background: #DAE8F7;   /* 靛青底 */
-  color:      #083060;   /* 深靛青字 */
-  /* 會所模式 — Clubhouse Model */
+  background-color: #e6f0e2;
+  color: #3d6432;
+  border-color: #aecda4;
 }
 
 
 /* ------------------------------------------------------------
-   General tag color (all sub-tags like 書摘、電影心得 etc.)
-   稻穗米 — warm rice yellow, no overlap with any category above
+   General tag color
    ------------------------------------------------------------ */
 
 .tag-general {
-  background: #F5F0E0;   /* 稻穗米底 */
-  color:      #4A3C1A;   /* 深褐字 */
+  background-color: #F5F0E0;
+  color: #4A3C1A;
 }
-
-
-/* ============================================================
-   How to apply in Hugo templates:
-
-   Category:
-   <span class="tag-pill tag-reading">閱讀與筆記</span>
-   <span class="tag-pill tag-daily">日常書寫</span>
-   <span class="tag-pill tag-self">成為自己</span>
-   <span class="tag-pill tag-illness">病痛經驗</span>
-   <span class="tag-pill tag-helping">助人工作</span>
-   <span class="tag-pill tag-clubhouse">會所模式</span>
-
-   General tag:
-   <span class="tag-general">書摘</span>
-   <span class="tag-general">電影心得</span>
-   ============================================================ */
