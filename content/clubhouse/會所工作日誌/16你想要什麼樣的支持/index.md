@@ -3,6 +3,7 @@ title: 會所工作日誌16_你想要什麼樣的支持
 displayTitle: 你想要什麼樣的支持
 seriesLabel: 會所工作日誌 16
 date: 2026-04-16
+featured: true
 description: 不知不覺和會員F工作了九個月左右，他就從玉子燒達人、過渡性職場到現在要去就業，中間也經歷許多有意義的對話，建立了我認為很真誠的夥伴關係。我們可以互相看見彼此、他可以提出對於被支持的想像、而我也能回應他說「你想要什麼樣的支持呢？」  我想這是我最接近會所準則說的「肩併肩（shoulder to shoulder）」的時刻之一。
 draft: false
 type: post

@@ -3,6 +3,7 @@ title: 會所工作日誌13_初次社區宣導
 displayTitle: 初次社區宣導
 seriesLabel: 會所工作日誌 13
 date: 2026-03-22
+featured: true
 description: 看見會員從準備到順利上台發表，真的好感動哦，像是成果發表一樣，展現出平常累積厚實的關係基底所延伸出來的成長與進步，其中也蘊含工作者的工作方法與信念，而且能夠用對話的方式呈現真是太棒了。
 draft: false
 type: post
