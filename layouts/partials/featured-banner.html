@@ -1,6 +1,8 @@
-{{- $featuredPages := first 8 (shuffle (where site.RegularPages "Params.featured" true)) -}}
-{{- $count := len $featuredPages -}}
-{{- if gt $count 0 -}}
+{{- $featured := where site.RegularPages "Params.featured" true -}}
+{{- $posts := first 8 ($featured | shuffle) -}}
+{{- $total := len $posts -}}
+
+{{- if gt $total 0 -}}
 <section class="home-discovery-section feat-banner" aria-labelledby="feat-banner-title" data-feat-carousel>
   <div class="home-discovery-section__header feat-header">
     <div>
@@ -12,80 +14,92 @@
 
   <div class="feat-carousel">
     <button class="feat-arrow feat-arrow-prev" type="button" aria-label="上一篇精選文章">‹</button>
+
     <div class="feat-track-outer">
       <div class="feat-track">
-        {{- range $featuredPages -}}
-        {{- $category := index (.Params.categories | default (slice)) 0 | default "" -}}
-        {{- $coverImage := .Params.cover.image | default "" -}}
-        {{- $coverAlt := .Params.cover.alt | default .Params.cover.caption | default .Title | plainify -}}
+        {{- range $i, $p := $posts -}}
+        {{- $img := "" -}}
+        {{- with $p.Params.cover -}}
+          {{- with .image -}}
+            {{- $img = . -}}
+          {{- end -}}
+        {{- end -}}
+        {{- $category := "" -}}
+        {{- with $p.Params.categories -}}
+          {{- $category = index . 0 -}}
+        {{- end -}}
+        {{- $categoryClass := "" -}}
+        {{- if eq $category "閱讀與筆記" -}}
+          {{- $categoryClass = "feat-category--reading" -}}
+        {{- else if eq $category "日常書寫" -}}
+          {{- $categoryClass = "feat-category--daily" -}}
+        {{- else if eq $category "成為自己" -}}
+          {{- $categoryClass = "feat-category--self" -}}
+        {{- else if eq $category "病痛經驗" -}}
+          {{- $categoryClass = "feat-category--illness" -}}
+        {{- else if eq $category "助人工作" -}}
+          {{- $categoryClass = "feat-category--helping" -}}
+        {{- else if eq $category "會所模式" -}}
+          {{- $categoryClass = "feat-category--clubhouse" -}}
+        {{- end -}}
+        {{- $coverAlt := $p.Params.cover.alt | default $p.Params.cover.caption | default $p.Title | plainify -}}
         {{- $coverResource := "" -}}
-        {{- if $coverImage -}}
-          {{- $coverStem := replaceRE "\\.[^.]+$" "" (path.Base $coverImage) -}}
-          {{- $coverResource = (.Resources.ByType "image").GetMatch (printf "%s.*" $coverStem) -}}
+        {{- if $img -}}
+          {{- $coverStem := replaceRE "\\.[^.]+$" "" (path.Base $img) -}}
+          {{- $coverResource = ($p.Resources.ByType "image").GetMatch (printf "%s.*" $coverStem) -}}
           {{- if not $coverResource -}}
-            {{- $coverResource = (.Resources.ByType "image").GetMatch (printf "*%s*" $coverImage) -}}
+            {{- $coverResource = ($p.Resources.ByType "image").GetMatch (printf "*%s*" $img) -}}
           {{- end -}}
           {{- if not $coverResource -}}
             {{- $coverResource = (resources.ByType "image").GetMatch (printf "*%s.*" $coverStem) -}}
           {{- end -}}
-        {{- else -}}
-          {{- $coverResource = .Resources.GetMatch "cover.*" -}}
         {{- end -}}
-        <article class="feat-slide">
-          <a class="feat-card-link" href="{{ .RelPermalink }}">
+        <article class="feat-slide{{ if eq $i 0 }} is-active{{ end }}">
+          <a class="feat-card" href="{{ $p.RelPermalink }}">
             <div class="feat-media">
-              {{- if $coverImage -}}
+              {{- if $img -}}
                 {{- if $coverResource -}}
                   {{- partialCached "optimized-image.html" (dict
                     "resource" $coverResource
                     "alt" $coverAlt
                     "loading" "lazy"
-                    "sizes" "(min-width: 768px) 580px, 100vw"
+                    "sizes" "(min-width: 768px) 560px, 100vw"
                     "maxWidth" 960
-                    "widths" (slice 360 580 760 960)
+                    "widths" (slice 360 560 720 960)
                     "fetchpriority" "auto"
                     "class" "feat-image"
-                  ) $coverResource.RelPermalink $coverAlt "featured-banner" -}}
+                  ) $coverResource.RelPermalink $coverAlt "featured-banner-layout" -}}
                 {{- else -}}
-                  <img class="feat-image" src="{{ $coverImage | relURL }}" alt="{{ $coverAlt }}" loading="lazy" decoding="async">
+                  <img class="feat-image" src="{{ $img | relURL }}" alt="{{ $coverAlt }}" loading="lazy" decoding="async">
                 {{- end -}}
-              {{- else if $coverResource -}}
-                {{- partialCached "optimized-image.html" (dict
-                  "resource" $coverResource
-                  "alt" $coverAlt
-                  "loading" "lazy"
-                  "sizes" "(min-width: 768px) 580px, 100vw"
-                  "maxWidth" 960
-                  "widths" (slice 360 580 760 960)
-                  "fetchpriority" "auto"
-                  "class" "feat-image"
-                ) $coverResource.RelPermalink $coverAlt "featured-banner-fallback" -}}
               {{- else -}}
                 <div class="feat-placeholder" aria-hidden="true"></div>
               {{- end -}}
             </div>
-            <div class="feat-overlay">
+            <div class="feat-body">
               {{- if $category -}}
-              <div class="feat-category">{{ $category }}</div>
+              <div class="feat-category {{ $categoryClass }}">{{ $category }}</div>
               {{- end -}}
-              <h3 class="feat-title">{{ .Title }}</h3>
-              <div class="feat-meta">{{ .Date.Format "2006.01.02" }} · {{ .ReadingTime }} 分鐘閱讀</div>
+              <h3 class="feat-title">{{ $p.Title }}</h3>
+              <div class="feat-meta">{{ $p.Date.Format "2006.01.02" }} · {{ $p.ReadingTime }} 分鐘閱讀</div>
             </div>
           </a>
         </article>
         {{- end -}}
       </div>
     </div>
+
     <button class="feat-arrow feat-arrow-next" type="button" aria-label="下一篇精選文章">›</button>
   </div>
+
   <div class="feat-dots" aria-label="精選文章輪播導覽">
-    {{- range $index, $_ := $featuredPages -}}
+    {{- range $i, $_ := $posts -}}
     <button
-      class="feat-dot{{ if eq $index 0 }} is-active{{ end }}"
+      class="feat-dot{{ if eq $i 0 }} is-active{{ end }}"
       type="button"
-      data-feat-dot="{{ $index }}"
-      aria-label="{{ printf "前往第 %d 篇精選文章" (add $index 1) }}"
-      {{ if eq $index 0 }}aria-current="true"{{ end }}>
+      data-feat-dot="{{ $i }}"
+      aria-label="{{ printf "前往第 %d 篇精選文章" (add $i 1) }}"
+      {{ if eq $i 0 }}aria-current="true"{{ end }}>
     </button>
     {{- end -}}
   </div>
@@ -128,19 +142,19 @@
     update();
   }
 
+  function stop() {
+    if (timer) {
+      window.clearInterval(timer);
+      timer = null;
+    }
+  }
+
   function start() {
     stop();
     if (slides.length > 1) {
       timer = window.setInterval(function () {
         go(1);
       }, interval);
-    }
-  }
-
-  function stop() {
-    if (timer) {
-      window.clearInterval(timer);
-      timer = null;
     }
   }
 

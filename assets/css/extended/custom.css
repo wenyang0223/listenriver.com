@@ -9707,83 +9707,6 @@ body.list .blog-archive-entry .home-latest-item__excerpt {
   min-width: 0;
 }
 
-.feat-card-link {
-  position: relative;
-  display: block;
-  aspect-ratio: 3 / 1.45;
-  overflow: hidden;
-  border-radius: 10px;
-  background: #1e1e1e;
-  color: #fff;
-  text-decoration: none;
-}
-
-.feat-card-link::after {
-  position: absolute;
-  inset: 0;
-  content: "";
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.65), transparent);
-  pointer-events: none;
-}
-
-.feat-media,
-.feat-media picture,
-.feat-image,
-.feat-placeholder {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.feat-image {
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.feat-placeholder {
-  background: #1e1e1e;
-}
-
-.feat-overlay {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  display: grid;
-  gap: 0.22rem;
-  padding: 1.1rem 1.25rem 0.9rem;
-}
-
-.feat-category {
-  color: rgba(255, 255, 255, 0.55);
-  font-family: var(--font-sans, var(--code-font-family));
-  font-size: 10px;
-  letter-spacing: 0.1em;
-  line-height: 1.2;
-  text-transform: uppercase;
-}
-
-.feat-title {
-  display: -webkit-box;
-  margin: 0;
-  overflow: hidden;
-  color: #fff;
-  font-family: var(--font-serif, Georgia, "Times New Roman", serif);
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.42;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.feat-meta {
-  color: rgba(255, 255, 255, 0.45);
-  font-family: var(--font-sans, var(--code-font-family));
-  font-size: 10px;
-  line-height: 1.35;
-}
-
 .feat-arrow {
   padding: 0 0.6rem;
   border: 0;
@@ -9803,6 +9726,120 @@ body.list .blog-archive-entry .home-latest-item__excerpt {
 .feat-arrow:disabled {
   opacity: 0.18;
   cursor: default;
+}
+
+.feat-card {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.feat-media {
+  aspect-ratio: 3 / 1.45;
+  overflow: hidden;
+  background: #1e1e1e;
+  border-radius: 10px 10px 0 0;
+}
+
+.feat-media picture,
+.feat-image,
+.feat-placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.feat-image {
+  object-fit: cover;
+}
+
+.feat-placeholder {
+  background: #1e1e1e;
+}
+
+.feat-body {
+  display: grid;
+  gap: 0.34rem;
+  padding: 0.92rem 1.05rem 1rem;
+  border: 0.5px solid var(--color-border-tertiary, rgba(17, 24, 39, 0.1));
+  border-top: 0;
+  border-radius: 0 0 10px 10px;
+  background: var(--color-background-primary, var(--entry));
+}
+
+.feat-category {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  min-height: 22px;
+  padding: 0 0.58rem;
+  border: 0.5px solid rgba(17, 24, 39, 0.1);
+  border-radius: 999px;
+  background: rgba(111, 202, 209, 0.12);
+  color: var(--secondary);
+  font-family: var(--font-sans, var(--code-font-family));
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.feat-category--reading {
+  border-color: #c5bfe8;
+  background-color: #edeaf7;
+  color: #5c5496;
+}
+
+.feat-category--daily {
+  border-color: #e2c49e;
+  background-color: #f7eddf;
+  color: #8a5e38;
+}
+
+.feat-category--self {
+  border-color: #a8d4c6;
+  background-color: #e2f5ef;
+  color: #2e6b5c;
+}
+
+.feat-category--illness {
+  border-color: #ddb8be;
+  background-color: #f5e8ea;
+  color: #8a404b;
+}
+
+.feat-category--helping {
+  border-color: #a8c4db;
+  background-color: #e4eef6;
+  color: #2d5e82;
+}
+
+.feat-category--clubhouse {
+  border-color: #aecda4;
+  background-color: #e6f0e2;
+  color: #3d6432;
+}
+
+.feat-title {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--primary);
+  font-family: var(--font-serif, Georgia, "Times New Roman", serif);
+  font-size: 18px;
+  font-weight: 650;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.feat-meta {
+  margin-top: 0.05rem;
+  color: var(--secondary);
+  font-family: var(--font-sans, var(--code-font-family));
+  font-size: 11px;
+  line-height: 1.35;
 }
 
 .feat-dots {
@@ -9842,5 +9879,13 @@ body.list .blog-archive-entry .home-latest-item__excerpt {
 
   .feat-track-outer {
     border-radius: 8px;
+  }
+
+  .feat-media {
+    border-radius: 8px 8px 0 0;
+  }
+
+  .feat-body {
+    border-radius: 0 0 8px 8px;
   }
 }
