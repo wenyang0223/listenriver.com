@@ -9667,3 +9667,180 @@ body.list .blog-archive-entry .home-latest-item__excerpt {
     -webkit-line-clamp: 3;
   }
 }
+
+.feat-banner {
+  display: grid;
+  gap: 0.85rem;
+  justify-items: center;
+}
+
+.feat-header {
+  width: 100%;
+  justify-self: stretch;
+}
+
+.feat-carousel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 760px) auto;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  width: 100%;
+}
+
+.feat-track-outer {
+  width: min(100%, 760px);
+  max-width: 760px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.feat-track {
+  display: flex;
+  transition: transform 0.45s ease;
+  will-change: transform;
+}
+
+.feat-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.feat-card-link {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 1.45;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #1e1e1e;
+  color: #fff;
+  text-decoration: none;
+}
+
+.feat-card-link::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65), transparent);
+  pointer-events: none;
+}
+
+.feat-media,
+.feat-media picture,
+.feat-image,
+.feat-placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.feat-image {
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.feat-placeholder {
+  background: #1e1e1e;
+}
+
+.feat-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  display: grid;
+  gap: 0.22rem;
+  padding: 1.1rem 1.25rem 0.9rem;
+}
+
+.feat-category {
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-sans, var(--code-font-family));
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.feat-title {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: #fff;
+  font-family: var(--font-serif, Georgia, "Times New Roman", serif);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.42;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.feat-meta {
+  color: rgba(255, 255, 255, 0.45);
+  font-family: var(--font-sans, var(--code-font-family));
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.feat-arrow {
+  padding: 0 0.6rem;
+  border: 0;
+  background: transparent;
+  color: var(--secondary);
+  font: inherit;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.feat-arrow:hover,
+.feat-arrow:focus-visible {
+  color: var(--primary);
+}
+
+.feat-arrow:disabled {
+  opacity: 0.18;
+  cursor: default;
+}
+
+.feat-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.65rem;
+}
+
+.feat-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.18);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.feat-dot.is-active {
+  width: 24px;
+  background: rgba(17, 24, 39, 0.55);
+}
+
+@media (max-width: 640px) {
+  .feat-carousel {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .feat-arrow {
+    display: none;
+  }
+
+  .feat-title {
+    font-size: 14px;
+  }
+
+  .feat-track-outer {
+    border-radius: 8px;
+  }
+}

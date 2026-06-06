@@ -1,0 +1,183 @@
+{{- $featuredPages := first 8 (shuffle (where site.RegularPages "Params.featured" true)) -}}
+{{- $count := len $featuredPages -}}
+{{- if gt $count 0 -}}
+<section class="home-discovery-section feat-banner" aria-labelledby="feat-banner-title" data-feat-carousel>
+  <div class="home-discovery-section__header feat-header">
+    <div>
+      <p class="home-discovery-section__eyebrow">Featured Posts</p>
+      <h2 id="feat-banner-title" class="home-discovery-section__title">精選文章</h2>
+    </div>
+    <a class="home-discovery-section__more" href="{{ "/blog/" | relURL }}">查看全部 →</a>
+  </div>
+
+  <div class="feat-carousel">
+    <button class="feat-arrow feat-arrow-prev" type="button" aria-label="上一篇精選文章">‹</button>
+    <div class="feat-track-outer">
+      <div class="feat-track">
+        {{- range $featuredPages -}}
+        {{- $category := index (.Params.categories | default (slice)) 0 | default "" -}}
+        {{- $coverImage := .Params.cover.image | default "" -}}
+        {{- $coverAlt := .Params.cover.alt | default .Params.cover.caption | default .Title | plainify -}}
+        {{- $coverResource := "" -}}
+        {{- if $coverImage -}}
+          {{- $coverStem := replaceRE "\\.[^.]+$" "" (path.Base $coverImage) -}}
+          {{- $coverResource = (.Resources.ByType "image").GetMatch (printf "%s.*" $coverStem) -}}
+          {{- if not $coverResource -}}
+            {{- $coverResource = (.Resources.ByType "image").GetMatch (printf "*%s*" $coverImage) -}}
+          {{- end -}}
+          {{- if not $coverResource -}}
+            {{- $coverResource = (resources.ByType "image").GetMatch (printf "*%s.*" $coverStem) -}}
+          {{- end -}}
+        {{- else -}}
+          {{- $coverResource = .Resources.GetMatch "cover.*" -}}
+        {{- end -}}
+        <article class="feat-slide">
+          <a class="feat-card-link" href="{{ .RelPermalink }}">
+            <div class="feat-media">
+              {{- if $coverImage -}}
+                {{- if $coverResource -}}
+                  {{- partialCached "optimized-image.html" (dict
+                    "resource" $coverResource
+                    "alt" $coverAlt
+                    "loading" "lazy"
+                    "sizes" "(min-width: 768px) 580px, 100vw"
+                    "maxWidth" 960
+                    "widths" (slice 360 580 760 960)
+                    "fetchpriority" "auto"
+                    "class" "feat-image"
+                  ) $coverResource.RelPermalink $coverAlt "featured-banner" -}}
+                {{- else -}}
+                  <img class="feat-image" src="{{ $coverImage | relURL }}" alt="{{ $coverAlt }}" loading="lazy" decoding="async">
+                {{- end -}}
+              {{- else if $coverResource -}}
+                {{- partialCached "optimized-image.html" (dict
+                  "resource" $coverResource
+                  "alt" $coverAlt
+                  "loading" "lazy"
+                  "sizes" "(min-width: 768px) 580px, 100vw"
+                  "maxWidth" 960
+                  "widths" (slice 360 580 760 960)
+                  "fetchpriority" "auto"
+                  "class" "feat-image"
+                ) $coverResource.RelPermalink $coverAlt "featured-banner-fallback" -}}
+              {{- else -}}
+                <div class="feat-placeholder" aria-hidden="true"></div>
+              {{- end -}}
+            </div>
+            <div class="feat-overlay">
+              {{- if $category -}}
+              <div class="feat-category">{{ $category }}</div>
+              {{- end -}}
+              <h3 class="feat-title">{{ .Title }}</h3>
+              <div class="feat-meta">{{ .Date.Format "2006.01.02" }} · {{ .ReadingTime }} 分鐘閱讀</div>
+            </div>
+          </a>
+        </article>
+        {{- end -}}
+      </div>
+    </div>
+    <button class="feat-arrow feat-arrow-next" type="button" aria-label="下一篇精選文章">›</button>
+  </div>
+  <div class="feat-dots" aria-label="精選文章輪播導覽">
+    {{- range $index, $_ := $featuredPages -}}
+    <button
+      class="feat-dot{{ if eq $index 0 }} is-active{{ end }}"
+      type="button"
+      data-feat-dot="{{ $index }}"
+      aria-label="{{ printf "前往第 %d 篇精選文章" (add $index 1) }}"
+      {{ if eq $index 0 }}aria-current="true"{{ end }}>
+    </button>
+    {{- end -}}
+  </div>
+</section>
+
+<script>
+(function () {
+  var root = document.currentScript.previousElementSibling;
+  if (!root || !root.matches("[data-feat-carousel]")) return;
+
+  var track = root.querySelector(".feat-track");
+  var slides = Array.prototype.slice.call(root.querySelectorAll(".feat-slide"));
+  var prev = root.querySelector(".feat-arrow-prev");
+  var next = root.querySelector(".feat-arrow-next");
+  var dots = Array.prototype.slice.call(root.querySelectorAll("[data-feat-dot]"));
+  var index = 0;
+  var timer = null;
+  var touchStartX = 0;
+  var interval = 5000;
+
+  function update() {
+    track.style.transform = "translateX(" + (index * -100) + "%)";
+    dots.forEach(function (dot, dotIndex) {
+      var isActive = dotIndex === index;
+      dot.classList.toggle("is-active", isActive);
+      if (isActive) {
+        dot.setAttribute("aria-current", "true");
+      } else {
+        dot.removeAttribute("aria-current");
+      }
+    });
+    if (slides.length <= 1) {
+      prev.disabled = true;
+      next.disabled = true;
+    }
+  }
+
+  function go(delta) {
+    index = (index + delta + slides.length) % slides.length;
+    update();
+  }
+
+  function start() {
+    stop();
+    if (slides.length > 1) {
+      timer = window.setInterval(function () {
+        go(1);
+      }, interval);
+    }
+  }
+
+  function stop() {
+    if (timer) {
+      window.clearInterval(timer);
+      timer = null;
+    }
+  }
+
+  function manual(delta) {
+    go(delta);
+    start();
+  }
+
+  prev.addEventListener("click", function () {
+    manual(-1);
+  });
+
+  next.addEventListener("click", function () {
+    manual(1);
+  });
+
+  dots.forEach(function (dot) {
+    dot.addEventListener("click", function () {
+      index = Number(dot.getAttribute("data-feat-dot")) || 0;
+      update();
+      start();
+    });
+  });
+
+  root.addEventListener("touchstart", function (event) {
+    touchStartX = event.changedTouches[0].clientX;
+  }, { passive: true });
+
+  root.addEventListener("touchend", function (event) {
+    var distance = event.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(distance) > 40) {
+      manual(distance < 0 ? 1 : -1);
+    }
+  }, { passive: true });
+
+  update();
+  start();
+})();
+</script>
+{{- end -}}
