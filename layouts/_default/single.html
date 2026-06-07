@@ -65,12 +65,18 @@
     {{- end }}
   </div>
   <div data-pagefind-ignore>
-    {{- partial "post_internal_links.html" . -}}
-    {{- partial "post_related.html" . -}}
+    {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
+    <ul class="post-tags">
+      {{- range ($.GetTerms $tags) }}
+      <li><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></li>
+      {{- end }}
+    </ul>
     {{- partial "post_interactions_v2.html" . -}}
     {{- if (.Param "comments") }}
       {{- partial "comments.html" . }}
     {{- end }}
+    {{- partial "post_internal_links.html" . -}}
+    {{- partial "post_related.html" . -}}
   </div>
   {{- end }}
 
@@ -82,12 +88,6 @@
   </button>
 
   <footer class="post-footer">
-    {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
-    <ul class="post-tags">
-      {{- range ($.GetTerms $tags) }}
-      <li><a href="{{ .Permalink }}">{{ .LinkTitle }}</a></li>
-      {{- end }}
-    </ul>
     {{- if (.Param "ShowPostNavLinks") }}
       {{- partial "post_sequence_nav.html" . }}
     {{- end }}
