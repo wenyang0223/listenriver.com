@@ -1,33 +1,124 @@
-{{- $limit := site.Params.articleRelatedLimit | default 3 -}}
-{{- $related := .Site.RegularPages.Related . | first $limit -}}
-{{- $related = where $related "RelPermalink" "ne" .RelPermalink -}}
-{{- if lt (len $related) 3 -}}
-  {{- $sameCategoryRecent := slice -}}
-  {{- with .Params.categories -}}
-    {{- $category := index . 0 -}}
-    {{- $sameCategoryRecent = where site.RegularPages "Params.categories" "intersect" (slice $category) -}}
-    {{- $sameCategoryRecent = where $sameCategoryRecent "RelPermalink" "ne" $.RelPermalink -}}
-    {{- $sameCategoryRecent = first $limit ($sameCategoryRecent.ByDate.Reverse) -}}
-  {{- end -}}
-  {{- range $sameCategoryRecent -}}
-    {{- if not (in $related .) -}}
+{{- $initialLimit := 4 -}}
+{{- $maxLimit := site.Params.articleRelatedLoadLimit | default 12 -}}
+{{- $related := slice -}}
+{{- $seen := slice .RelPermalink -}}
+{{- $pool := where site.RegularPages "RelPermalink" "ne" .RelPermalink -}}
+
+{{- with .Params.tags -}}
+  {{- $sameTag := where $pool "Params.tags" "intersect" . -}}
+  {{- range $sameTag.ByDate.Reverse -}}
+    {{- if and (lt (len $related) $maxLimit) (not (in $seen .RelPermalink)) -}}
       {{- $related = $related | append . -}}
+      {{- $seen = $seen | append .RelPermalink -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
-{{- $related = first $limit $related -}}
+
+{{- with .Params.categories -}}
+  {{- $sameCategory := where $pool "Params.categories" "intersect" . -}}
+  {{- range $sameCategory.ByDate.Reverse -}}
+    {{- if and (lt (len $related) $maxLimit) (not (in $seen .RelPermalink)) -}}
+      {{- $related = $related | append . -}}
+      {{- $seen = $seen | append .RelPermalink -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- with .Section -}}
+  {{- $sameSection := where $pool "Section" . -}}
+  {{- range $sameSection.ByDate.Reverse -}}
+    {{- if and (lt (len $related) $maxLimit) (not (in $seen .RelPermalink)) -}}
+      {{- $related = $related | append . -}}
+      {{- $seen = $seen | append .RelPermalink -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- range $pool.ByDate.Reverse -}}
+  {{- if and (lt (len $related) $maxLimit) (not (in $seen .RelPermalink)) -}}
+    {{- $related = $related | append . -}}
+    {{- $seen = $seen | append .RelPermalink -}}
+  {{- end -}}
+{{- end -}}
+
 {{- if gt (len $related) 0 -}}
-<section id="related-posts" class="post-relationship-section post-related-section" aria-labelledby="post-related-title">
+<section id="related-posts" class="post-relationship-section post-related-section" aria-labelledby="post-related-title" data-post-related>
   <div class="home-section-heading post-relationship-heading">
     <div>
       <span class="home-section-kicker">Related</span>
-      <h2 id="post-related-title" class="home-section-title">延伸閱讀</h2>
+      <h2 id="post-related-title" class="home-section-title">&#24310;&#20280;&#38321;&#35712;</h2>
     </div>
   </div>
-  <div class="post-relationship-grid">
-    {{- range $related -}}
-      {{- partial "article-card.html" (dict "page" . "class" "post-entry post-relationship-entry") -}}
+  <div class="post-related-list">
+    {{- range $index, $page := $related -}}
+      {{- $class := "post-related-card post-related-list__item" -}}
+      {{- if ge $index $initialLimit -}}
+        {{- $class = printf "%s is-hidden" $class -}}
+      {{- end -}}
+      {{- $displayTitle := $page.Params.displayTitle | default $page.Title | default $page.File.TranslationBaseName -}}
+      <article class="{{ $class }}">
+        <a class="post-related-card__link" href="{{ $page.RelPermalink }}" aria-label="&#38321;&#35712; {{ $displayTitle | plainify }}"></a>
+        <div class="post-related-card__media" aria-hidden="true">
+          {{- $isHidden := ($page.Param "cover.hiddenInList") | default ($page.Param "cover.hidden") | default false -}}
+          {{- $relatedSizes := "(min-width: 768px) 176px, 100vw" -}}
+          {{- $relatedWidths := slice 240 320 360 480 -}}
+          {{- partialCached "cover.html" (dict "cxt" $page "IsSingle" false "isHidden" $isHidden "sizes" $relatedSizes "widths" $relatedWidths "maxWidth" 480) $page.RelPermalink false $isHidden ($page.Params.cover.image | default "") "lazy" "auto" $relatedSizes (delimit $relatedWidths "-") 480 -}}
+        </div>
+        <div class="post-related-card__body">
+          {{- if not ($page.Param "hideMeta") }}
+          <div class="post-related-card__meta">
+            {{- with index ($page.Params.categories | default (slice)) 0 -}}
+            <span>{{ . }}</span>
+            {{- end -}}
+            <time datetime="{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ $page.Date.Format "2006.01.02" }}</time>
+            {{- if site.Params.ShowReadingTime -}}
+            <span>{{ partial "reading-time.html" $page }} &#20998;&#37912;&#38321;&#35712;</span>
+            {{- end -}}
+          </div>
+          {{- end }}
+          <h3 class="post-related-card__title">{{ $displayTitle }}</h3>
+          {{- if ne ($page.Param "hideSummary") true }}
+          <p class="post-related-card__excerpt">{{ $page.Summary | plainify | htmlUnescape | truncate 120 }}</p>
+          {{- end }}
+        </div>
+      </article>
     {{- end -}}
   </div>
+  {{- if gt (len $related) $initialLimit -}}
+  <div class="post-related-actions">
+    <button class="post-related-load-more" type="button" data-post-related-more data-step="{{ $initialLimit }}">
+      &#36617;&#20837;&#26356;&#22810;
+    </button>
+  </div>
+  <script>
+  (function () {
+    var section = document.currentScript.closest("[data-post-related]");
+    if (!section) return;
+
+    var button = section.querySelector("[data-post-related-more]");
+    var items = Array.prototype.slice.call(section.querySelectorAll(".post-related-list__item"));
+    var step = Number(button && button.dataset.step) || 4;
+    var visible = {{ $initialLimit }};
+
+    function update() {
+      items.forEach(function (item, index) {
+        item.classList.toggle("is-hidden", index >= visible);
+      });
+      if (button && visible >= items.length) {
+        button.hidden = true;
+      }
+    }
+
+    if (button) {
+      button.addEventListener("click", function () {
+        visible = Math.min(visible + step, items.length);
+        update();
+      });
+    }
+
+    update();
+  }());
+  </script>
+  {{- end -}}
 </section>
 {{- end -}}
