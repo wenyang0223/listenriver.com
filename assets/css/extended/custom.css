@@ -10196,3 +10196,277 @@ body.list .blog-archive-entry .home-latest-item__excerpt {
   width: 24px;
   background: rgba(17, 24, 39, 0.55);
 }
+
+[data-theme="dark"] .home-discovery-section--topics {
+  --taxonomy-landing-line: rgba(255, 255, 255, 0.12);
+  --taxonomy-landing-line-strong: rgba(111, 202, 209, 0.34);
+  --taxonomy-landing-surface: rgb(46, 46, 51);
+  --taxonomy-landing-surface-soft: rgba(255, 255, 255, 0.06);
+  --taxonomy-landing-text: rgb(232, 233, 234);
+  --taxonomy-landing-text-soft: rgba(218, 218, 219, 0.76);
+  --taxonomy-landing-text-faint: rgba(155, 156, 157, 0.92);
+  --taxonomy-landing-reading: #8ecff2;
+  --taxonomy-landing-practice: #8fd7af;
+  --taxonomy-landing-pain: #f0ad93;
+  --taxonomy-landing-growth: #e5c47f;
+  --taxonomy-landing-daily: #c1b6f4;
+  --taxonomy-landing-clubhouse: #e6a8c1;
+}
+
+[data-theme="dark"] .home-discovery-section--topics .taxonomy-landing-card,
+[data-theme="dark"] .home-discovery-section--topics .topic-card {
+  background: var(--taxonomy-landing-surface);
+  border-color: var(--taxonomy-landing-line);
+  box-shadow: none;
+  color: var(--taxonomy-landing-text);
+}
+
+[data-theme="dark"] .home-discovery-section--topics .taxonomy-landing-card:hover,
+[data-theme="dark"] .home-discovery-section--topics .topic-card:hover {
+  border-color: var(--taxonomy-landing-line-strong);
+  box-shadow: 0 14px 28px rgba(2, 6, 23, 0.28);
+}
+
+[data-theme="dark"] .home-discovery-section--topics .taxonomy-landing-card__media {
+  border-bottom-color: var(--taxonomy-landing-line);
+  background: linear-gradient(180deg, rgba(31, 41, 55, 0.98), rgba(17, 24, 39, 0.98));
+}
+
+[data-theme="dark"] .home-discovery-section--topics .taxonomy-landing-card__title,
+[data-theme="dark"] .home-discovery-section--topics .topic-card-name {
+  color: var(--taxonomy-landing-text);
+}
+
+[data-theme="dark"] .home-discovery-section--topics .taxonomy-landing-card__description,
+[data-theme="dark"] .home-discovery-section--topics .taxonomy-landing-card__footer,
+[data-theme="dark"] .home-discovery-section--topics .topic-card-count {
+  color: var(--taxonomy-landing-text-soft);
+}
+
+[data-theme="dark"] .home-discovery-section--topics .taxonomy-landing-card__tag {
+  background: var(--taxonomy-landing-surface-soft);
+  border-color: var(--taxonomy-landing-line);
+  color: var(--taxonomy-landing-text-soft);
+}
+
+[data-theme="dark"] .home-discovery-section--topics .taxonomy-landing-card__tag:hover {
+  background: rgba(111, 202, 209, 0.16);
+  border-color: var(--taxonomy-landing-line-strong);
+  color: var(--taxonomy-landing-text);
+}
+
+[data-theme="dark"] .home-discovery-section--topics .taxonomy-landing-card__footer {
+  border-top-color: var(--taxonomy-landing-line);
+}
+
+[data-theme="dark"] .latest-card,
+[data-theme="dark"] .home-discovery .home-clubhouse-card.latest-card {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: var(--entry);
+}
+
+[data-theme="dark"] .latest-title,
+[data-theme="dark"] .home-clubhouse-card__title.latest-title {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .latest-meta,
+[data-theme="dark"] .home-discovery .home-clubhouse-card__meta.latest-meta,
+[data-theme="dark"] .feat-meta {
+  color: var(--secondary);
+}
+
+[data-theme="dark"] .feat-card {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="dark"] .feat-body {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: var(--entry);
+}
+
+[data-theme="dark"] .feat-dot {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+[data-theme="dark"] .feat-dot.is-active {
+  background: rgba(111, 202, 209, 0.82);
+}
+
+[data-theme="dark"] .home-latest-item {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .home-latest-item:hover,
+[data-theme="dark"] .home-latest-item:focus-within {
+  border-color: rgba(111, 202, 209, 0.34);
+  box-shadow: 0 14px 28px rgba(2, 6, 23, 0.28);
+}
+
+[data-theme="dark"] .home-clubhouse-arrow,
+[data-theme="dark"] .home-gallery-arrow {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(46, 46, 51, 0.86);
+  color: rgba(241, 245, 249, 0.9);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 14px 30px rgba(2, 6, 23, 0.28);
+}
+
+[data-theme="dark"] .home-clubhouse-arrow:hover,
+[data-theme="dark"] .home-gallery-arrow:hover,
+[data-theme="dark"] .home-clubhouse-arrow:focus-visible,
+[data-theme="dark"] .home-gallery-arrow:focus-visible {
+  border-color: rgba(111, 202, 209, 0.38);
+  background: rgba(56, 64, 70, 0.94);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .home-gallery-slider {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+[data-theme="dark"] .home-gallery-dot {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+[data-theme="dark"] .home-gallery-dot.is-active {
+  background: rgba(111, 202, 209, 0.82);
+}
+
+[data-theme="dark"] .feat-category,
+[data-theme="dark"] .tag-pill {
+  border-color: rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(241, 245, 249, 0.9);
+}
+
+[data-theme="dark"] .feat-category--reading,
+[data-theme="dark"] .tag-reading {
+  border-color: rgba(193, 182, 244, 0.28);
+  background: rgba(193, 182, 244, 0.14);
+  color: #d8d1ff;
+}
+
+[data-theme="dark"] .feat-category--daily,
+[data-theme="dark"] .tag-daily {
+  border-color: rgba(229, 196, 127, 0.3);
+  background: rgba(229, 196, 127, 0.14);
+  color: #f1d595;
+}
+
+[data-theme="dark"] .feat-category--self,
+[data-theme="dark"] .tag-self {
+  border-color: rgba(143, 215, 175, 0.3);
+  background: rgba(143, 215, 175, 0.14);
+  color: #b8efd0;
+}
+
+[data-theme="dark"] .feat-category--illness,
+[data-theme="dark"] .tag-illness {
+  border-color: rgba(240, 173, 147, 0.3);
+  background: rgba(240, 173, 147, 0.14);
+  color: #ffc7b3;
+}
+
+[data-theme="dark"] .feat-category--helping,
+[data-theme="dark"] .tag-helping {
+  border-color: rgba(142, 207, 242, 0.32);
+  background: rgba(142, 207, 242, 0.14);
+  color: #bde7ff;
+}
+
+[data-theme="dark"] .feat-category--clubhouse,
+[data-theme="dark"] .tag-clubhouse {
+  border-color: rgba(230, 168, 193, 0.3);
+  background: rgba(230, 168, 193, 0.14);
+  color: #f5c4d8;
+}
+
+[data-theme="dark"] .home-author-card {
+  background: rgba(46, 46, 51, 0.96);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .home-author-card__aside {
+  border-left-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .home-author-card__tagline,
+[data-theme="dark"] .home-author-card__description {
+  color: rgba(232, 233, 234, 0.86);
+}
+
+[data-theme="dark"] .home-author-card__social-link {
+  color: rgba(232, 233, 234, 0.76);
+}
+
+[data-theme="dark"] .home-author-card__social-link:hover {
+  color: var(--primary);
+}
+
+[data-theme="dark"] .home-author-card__description::before {
+  background: rgba(111, 202, 209, 0.34);
+}
+
+[data-theme="dark"] .home-author-card__avatar {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .salon-hero {
+  border-color: rgba(255, 255, 255, 0.18);
+  background:
+    radial-gradient(circle at 78% 28%, rgba(183, 238, 242, 0.34), transparent 31%),
+    radial-gradient(circle at 14% 84%, rgba(226, 245, 239, 0.22), transparent 30%),
+    linear-gradient(135deg, rgba(79, 86, 92, 0.96), rgba(56, 65, 70, 0.94) 46%, rgba(39, 49, 54, 0.96));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 0 42px rgba(255, 255, 255, 0.035),
+    0 18px 42px rgba(2, 6, 23, 0.22);
+}
+
+[data-theme="dark"] .salon-hero-kicker {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: none;
+}
+
+[data-theme="dark"] .salon-hero-title {
+  color: #87e7ed;
+  text-shadow: 0 0 24px rgba(111, 202, 209, 0.22);
+}
+
+[data-theme="dark"] .salon-hero-divider {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme="dark"] .salon-hero-topics {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+[data-theme="dark"] .salon-hero-bottom .salon-channel-desc {
+  color: rgba(245, 247, 248, 0.82);
+}
+
+[data-theme="dark"] .salon-hero-mark {
+  opacity: 0.86;
+}
+
+[data-theme="dark"] .salon-hero-mark::before,
+[data-theme="dark"] .salon-hero-mark::after {
+  background: linear-gradient(90deg, transparent, rgba(183, 238, 242, 0.18), rgba(135, 231, 237, 0.46), transparent);
+}
+
+[data-theme="dark"] .salon-hero-mark::before {
+  box-shadow:
+    0 42px 0 rgba(183, 238, 242, 0.14),
+    0 84px 0 rgba(255, 255, 255, 0.045);
+}
+
+[data-theme="dark"] .salon-hero-mark::after {
+  box-shadow:
+    0 -48px 0 rgba(255, 255, 255, 0.055),
+    0 46px 0 rgba(183, 238, 242, 0.11);
+}
