@@ -3,7 +3,7 @@ title: 會所工作日誌18_保持真誠好奇、找出盲點、默默推進
 displayTitle: 保持真誠好奇、找出盲點、默默推進
 seriesLabel: 會所工作日誌 18
 date: 2026-05-15
-featured: true
+featured: false
 description: 我發現其實我在聊天或會談之前，內心並沒有太多預設，而是真的如《成為一個人》所說，保持真誠好奇，往下追問，似乎自然浮現出會談的方向。
 draft: false
 type: post

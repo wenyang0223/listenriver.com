@@ -3,7 +3,7 @@ title: 會所工作手冊03_負面教材
 displayTitle: 負面教材
 seriesLabel: 會所工作手冊 03
 date: 2026-04-25
-featured: true
+featured: false
 description:
 draft: true
 type: post
