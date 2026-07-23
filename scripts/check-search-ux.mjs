@@ -74,7 +74,8 @@ function watchPage(page) {
 
   page.on("console", (message) => {
     if (message.type() === "error") {
-      errors.push(message.text());
+      const source = message.location().url || "unknown";
+      errors.push(`${message.text()} [source: ${source}]`);
     }
   });
   page.on("pageerror", (error) => errors.push(error.message));
@@ -88,6 +89,25 @@ function watchPage(page) {
   });
 
   return { errors, failedPagefind };
+}
+
+async function createSearchTestPage(browser, viewport) {
+  const page = await browser.newPage({ viewport });
+
+  // Search UX validation must not depend on third-party analytics availability.
+  await page.addInitScript(() => {
+    Object.defineProperty(Navigator.prototype, "doNotTrack", {
+      configurable: true,
+      get: () => "1",
+    });
+  });
+  await page.route("https://www.googletagmanager.com/**", (route) => route.fulfill({
+    status: 200,
+    contentType: "text/javascript",
+    body: "",
+  }));
+
+  return page;
 }
 
 async function waitForRenderedResults(page, label) {
@@ -152,7 +172,7 @@ async function waitForQueryParam(page, expectedQuery) {
 }
 
 async function checkPrefilledSearch(browser, target, name, viewport) {
-  const page = await browser.newPage({ viewport });
+  const page = await createSearchTestPage(browser, viewport);
   const watched = watchPage(page);
 
   await page.goto(target, { waitUntil: "load", timeout: 30000 });
@@ -170,7 +190,7 @@ async function checkPrefilledSearch(browser, target, name, viewport) {
 }
 
 async function checkHeaderSearch(browser, origin) {
-  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  const page = await createSearchTestPage(browser, { width: 1280, height: 900 });
   const watched = watchPage(page);
   await page.goto(origin, { waitUntil: "load", timeout: 30000 });
 
@@ -196,7 +216,7 @@ async function checkHeaderSearch(browser, origin) {
 }
 
 async function checkSearchUrlSync(browser, target) {
-  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  const page = await createSearchTestPage(browser, { width: 1280, height: 900 });
   const watched = watchPage(page);
   const updatedQuery = `${query}之旅`;
 
@@ -237,7 +257,7 @@ async function checkSearchUrlSync(browser, target) {
 }
 
 async function checkEmptyHeaderSearch(browser, origin) {
-  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  const page = await createSearchTestPage(browser, { width: 1280, height: 900 });
   const watched = watchPage(page);
   await page.goto(origin, { waitUntil: "load", timeout: 30000 });
 

@@ -1,14 +1,15 @@
 ---
-title: "關於"
-type: "about"
-layout: "single"
+title: 關於
+type: about
+layout: single
 ShowToc: false
 hideMeta: true
 comments: false
-description: "網站介紹與個人簡介"
+description: 網站介紹與個人簡介
 ---
+試著在會所深耕的新手社工，對精神疾病經驗保持好奇與學習，努力成為助人工作者，書寫梳理自身病痛經驗、工作經驗、閱讀心得、日常雜寫。
 
-試著在會所深耕的新手社工，對精神疾病經驗保持好奇與學習，努力成為助人工作者，書寫梳理自身病痛經驗、工作經驗、閱讀心得。
+興趣廣泛：深蹲、游泳、圍棋、象棋、電影、畫畫、吉他。
 
 歡迎心得回饋或交流討論：[wenyang5566@gmail.com](mailto:wenyang5566@gmail.com)
 
