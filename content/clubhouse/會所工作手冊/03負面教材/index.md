@@ -8,8 +8,8 @@ description:
 draft: true
 type: post
 cover:
-  image: 為自己做決定即是成為自己.jpg
-  alt: 為自己做決定即是成為自己
+  image: 負面教材.jpg
+  alt: 負面教材
 categories:
   - 助人工作
 tags:
