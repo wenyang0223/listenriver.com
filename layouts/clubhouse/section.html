@@ -492,11 +492,7 @@
       </div>
       <div class="clubhouse-group__list">
         {{- range $clubhousePages }}
-        <a class="clubhouse-group__item" href="{{ .RelPermalink }}">
-          <span class="clubhouse-group__date">{{ .Date.Format "2006.01.02" }}</span>
-          <span class="clubhouse-group__item-title">{{ .Title }}</span>
-          <span class="clubhouse-group__summary">{{ .Summary | plainify | htmlUnescape | truncate 90 }}</span>
-        </a>
+          {{- partial "clubhouse-story-card.html" . }}
         {{- end }}
       </div>
     </section>
