@@ -2285,6 +2285,9 @@ body.mobile-nav-locked {
 .post-single .post-content .post-content-image.is-zoomable,
 .post-single > .entry-cover img.is-zoomable {
   cursor: zoom-in;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .post-single .post-content .post-figure:hover .post-content-image.is-zoomable,
@@ -2400,6 +2403,9 @@ body.mobile-nav-locked {
   width: 100%;
   max-height: calc(100vh - 150px);
   object-fit: contain;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
   border-radius: 22px;
   box-shadow: 0 24px 54px rgba(0, 0, 0, 0.32);
   background: rgba(255, 255, 255, 0.04);

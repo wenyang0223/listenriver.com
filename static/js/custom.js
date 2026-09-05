@@ -753,7 +753,11 @@
       image.classList.add('is-zoomable');
       image.setAttribute('tabindex', '0');
       image.setAttribute('role', 'button');
+      image.setAttribute('draggable', 'false');
       image.setAttribute('aria-label', alt ? `放大圖片：${alt}` : '放大圖片');
+
+      image.addEventListener('contextmenu', (event) => event.preventDefault());
+      image.addEventListener('dragstart', (event) => event.preventDefault());
 
       return {
         image,
@@ -787,6 +791,10 @@
     const lightboxImage = lightbox.querySelector('.reader-lightbox-image');
     const lightboxCaption = lightbox.querySelector('.reader-lightbox-caption');
     let activeIndex = -1;
+
+    lightboxImage.setAttribute('draggable', 'false');
+    lightboxImage.addEventListener('contextmenu', (event) => event.preventDefault());
+    lightboxImage.addEventListener('dragstart', (event) => event.preventDefault());
 
     function openLightbox(index) {
       const target = imageMeta[index];
