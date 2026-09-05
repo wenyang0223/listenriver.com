@@ -2285,32 +2285,9 @@ body.mobile-nav-locked {
 .post-single .post-content .post-content-image.is-zoomable,
 .post-single > .entry-cover img.is-zoomable {
   cursor: zoom-in;
-}
-
-.post-single .post-content .post-figure::after,
-.post-single > .entry-cover::after {
-  content: "點擊放大";
-  position: absolute;
-  right: 16px;
-  bottom: 16px;
-  padding: 0.4rem 0.7rem;
-  border-radius: 999px;
-  background: rgba(17, 24, 39, 0.7);
-  color: #f8fafc;
-  font-size: 0.76rem;
-  letter-spacing: 0.02em;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  pointer-events: none;
-}
-
-.post-single .post-content .post-figure:hover::after,
-.post-single .post-content .post-figure:focus-within::after,
-.post-single > .entry-cover:hover::after,
-.post-single > .entry-cover:focus-within::after {
-  opacity: 1;
-  transform: translateY(0);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .post-single .post-content .post-figure:hover .post-content-image.is-zoomable,
@@ -2426,6 +2403,9 @@ body.mobile-nav-locked {
   width: 100%;
   max-height: calc(100vh - 150px);
   object-fit: contain;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
   border-radius: 22px;
   box-shadow: 0 24px 54px rgba(0, 0, 0, 0.32);
   background: rgba(255, 255, 255, 0.04);
@@ -2520,17 +2500,6 @@ body.mobile-nav-locked {
   .post-floating-tools__item {
     min-height: 38px;
     padding: 0 0.68rem;
-  }
-
-  .post-single .post-content .post-figure::after,
-  .post-single > .entry-cover::after {
-    right: 12px;
-    bottom: 12px;
-    opacity: 1;
-    transform: none;
-    font-size: 0.72rem;
-    padding: 0.34rem 0.62rem;
-    background: rgba(17, 24, 39, 0.58);
   }
 
   .post-single .post-content li::marker {
@@ -9311,14 +9280,15 @@ html {
 @media (max-width: 768px) {
   :root {
     --article-phone-gutter: clamp(37px, 9vw, 52px);
-    --article-content-image-gutter: 14px;
+    --article-media-gutter: 14px;
     --article-phone-font-size: 19.25px;
-    --article-phone-line-height: 1.92;
-    --article-phone-paragraph-gap: 1.65em;
+    --article-phone-line-height: 1.86;
+    --article-phone-paragraph-gap: 1.48em;
   }
 
   .post-single {
     --article-mobile-gutter: var(--article-phone-gutter);
+    --article-media-outset: calc(var(--article-mobile-gutter) - var(--article-media-gutter));
     width: 100%;
     max-width: 100%;
     margin: 0;
@@ -9357,7 +9327,7 @@ html {
   .post-single .post-title {
     max-width: 100%;
     margin-bottom: 1.25rem;
-    font-size: clamp(2.08rem, 9.4vw, 2.42rem);
+    font-size: clamp(2rem, 8.8vw, 2.3rem);
     font-weight: 800;
     line-height: 1.24;
     letter-spacing: 0;
@@ -9480,8 +9450,8 @@ html {
   .post-single .post-content h2,
   .post-single .post-content h3,
   .post-single .post-content h4 {
-    margin-top: 3.65rem;
-    margin-bottom: 1.35rem;
+    margin-top: 3.3rem;
+    margin-bottom: 1.25rem;
     letter-spacing: 0;
     scroll-margin-top: calc(var(--mobile-header-height) + 14px);
   }
@@ -9504,7 +9474,7 @@ html {
   .post-single .post-content > blockquote {
     max-width: 100%;
     margin: 3rem 0;
-    padding: 0.32rem 0 0.32rem 2.15rem !important;
+    padding: 0.32rem 0 0.32rem 1.3rem !important;
     border-left-width: 4px;
     border-left-color: rgba(111, 202, 209, 0.82);
     line-height: 2.04;
@@ -9533,10 +9503,10 @@ html {
   }
 
   .post-single .post-content .post-figure {
-    width: calc(100% - (var(--article-content-image-gutter) * 2));
-    max-width: calc(100% - (var(--article-content-image-gutter) * 2));
-    margin-left: auto;
-    margin-right: auto;
+    width: calc(100% + (var(--article-media-outset) * 2));
+    max-width: none;
+    margin-left: calc(0px - var(--article-media-outset));
+    margin-right: calc(0px - var(--article-media-outset));
   }
 
   .post-single .post-content .post-figure {
@@ -9552,7 +9522,16 @@ html {
   .post-single .entry-cover img {
     width: 100%;
     max-width: 100%;
-    border-radius: 10px;
+    border-radius: 12px;
+  }
+
+  .post-single .post-content .post-content-image {
+    box-shadow: none;
+  }
+
+  .post-single .post-content .post-figure figcaption {
+    padding-left: 8px;
+    padding-right: 8px;
   }
 
   .post-single .post-content pre,
@@ -9566,10 +9545,10 @@ html {
 @media (max-width: 390px) {
   :root {
     --article-phone-gutter: 34px;
-    --article-content-image-gutter: 12px;
+    --article-media-gutter: 12px;
     --article-phone-font-size: 18.75px;
-    --article-phone-line-height: 1.9;
-    --article-phone-paragraph-gap: 1.55em;
+    --article-phone-line-height: 1.86;
+    --article-phone-paragraph-gap: 1.45em;
   }
 }
 

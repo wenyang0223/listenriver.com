@@ -748,17 +748,19 @@
     const imageMeta = images.map((image, index) => {
       const figure = image.closest('.post-figure, .entry-cover');
       const captionNode = figure ? figure.querySelector('figcaption') : null;
-      const src = image.currentSrc || image.src;
       const alt = image.getAttribute('alt') || '';
 
       image.classList.add('is-zoomable');
       image.setAttribute('tabindex', '0');
       image.setAttribute('role', 'button');
+      image.setAttribute('draggable', 'false');
       image.setAttribute('aria-label', alt ? `放大圖片：${alt}` : '放大圖片');
+
+      image.addEventListener('contextmenu', (event) => event.preventDefault());
+      image.addEventListener('dragstart', (event) => event.preventDefault());
 
       return {
         image,
-        src,
         alt,
         caption: captionNode ? captionNode.textContent.trim() : '',
         index
@@ -790,12 +792,16 @@
     const lightboxCaption = lightbox.querySelector('.reader-lightbox-caption');
     let activeIndex = -1;
 
+    lightboxImage.setAttribute('draggable', 'false');
+    lightboxImage.addEventListener('contextmenu', (event) => event.preventDefault());
+    lightboxImage.addEventListener('dragstart', (event) => event.preventDefault());
+
     function openLightbox(index) {
       const target = imageMeta[index];
       if (!target) return;
 
       activeIndex = index;
-      lightboxImage.src = target.src;
+      lightboxImage.src = target.image.currentSrc || target.image.src;
       lightboxImage.alt = target.alt;
       lightboxCaption.textContent = target.caption || target.alt || '';
       lightbox.classList.add('is-open');
