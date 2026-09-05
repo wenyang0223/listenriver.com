@@ -25,7 +25,7 @@
 
 {{- if $resource -}}
   {{- $widths := slice 360 640 920 -}}
-  {{- $sizes := "(min-width: 1280px) 640px, (min-width: 900px) 56vw, calc(100vw - 36px)" -}}
+  {{- $sizes := "(min-width: 1200px) 800px, (min-width: 769px) 80vw, (max-width: 390px) calc(100vw - 24px), calc(100vw - 28px)" -}}
   <figure class="post-figure">
     {{- partialCached "optimized-image.html" (dict
       "resource" $resource
@@ -48,7 +48,7 @@
       loading="lazy"
       decoding="async"
       fetchpriority="auto"
-      sizes="(min-width: 1280px) 640px, (min-width: 900px) 56vw, calc(100vw - 36px)"
+      sizes="(min-width: 1200px) 800px, (min-width: 769px) 80vw, (max-width: 390px) calc(100vw - 24px), calc(100vw - 28px)"
       class="post-content-image">
     {{- with .Title }}
       <figcaption>{{ . }}</figcaption>

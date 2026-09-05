@@ -748,7 +748,6 @@
     const imageMeta = images.map((image, index) => {
       const figure = image.closest('.post-figure, .entry-cover');
       const captionNode = figure ? figure.querySelector('figcaption') : null;
-      const src = image.currentSrc || image.src;
       const alt = image.getAttribute('alt') || '';
 
       image.classList.add('is-zoomable');
@@ -758,7 +757,6 @@
 
       return {
         image,
-        src,
         alt,
         caption: captionNode ? captionNode.textContent.trim() : '',
         index
@@ -795,7 +793,7 @@
       if (!target) return;
 
       activeIndex = index;
-      lightboxImage.src = target.src;
+      lightboxImage.src = target.image.currentSrc || target.image.src;
       lightboxImage.alt = target.alt;
       lightboxCaption.textContent = target.caption || target.alt || '';
       lightbox.classList.add('is-open');
